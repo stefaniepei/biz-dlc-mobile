@@ -13,17 +13,7 @@ module.exports = {
     rules: [
       {
         test: /\.vue$/,
-        loader: 'vue-loader',
-        options: {
-          // loaders: {
-          // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
-          // the "scss" and "sass" values for the lang attribute to the right configs here.
-          // other preprocessors should work out of the box, no loader config like this necessary.
-          // 'scss': 'vue-style-loader!css-loader!sass-loader',
-          // 'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
-          // }
-          // other vue-loader options go here
-        }
+        loader: 'vue-loader'
       },
       {
         test: /\.js$/,
@@ -35,28 +25,34 @@ module.exports = {
         loader: 'style-loader!css-loader'
       },
       {
-          test: /\.less/,
-          exclude: /^node_modules$/,
-          loader: `style-loader!css-loader!less-loader`
+        test: /\.less/,
+        exclude: /^node_modules$/,
+        loader: 'style-loader!css-loader!less-loader'
       },
       {
-          test: /\.sass/,
-          exclude: /^node_modules$/,
-          loader: `style-loader!css-loader!sass-loader`
+        test: /\.sass/,
+        exclude: /^node_modules$/,
+        loader: 'style-loader!css-loader!sass-loader'
       },
       {
-        test: /\.(png|jpg|gif|svg)$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]?[hash]'
-        }
+        test: /\.(png|jpg)$/,
+        exclude: /^node_modules$/,
+        loader: 'url-loader?limit=8192&name=./static/img/[hash].[ext]',
+      },
+      {
+        test: /\.(eot|woff|svg|ttf|woff2|gif|appcache)(\?|$)/,
+        exclude: /^node_modules$/,
+        loader: 'file-loader?name=[name].[ext]?v=[hash]'
       }
     ]
   },
   resolve: {
     alias: {
-      'vue$': 'vue/dist/vue.esm.js',
+      'vue$': 'vue/dist/vue.common.js',
       'assets': path.resolve(__dirname, './src/assets/'),
+      'css': path.resolve(__dirname, './src/assets/css/'),
+      'js': path.resolve(__dirname, './src/assets/js/'),
+      'images': path.resolve(__dirname, './src/../assets/images/'),
       'components': path.resolve(__dirname, './src/components/'),
       'configs': path.resolve(__dirname, './src/configs/'),
       'filters': path.resolve(__dirname, './src/filters/'),
@@ -69,17 +65,17 @@ module.exports = {
     historyApiFallback: true,
     noInfo: true,
     proxy: {
-            'utils/*': {
-                changeOrigin: true,
-                target: 'https://unstable.dianlc.com',
-                secure: false,
-            }
-        }
-},
+      'utils/*': {
+        changeOrigin: true,
+        target: 'https://unstable.dianlc.com',
+        secure: false,
+      }
+    }
+  },
   performance: {
-  hints: false
-},
-devtool: '#eval-source-map'
+    hints: false
+  },
+  devtool: '#eval-source-map'
 }
 
 if (process.env.NODE_ENV === 'production') {

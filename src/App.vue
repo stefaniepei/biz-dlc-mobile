@@ -1,21 +1,22 @@
 <template>
   <div id="app">
-		<div class="nav">
-		<ul>
-	    	<router-link to="/home" tag="li" active-class="active">
-	    		<a href="javascript:;">首页</a>
-	    	</router-link>
-	    	<router-link to="/login" tag="li" active-class="active">
-	    		<a href="javascript:;">登录</a>
-	    	</router-link>
-	    	<router-link to="/signup" tag="li" active-class="active">
-	    		<a href="javascript:;">注册</a>
-	    	</router-link>
-				<router-link to="/account" tag="li" active-class="active">
-	    		<a href="javascript:;">我的账户</a>
-	    	</router-link>
-	    </ul>
-	</div>
+		<!--<div class="nav">
+			<ul>
+				<router-link to="/home" tag="li" active-class="active">
+					<a href="javascript:;">首页</a>
+				</router-link>
+				<router-link to="/login" tag="li" active-class="active">
+					<a href="javascript:;">登录</a>
+				</router-link>
+				<router-link to="/signup" tag="li" active-class="active">
+					<a href="javascript:;">注册</a>
+				</router-link>
+					<router-link to="/account" tag="li" active-class="active">
+					<a href="javascript:;">我的账户</a>
+				</router-link>
+			</ul>
+		</div>-->
+	<HeaderNav></HeaderNav>
 	<keep-alive>
 		<router-view class="router-view"></router-view>
 	</keep-alive>
@@ -24,6 +25,7 @@
 
 <script>
   import {mapGetters} from 'vuex'
+  import HeaderNav from 'components/HeaderNav.vue'
 
   export default {
 		data() {
@@ -52,7 +54,7 @@
 			}
 		},
 		components:{
-			
+			HeaderNav
 		}
   }
 

@@ -16,6 +16,38 @@ export default [
         component: resolve => require(['../pages/account/Info.vue'], resolve)
     },
     {
+        path: '/financialList', //我的理财
+        meta: { auth: false },
+        component: resolve => require(['../pages/account/FinancialList.vue'], resolve)
+    },
+    {
+        path: '/orderList', //订单列表
+        meta: { auth: false },
+        component: resolve => require(['../pages/account/FinancialList.vue'], resolve)
+    },
+    {
+        path: '/capitalList', //资金明细
+        meta: { auth: false },
+        component: resolve => require(['../pages/account/CapitalList.vue'], resolve)
+    },
+    {
+        path: '/recharge', //充值
+        meta: { auth: false },
+        component: resolve => require(['../pages/account/Recharge.vue'], resolve)
+    },
+    {
+        path: '/cash', //提现
+        meta: { auth: false },
+        component: resolve => require(['../pages/account/Cash.vue'], resolve)
+    },
+    {
+        path: '/invite', //邀请有礼
+        meta: { auth: false },
+        component: resolve => require(['../pages/account/Invite.vue'], resolve)
+    },
+
+    
+    {
         path: '/', //首页
         component: resolve => require(['../pages/index/index.vue'], resolve)
     },
