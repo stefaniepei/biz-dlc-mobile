@@ -11,6 +11,14 @@ export default [
         component: resolve => require(['../pages/user/Signup.vue'], resolve)
     },
     {
+        path: '/productList', //产品列表
+        component: resolve => require(['../pages/product/ProductList.vue'], resolve)
+    },
+    {
+        path: '/productDetail/:id/:source', //产品详情
+        component: resolve => require(['../pages/product/ProductDetail.vue'], resolve)
+    },
+    {
         path: '/account', //账户中心
         meta: { auth: false },
         component: resolve => require(['../pages/account/Info.vue'], resolve)
@@ -23,7 +31,7 @@ export default [
     {
         path: '/orderList', //订单列表
         meta: { auth: false },
-        component: resolve => require(['../pages/account/FinancialList.vue'], resolve)
+        component: resolve => require(['../pages/account/OrderList.vue'], resolve)
     },
     {
         path: '/capitalList', //资金明细
@@ -49,7 +57,7 @@ export default [
     
     {
         path: '/', //首页
-        component: resolve => require(['../pages/index/index.vue'], resolve)
+        component: resolve => require(['../pages/index/Index.vue'], resolve)
     },
     {
         path: '*', //其他页面
