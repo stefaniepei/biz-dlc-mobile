@@ -7,8 +7,8 @@
                         <p class="text-center">预期年化收益<span id="prodIconInfo"></span></p>
                     </div>
                     <div class="col-xs-12 text-center">
-                        <span id="expectYearReturn" class="earnings">0</span>
-                        <span id="expectYearReturn2" class="earnings"></span>
+                        <span class="earnings">{{productDetail.expectYearReturn}}</span>
+                        <span v-if="productDetail.invest2YearReturn > 0" class="earnings">~{{productDetail.invest2YearReturn}}</span>
                         <span style="color:#ff7742">%</span>
                     </div>
                 </section>
@@ -19,14 +19,14 @@
             </div>
             <section class="prod-invest">
                 <div class="col-xs-5">
-                    <p id="interestDays">0天</p>
+                    <p>{{productDetail.prodPeriod}}天</p>
                     <p>投资期限</p>
                 </div>
                 <div class="col-xs-2 text-center">
                     <div class="line"></div>
                 </div>
                 <div class="col-xs-5 text-right">
-                    <p id="maxRaisedAmount">0万</p>
+                    <p>{{productDetail.maxRaisedAmount}}万</p>
                     <p>项目金额</p>
                 </div>
             </section>
@@ -36,19 +36,19 @@
             <div class="col-xs-6 text-right">预计收益(元)</div>
         </section>
         <section class="row" style="color:#f08e68;">
-            <div id="availableAmount" class="col-xs-6">0</div>
-            <div id="exprctYearInterest" class="col-xs-6 text-right">0</div>
+            <div class="col-xs-6">{{productDetail.availableAmount}}</div>
+            <div id="exprctYearInterest" class="col-xs-6 text-right">{{exprctYearInterest}}</div>
         </section>
 
         <section class="input-group input-group-lg line">
-            <span id="clickBtn_left" class="input-group-addon line-btn">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
+            <span class="input-group-addon line-btn">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
             <input id="buyAmount" type="text" class="form-control line-input" placeholder="投资金额">
-            <span id="clickBtn_right" class="input-group-addon line-btn">&nbsp;&nbsp;+&nbsp;&nbsp;</span>
+            <span class="input-group-addon line-btn">&nbsp;&nbsp;+&nbsp;&nbsp;</span>
         </section>
 
         <section class="prod-explain">
             <div>
-                <span>还款方式：</span><span class="invest-type"></span>
+                <span>还款方式：</span><span class="invest-type">{{productDetail.investType}}</span>
             </div>
             <div>
                 <span>剩余时间：</span>
@@ -72,20 +72,71 @@
             <span>投资记录</span>
             <span class="arrow-right"></span>
         </section>
-        <section style="height:1rem;margin-top:0.5rem" class="error-msg" id="errorMsg">
+        <section style="height:1rem;margin-top:0.5rem">
         </section>
         <section>
             <button id="createOrderBtn" type="button" class="btn btn-primary btn-lg btn-block pay-timer">立即投资</button>
         </section>
         <section class="row login-info">
             <span class="col-xs-9">账户余额（元）：
-            <span id="login-info"><a href="/login">登录可见</a></span></span>
+            <span id="login-info" v-show="loginOut"><a href="/login">登录可见</a></span></span>
             <span class="col-xs-3 text-right"><a href="/recharge">充值 > </a></span>
         </section>
     </div>
 </template>
 <script>
+    import {mapGetters,mapState} from 'vuex'
 
+    export default{
+        data(){
+            return {
+                loginIn:false,
+                loginOut:true,
+                productDetail:{}
+            }
+        },
+        // computed: mapState({ 
+        //     user: (state) => state.user
+        // }),
+
+        // header:(state,title) => state.header
+        computed:mapGetters([
+			'headerDisplay',
+            'headerTitle'
+		]),
+        watch: {
+            
+        },
+        beforeRouteEnter (to, from, next) {
+            next(vm=>{
+                vm.getProductDetail(vm.$route.params.id)
+            })
+        },
+        beforeRouteLeave (to, from, next) {
+            next(vm=>{
+                 vm.$store.dispatch('EDIT_TITLE')
+            })
+        },
+        mounted () {
+            
+        },
+        methods: {
+            getProductDetail(id){
+                let _this = this
+                this.$http.get('/products/'+id).then(function(res){
+                    _this.productDetail = res.data.data
+                    _this.$store.dispatch('EDIT_TITLE',_this.productDetail.prodName)
+
+                    console.log(res.data.data)
+                }).catch(function(err){
+                    console.log(err)
+                });
+            }
+        },
+        components: {
+            
+        }
+    }
 </script>
 <style scoped>
 .product-detail {

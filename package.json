@@ -5,13 +5,12 @@
   "author": "pei.jk@finnovate.com.cn",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --host unstable.dianlc.com --open --inline --hot",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --host unstable.dianlc.com --port 8081 --open --inline --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
     "vue": "^2.2.1",
-    "vue-awesome-swiper": "^2.3.2",
-    "vue-swiper": "^0.5.0"
+    "vue-awesome-swiper": "^2.3.2"
   },
   "devDependencies": {
     "axios": "^0.15.3",

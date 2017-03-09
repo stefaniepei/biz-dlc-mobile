@@ -70,13 +70,24 @@
     </div>
 </template>
 <script>
+    import {mapGetters} from 'vuex'
     export default{
         data(){
             return {
                 loginIn:false,
-                loginOut:true,
-                headerTitle:'点理财'
+                loginOut:true
             }
+        },
+        computed:mapGetters([
+            'headerTitle'
+        ]),
+        mounted () {
+            
+        },
+        watch: {
+            $route(to){
+                this.$store.dispatch('EDIT_TITLE')
+		    }
         },
         methods: {
             back(){
