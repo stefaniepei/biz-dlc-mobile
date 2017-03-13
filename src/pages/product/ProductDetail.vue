@@ -41,9 +41,9 @@
         </section>
 
         <section class="input-group input-group-lg line">
-            <span class="input-group-addon line-btn">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-            <input id="buyAmount" type="text" class="form-control line-input" :placeholder="Number.parseInt(productDetail.minApplyAmount)+'元起投,'+Number.parseInt(productDetail.minAddAmount)+'元递增'">
-            <span class="input-group-addon line-btn">&nbsp;&nbsp;+&nbsp;&nbsp;</span>
+            <span class="input-group-addon line-btn" @click="subtraction">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
+            <input id="buyAmount" type="text" class="form-control line-input text-center" :placeholder="Number.parseInt(productDetail.minApplyAmount)+'元起投,'+Number.parseInt(productDetail.minAddAmount)+'元递增'" v-model="buyAmount">
+            <span class="input-group-addon line-btn" @click="addition">&nbsp;&nbsp;+&nbsp;&nbsp;</span>
         </section>
 
         <section class="prod-explain">
@@ -54,18 +54,18 @@
         </section>
         <section class="prod-fill">
         </section>
-        <section class="prod-arrow-line" id="toInfo">
+        <router-link :to="{name:'productInfo',params:{id:productDetail.prodCodeId,source:this.$route.params.source}}" class="prod-arrow-line" tag="section">
             <span>项目介绍</span>
             <span class="arrow-right"></span>
-        </section>
-        <section class="prod-arrow-line" id="toIntroduce">
+        </router-link>
+        <router-link :to="{name:'productIntroduce',params:{id:productDetail.prodCodeId,source:this.$route.params.source}}" class="prod-arrow-line" tag="section">
             <span>产品介绍</span>
             <span class="arrow-right"></span>
-        </section>
-        <section class="prod-arrow-line" id="toRecords">
+        </router-link>
+        <router-link :to="{name:'productRecords',params:{id:productDetail.prodCodeId,source:this.$route.params.source}}" class="prod-arrow-line" tag="section">
             <span>投资记录</span>
             <span class="arrow-right"></span>
-        </section>
+        </router-link>
         <section style="height:1rem;margin-top:0.5rem">
         </section>
         <section>
@@ -89,8 +89,7 @@
                 loginOut:true,
                 productDetail:{},
                 exprctYearInterest:'0.00',
-                leftTimeSeconds:0,
-                ttl:0
+                buyAmount:'',
             }
         },
         // computed: mapState({ 
@@ -124,11 +123,33 @@
                 this.$http.get('/products/'+id).then(function(res){
                     _this.productDetail = res.data.data
                     _this.$store.dispatch('EDIT_TITLE',_this.productDetail.prodName)
-                    console.log(Number.parseInt(_this.productDetail.ttl/1000))
                     _this.$store.dispatch('START_TIMER',Number.parseInt(_this.productDetail.ttl/1000))
                 }).catch(function(err){
                     console.log(err)
                 });
+            },
+            addition(){
+                if(this.buyAmount === '') {
+                    this.buyAmount = 0
+                }
+                let res = Number.parseInt(this.buyAmount) +  Number.parseInt(this.productDetail.minAddAmount)
+                this.calu(res)
+            },
+            subtraction(){
+                if(this.buyAmount === '') {
+                    this.buyAmount = 0
+                }
+                let res = Number.parseInt(this.buyAmount) -  Number.parseInt(this.productDetail.minAddAmount)
+                this.calu(res)
+            },
+            calu(res){
+                if(res > this.productDetail.availableAmount){
+                    this.buyAmount = Number.parseInt(this.productDetail.availableAmount)
+                }else if(res < this.productDetail.minApplyAmount){
+                    this.buyAmount = Number.parseInt(this.productDetail.minApplyAmount)
+                }else{
+                    this.buyAmount = res
+                }
             }
         },
         components: {

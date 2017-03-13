@@ -15,8 +15,23 @@ export default [
         component: resolve => require(['../pages/product/ProductList.vue'], resolve)
     },
     {
-        path: '/productDetail/:id/:source', //产品详情
+        path: '/productDetail/:source/:id', //产品详情
         component: resolve => require(['../pages/product/ProductDetail.vue'], resolve)
+    },
+    {
+        name:'productInfo',
+        path: '/productInfo/:source/:id', //项目介绍
+        component: resolve => require(['../pages/product/ProductInfo.vue'], resolve)
+    },
+    {
+        name: 'productIntroduce',
+        path: '/productIntroduce/:source/:id', //产品介绍
+        component: resolve => require(['../pages/product/ProductIntroduce.vue'], resolve)
+    },
+    {
+        name:'productRecords',
+        path: '/productRecords/:source/:id', //投资记录
+        component: resolve => require(['../pages/product/ProductRecords.vue'], resolve)
     },
     {
         path: '/account', //账户中心
@@ -54,7 +69,7 @@ export default [
         component: resolve => require(['../pages/account/Invite.vue'], resolve)
     },
 
-    
+
     {
         path: '/', //首页
         component: resolve => require(['../pages/index/Index.vue'], resolve)

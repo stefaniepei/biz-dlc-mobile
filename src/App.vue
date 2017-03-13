@@ -16,7 +16,7 @@
 			<router-link to="/signup" tag="li" active-class="active">
 				<a href="javascript:;">注册</a>
 			</router-link>
-				<router-link to="/productDetail/100049660/home" tag="li" active-class="active">
+				<router-link to="/productDetail/home/100049660" tag="li" active-class="active">
 				<a href="javascript:;">项目详情</a>
 			</router-link>
 		</ul>
@@ -42,6 +42,7 @@
 	watch:{
 		$route(to){
 			// var path=to.path.substring(1);
+			// console.log(to)
 			// this.headerChange(path);
 		}
 	},
