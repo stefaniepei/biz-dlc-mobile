@@ -51,6 +51,7 @@
                         intDiff--
                     }else{
                         clearInterval(colck)
+                        //need to dispath disabled btn
                     }
                 },1000)
                 return true
