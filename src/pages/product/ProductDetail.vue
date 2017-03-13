@@ -42,7 +42,7 @@
 
         <section class="input-group input-group-lg line">
             <span class="input-group-addon line-btn" @click="subtraction">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-            <input id="buyAmount" type="text" class="form-control line-input text-center" :placeholder="Number.parseInt(productDetail.minApplyAmount)+'元起投,'+Number.parseInt(productDetail.minAddAmount)+'元递增'" v-model="buyAmount">
+            <input id="buyAmount" type="text" class="form-control line-input text-center" :placeholder="Number.parseInt(productDetail.minApplyAmount)+'元起投,'+Number.parseInt(productDetail.minAddAmount)+'元递增'" v-model="buyAmount" @keyup="boolAmount">
             <span class="input-group-addon line-btn" @click="addition">&nbsp;&nbsp;+&nbsp;&nbsp;</span>
         </section>
 
@@ -129,27 +129,30 @@
                 });
             },
             addition(){
-                if(this.buyAmount === '') {
-                    this.buyAmount = 0
-                }
+                if(this.buyAmount === '')   this.buyAmount = 0
                 let res = Number.parseInt(this.buyAmount) +  Number.parseInt(this.productDetail.minAddAmount)
                 this.calu(res)
             },
             subtraction(){
-                if(this.buyAmount === '') {
-                    this.buyAmount = 0
-                }
+                if(this.buyAmount === '')   this.buyAmount = 0
                 let res = Number.parseInt(this.buyAmount) -  Number.parseInt(this.productDetail.minAddAmount)
                 this.calu(res)
             },
             calu(res){
-                if(res > this.productDetail.availableAmount){
+                if(res > Number.parseInt(this.productDetail.availableAmount)){
                     this.buyAmount = Number.parseInt(this.productDetail.availableAmount)
-                }else if(res < this.productDetail.minApplyAmount){
+                }else if(res < Number.parseInt(this.productDetail.minApplyAmount)){
                     this.buyAmount = Number.parseInt(this.productDetail.minApplyAmount)
                 }else{
-                    this.buyAmount = res
+                    if(res == '' || isNaN(res)){
+                        this.buyAmount = ''
+                    }else{
+                        this.buyAmount = res
+                    }
                 }
+            },
+            boolAmount(){
+                this.calu(Number.parseInt(this.buyAmount))
             }
         },
         components: {
