@@ -16,7 +16,7 @@
 			<router-link to="/signup" tag="li" active-class="active">
 				<a href="javascript:;">注册</a>
 			</router-link>
-				<router-link to="/productDetail/100049752/home" tag="li" active-class="active">
+				<router-link to="/productDetail/100049660/home" tag="li" active-class="active">
 				<a href="javascript:;">项目详情</a>
 			</router-link>
 		</ul>

@@ -26,7 +26,7 @@
                     <div class="line"></div>
                 </div>
                 <div class="col-xs-5 text-right">
-                    <p>{{productDetail.maxRaisedAmount}}万</p>
+                    <p>{{productDetail.maxRaisedAmount|toMillion}}万</p>
                     <p>项目金额</p>
                 </div>
             </section>
@@ -36,27 +36,21 @@
             <div class="col-xs-6 text-right">预计收益(元)</div>
         </section>
         <section class="row" style="color:#f08e68;">
-            <div class="col-xs-6">{{productDetail.availableAmount}}</div>
+            <div class="col-xs-6">{{productDetail.availableAmount|formatCurrency}}</div>
             <div id="exprctYearInterest" class="col-xs-6 text-right">{{exprctYearInterest}}</div>
         </section>
 
         <section class="input-group input-group-lg line">
             <span class="input-group-addon line-btn">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-            <input id="buyAmount" type="text" class="form-control line-input" placeholder="投资金额">
+            <input id="buyAmount" type="text" class="form-control line-input" :placeholder="Number.parseInt(productDetail.minApplyAmount)+'元起投,'+Number.parseInt(productDetail.minAddAmount)+'元递增'">
             <span class="input-group-addon line-btn">&nbsp;&nbsp;+&nbsp;&nbsp;</span>
         </section>
 
         <section class="prod-explain">
             <div>
-                <span>还款方式：</span><span class="invest-type">{{productDetail.investType}}</span>
+                <span>还款方式：</span><span class="invest-type">{{productDetail.interestType|productDict('interestTypeList')}}</span>
             </div>
-            <div>
-                <span>剩余时间：</span>
-                <span style="color:orange" class="time" id="dayShow"></span><span>天</span>
-                <span style="color:orange" class="time" id="hourShow"></span><span>小时</span>
-                <span style="color:orange" class="time" id="minuteShow"></span><span>分</span>
-                <span style="color:orange" class="time" id="secondShow"></span><span>秒</span>
-            </div>
+            <CountDown></CountDown>
         </section>
         <section class="prod-fill">
         </section>
@@ -86,13 +80,17 @@
 </template>
 <script>
     import {mapGetters,mapState} from 'vuex'
+    import CountDown from 'components/CountDown.vue'
 
     export default{
         data(){
             return {
                 loginIn:false,
                 loginOut:true,
-                productDetail:{}
+                productDetail:{},
+                exprctYearInterest:'0.00',
+                leftTimeSeconds:0,
+                ttl:0
             }
         },
         // computed: mapState({ 
@@ -126,15 +124,15 @@
                 this.$http.get('/products/'+id).then(function(res){
                     _this.productDetail = res.data.data
                     _this.$store.dispatch('EDIT_TITLE',_this.productDetail.prodName)
-
-                    console.log(res.data.data)
+                    console.log(Number.parseInt(_this.productDetail.ttl/1000))
+                    _this.$store.dispatch('START_TIMER',Number.parseInt(_this.productDetail.ttl/1000))
                 }).catch(function(err){
                     console.log(err)
                 });
             }
         },
         components: {
-            
+            CountDown
         }
     }
 </script>

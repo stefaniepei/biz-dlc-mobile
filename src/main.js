@@ -21,13 +21,12 @@ const router = new VueRouter({
 //     }
 //     next()
 // })
+
+
+import * as filters from './filters/'
+Object.keys(filters).forEach(key => Vue.filter(key, filters[key]))//install filters
+
 import App from './App.vue'
-// import filters from './filters'
-
-
-
-// Object.keys(filters).forEach(key => Vue.filter(key, filters[key]))
-
 
 new Vue({
   el: '#app',
