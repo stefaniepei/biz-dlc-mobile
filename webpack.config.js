@@ -3,7 +3,14 @@ var webpack = require('webpack')
 var debug = true
 
 module.exports = {
-  entry: './src/main.js',
+  // entry: './src/main.js',
+  entry: {
+    'main': [
+      'webpack-dev-server/client?https://unstable-m.dianlc.com/',
+      'webpack/hot/only-dev-server',
+      './src/main.js'
+    ]
+  },
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
@@ -64,12 +71,9 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     noInfo: true,
+    // port: 8083,
     proxy: {
-      'utils/*': {
-        changeOrigin: true,
-        target: 'https://unstable.dianlc.com',
-        secure: false,
-      }
+      // "**": 'https://unstable-m.dianlc.com'
     }
   },
   performance: {

@@ -19,7 +19,7 @@ axios.interceptors.response.use(function (response) {
 
 // console.log(axios.defaults)
 
-axios.defaults.baseURL = debug ? 'https://unstable.dianlc.com' : 'https://{{www}}.{{dns_name}}'
+axios.defaults.baseURL = debug ? 'https://unstable-m.dianlc.com' : 'https://{{mobile}}.{{dns_name}}'
 
 axios.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded'
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'

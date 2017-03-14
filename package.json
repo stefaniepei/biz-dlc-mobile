@@ -5,7 +5,7 @@
   "author": "pei.jk@finnovate.com.cn",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --host unstable.dianlc.com --port 8081 --open --inline --hot",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --host unstable-m.dianlc.com --port 8083 --open --inline --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
