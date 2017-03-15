@@ -69,11 +69,14 @@
         <section style="height:1rem;margin-top:0.5rem">
         </section>
         <section>
-            <button id="createOrderBtn" type="button" class="btn btn-primary btn-lg btn-block pay-timer">立即投资</button>
+            <button id="createOrderBtn" type="button" class="btn btn-primary btn-lg btn-block pay-timer" :disabled="btnDisabled" v-on:btnState="toDisabled">{{btnVal}}</button>
         </section>
         <section class="row login-info">
-            <span class="col-xs-9">账户余额（元）：
-            <span id="login-info" v-show="loginOut"><a href="/login">登录可见</a></span></span>
+            <span class="col-xs-9">
+                账户余额（元）：
+                <span v-show="!loginOut">{{balance}}</span>
+                <span v-show="loginOut"><a href="/login">登录可见</a></span>
+            </span>
             <span class="col-xs-3 text-right"><a href="/recharge">充值 > </a></span>
         </section>
     </div>
@@ -85,11 +88,13 @@
     export default{
         data(){
             return {
-                loginIn:false,
                 loginOut:true,
+                balance:'0.00',
                 productDetail:{},
                 exprctYearInterest:'0.00',
                 buyAmount:'',
+                btnDisabled:false,
+                btnVal:'立即购买'
             }
         },
         // computed: mapState({ 
@@ -98,8 +103,7 @@
 
         // header:(state,title) => state.header
         computed:mapGetters([
-			'headerDisplay',
-            'headerTitle'
+			'user'
 		]),
         watch: {
             
@@ -150,9 +154,22 @@
                         this.buyAmount = res
                     }
                 }
+                if(this.buyAmount !== ''){
+                    this.exprctYearInterest = (Number.parseInt(this.buyAmount)*Number.parseInt(this.productDetail.expectYearReturn)/100/Number.parseInt(this.productDetail.yearDays)*Number.parseInt(this.productDetail.prodPeriod)).toFixed(2)
+                }else{
+                    this.exprctYearInterest = '0.00'
+                }
             },
             boolAmount(){
                 this.calu(Number.parseInt(this.buyAmount))
+            },
+            toEnabled(){
+                this.btnDisabled = false
+                this.btnVal = '立即购买'
+            },
+            toDisabled(){
+                this.btnDisabled = 'disabled'
+                this.btnVal = '已过期'
             }
         },
         components: {

@@ -35,7 +35,7 @@
                 let {day,hour,minute,second} = 0
                 let _this = this
                 let colck = setInterval(function(){
-                    if(intDiff>0){
+                    if(intDiff>=0){
                         day = Math.floor(intDiff / (60 * 60 * 24))
                         hour = Math.floor(intDiff / (60 * 60)) - (day * 24)
                         minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60)
@@ -51,7 +51,7 @@
                         intDiff--
                     }else{
                         clearInterval(colck)
-                        //need to dispath disabled btn
+                        _this.$parent.toDisabled()
                     }
                 },1000)
                 return true

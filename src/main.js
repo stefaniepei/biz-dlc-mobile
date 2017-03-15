@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { routes, axios } from './configs'
 import store from './store'
+import './assets/css/common.css'
 
 Vue.use(VueRouter)
 Vue.prototype.$http = axios
