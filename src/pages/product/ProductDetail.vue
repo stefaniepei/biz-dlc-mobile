@@ -74,10 +74,10 @@
         <section class="row login-info">
             <span class="col-xs-9">
                 账户余额（元）：
-                <span v-show="!loginOut">{{balance}}</span>
-                <span v-show="loginOut"><a href="/login">登录可见</a></span>
+                <span v-show="!loginOut">{{user.balance}}</span>
+                <span v-show="loginOut"><router-link to="/login">登录可见</router-link></span>
             </span>
-            <span class="col-xs-3 text-right"><a href="/recharge">充值 > </a></span>
+            <span class="col-xs-3 text-right"><router-link to="/recharge">充值 > </router-link></span>
         </section>
     </div>
 </template>
@@ -89,19 +89,16 @@
         data(){
             return {
                 loginOut:true,
-                balance:'0.00',
                 productDetail:{},
                 exprctYearInterest:'0.00',
                 buyAmount:'',
-                btnDisabled:false,
+                btnDisabled:'disabled',
                 btnVal:'立即购买'
             }
         },
         // computed: mapState({ 
         //     user: (state) => state.user
         // }),
-
-        // header:(state,title) => state.header
         computed:mapGetters([
 			'user'
 		]),
@@ -113,18 +110,18 @@
                 vm.getProductDetail(vm.$route.params.id)
             })
         },
-        beforeRouteLeave (to, from, next) {
-            next(vm=>{
-                 vm.$store.dispatch('EDIT_TITLE')
-            })
-        },
+        // beforeRouteLeave (to, from, next) {
+        //     next(vm=>{
+        //          vm.$store.dispatch('EDIT_TITLE')
+        //     })
+        // },
         mounted () {
             
         },
         methods: {
             getProductDetail(id){
                 let _this = this
-                this.$http.get('/products/'+id).then(function(res){
+                this.$http.get(`/products/${id}`).then(function(res){
                     _this.productDetail = res.data.data
                     _this.$store.dispatch('EDIT_TITLE',_this.productDetail.prodName)
                     _this.$store.dispatch('START_TIMER',Number.parseInt(_this.productDetail.ttl/1000))

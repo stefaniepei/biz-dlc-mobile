@@ -73,8 +73,7 @@ export default{
     methods:{
         getSwiperData(){
             let _this = this
-            let paramsData = {createdFrom:'2016-12-01',type:3,page:1,pageSize:5}
-            this.$http.get('/utils/bulletin',{params:paramsData}).then(function(res){
+            this.$http.get('/utils/bulletin',{params:{createdFrom:'2016-12-01',type:3,page:1,pageSize:5}}).then(function(res){
                 _this.imgData = res.data.data
                 // _this.initSwiper()
             }).catch(function(err){

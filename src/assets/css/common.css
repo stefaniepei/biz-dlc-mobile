@@ -1,3 +1,35 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+ol, ul, li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    border: 0;
+}
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    color: #575757;
+}
+
+.clear {
+    clear: both;
+}
+
 .btn:disabled{
     background-color: #e5e5e5;
     border: none;

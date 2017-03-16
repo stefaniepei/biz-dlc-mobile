@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "vue": "^2.2.1",
-    "vue-awesome-swiper": "^2.3.2"
+    "vue-awesome-swiper": "^2.3.2",
+    "vue-mugen-scroll": "^0.2.1"
   },
   "devDependencies": {
     "axios": "^0.15.3",

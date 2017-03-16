@@ -6,19 +6,22 @@
 	</keep-alive>
 	<div class="nav">
 		<ul>
-			<li>----------------------</li>
-			<router-link to="/home" tag="li" active-class="active">
-				<a href="javascript:;">首页</a>
+			<li><hr/></li>
+			<li style="text-align:center">
+			<router-link to="/home" tag="span" active-class="active">
+				<a href="javascript:;">首页</a> | 
 			</router-link>
-			<router-link to="/login" tag="li" active-class="active">
-				<a href="javascript:;">登录</a>
+			<router-link to="/login" tag="span" active-class="active">
+				<a href="javascript:;">登录</a> | 
 			</router-link>
-			<router-link to="/signup" tag="li" active-class="active">
-				<a href="javascript:;">注册</a>
+			<router-link to="/signup" tag="span" active-class="active">
+				<a href="javascript:;">注册</a> | 
 			</router-link>
-				<router-link to="/productDetail/home/100049660" tag="li" active-class="active">
+				<router-link to="/productDetail/home/100049660" tag="span" active-class="active">
 				<a href="javascript:;">项目详情</a>
 			</router-link>
+			</li>
+			<li><hr/></li>
 		</ul>
 	</div>
   </div>

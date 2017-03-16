@@ -31,6 +31,7 @@
         },
         methods: {
             clocking(){
+                this.$parent.toEnabled()
                 let intDiff = Number.parseInt(this.leftSeconds)
                 let {day,hour,minute,second} = 0
                 let _this = this
