@@ -50,7 +50,7 @@
             <div>
                 <span>还款方式：</span><span class="invest-type">{{productDetail.interestType|productDict('interestTypeList')}}</span>
             </div>
-            <CountDown></CountDown>
+            <count-down></count-down>
         </section>
         <section class="prod-fill">
         </section>
@@ -83,7 +83,7 @@
 </template>
 <script>
     import {mapGetters,mapState} from 'vuex'
-    import CountDown from 'components/CountDown.vue'
+    import countDown from 'components/count-down.vue'
 
     export default{
         data(){
@@ -170,7 +170,7 @@
             }
         },
         components: {
-            CountDown
+            countDown
         }
     }
 </script>

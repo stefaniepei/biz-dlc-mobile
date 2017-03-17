@@ -11,6 +11,21 @@ export default [
         component: resolve => require(['../pages/user/Signup.vue'], resolve)
     },
     {
+        path: '/register', //注册
+        component: resolve => require(['../pages/user/Register.vue'], resolve)
+    },
+    {
+        path: '/refer', //邀请注册
+        component: resolve => require(['../pages/user/Refer.vue'], resolve)
+    },
+    {
+        path: '/forgetPwd/:source', //忘记密码
+        component: resolve => require(['../pages/user/ForgetPwd.vue'], resolve)
+    },
+
+
+
+    {
         path: '/productList', //产品列表
         component: resolve => require(['../pages/product/ProductList.vue'], resolve)
     },
@@ -33,6 +48,9 @@ export default [
         path: '/productRecords/:source/:id', //投资记录
         component: resolve => require(['../pages/product/ProductRecords.vue'], resolve)
     },
+
+
+
     {
         path: '/account', //账户中心
         meta: { auth: false },
@@ -68,6 +86,7 @@ export default [
         meta: { auth: false },
         component: resolve => require(['../pages/account/Invite.vue'], resolve)
     },
+
 
 
     {

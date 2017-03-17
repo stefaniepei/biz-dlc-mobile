@@ -16,6 +16,7 @@ img {
 a {
     text-decoration: none;
     cursor: pointer;
+    color:#398be1;
 }
 
 a:link {
@@ -23,7 +24,7 @@ a:link {
 }
 
 a:visited {
-    color: #575757;
+    color: #398be1;
 }
 
 .clear {
@@ -34,4 +35,20 @@ a:visited {
     background-color: #e5e5e5;
     border: none;
     color: #bababa;
+}
+
+.fz-12,.fz-small{
+    font-size: 1.2rem;
+}
+
+.fz-14,.fz-normal{
+    font-size: 1.4rem;
+}
+
+.fz-16,.fz-big{
+    font-size: 1.6rem;
+}
+
+.float-right{
+    float: right;
 }

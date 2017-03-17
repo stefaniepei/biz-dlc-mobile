@@ -7,7 +7,7 @@
             <li class="item" v-for="(record,index) in records">
                 <div class="item-left">
                     <span class="s1">{{record.cellphone}}</span>
-                    <span class="s2">{{record.investedAt}}</span>
+                    <span class="s2">{{record.investedAt|dateTimeFormat}}</span>
                 </div>
                 <div class="item-right">
                     <span class="s3">{{record.amount}}</span>
@@ -46,7 +46,7 @@
             },
             getProductRecords(id){
                 let _this = this;
-                let pageSize = 10
+                let pageSize = 20
                 this.$http.get(`/trades/invest/list`,{params:{prodCodeId:id,page:this.page,pageSize:pageSize}}).then(function(res){
                     if(_this.page === 1){
                         _this.records = res.data.data

@@ -13,6 +13,11 @@ export const normalTime = (time) => {
 }
 
 export const dateFormat = (timeString) => {
-    timeString = timeString.split('T')
-    return timeString[0]
+    let formatString = String(timeString).split('T')
+    return formatString[0]
+}
+
+export const dateTimeFormat = (timeString) => {
+    let formatString = String(timeString).replace('T', ' ')
+    return formatString
 }

@@ -1,10 +1,16 @@
 <template>
   <div id="app">
-	<HeaderNav v-show="headerDisplay"></HeaderNav>
+	
+	<mt-header title="点理财" :style="{backgroundColor:'#346FAF'}">
+		<router-link to="/" slot="left">
+			<mt-button icon="back"></mt-button>
+		</router-link>
+		<mt-button icon="more" slot="right"></mt-button>
+	</mt-header>
 	<keep-alive>
 		<router-view class="router-view"></router-view>
 	</keep-alive>
-	<div class="nav">
+	<div class="nav" style="margin-top:2rem;">
 		<ul>
 			<li><hr/></li>
 			<li style="text-align:center">
@@ -29,7 +35,6 @@
 
 <script>
   import {mapGetters} from 'vuex'
-  import HeaderNav from 'components/HeaderNav.vue'
 
   export default {
 		data() {
@@ -59,7 +64,7 @@
 		}
 	},
 	components:{
-		HeaderNav
+		
 	}
   }
 

@@ -1,11 +1,10 @@
 <template>
     <div class="content">
-        <Swiper></Swiper>
-        <span>{{msg}}</span>
+        <dlc-swiper></dlc-swiper>
     </div>
 </template>
 <script>
-    import Swiper from 'components/Swiper.vue'
+    import dlcSwiper from 'components/dlc-swiper.vue'
     export default{
         data() {
             return {
@@ -13,7 +12,7 @@
             }
         },
 		components:{
-			Swiper
+			dlcSwiper
 		},
     }
 </script>
