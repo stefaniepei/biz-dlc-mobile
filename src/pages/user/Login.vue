@@ -5,19 +5,15 @@
     </div>
     
     <div class="marReg">
-        <input type="text" maxlength="11" placeholder="请输入手机号码" :value="userName">
+        <input type="text" maxlength="11" placeholder="请输入手机号码" v-model="userName">
     </div>
     
     <div class="marReg">
-        <input type="password" maxlength="16" placeholder="请输入密码" :value="loginPassword">
+        <input type="password" maxlength="16" placeholder="请输入密码" v-model="loginPassword">
     </div>
     
-    <div class="errInfo">
-        <p class="loginP" id="showError"></p>
-    </div>
-
     <div class="marReg no-boder">
-        <button type="button" class="btn btn-normal btn-login" id="loginBtn">登录</button>
+        <button type="button" class="btn btn-normal btn-login" @click="submitLogin">登录</button>
     </div>
     
     <div class="login-link">
@@ -28,7 +24,10 @@
 </template>
 <script>
     import { Toast } from 'mint-ui'
-
+    import bcrypt from 'bcryptjs'
+    import md5 from 'md5'
+    import { testAccountName,testPassword } from '../../utils/validate.js'
+    
     export default{
         data() {
             return {
@@ -37,14 +36,35 @@
             }
         },
         mounted(){
-			console.log(this)
-            Toast('Upload Complete')
-            Toast({
-                message: 'operation success',
-                iconClass: 'icon icon-success',
-                position: 'bottom',
-           });
+            
 		},
+        methods: {
+            validateForm(){
+                if(!testAccountName(this.userName)){
+                    Toast('请输入11位正确的手机号码')
+                    return false
+                }else if(!testPassword(this.loginPassword)){
+                    Toast('请输入8-16位数字和字母组合的密码')
+                    return false
+                }
+                return true
+            },
+            submitLogin(){
+                this.validateForm()
+                let _this = this
+                this.$http.get(`/user/signin/salt/${_this.userName}`).then((res)=>{
+                    _this.$http.post(`/user/signin`,{userName:_this.userName,password:md5(bcrypt.hashSync(this.loginPassword,res['data']['data']['salt']))}).then((response)=>{
+                        _this.$store.dispatch('USER_LOGIN_IN',response['data']['data'])
+                        _this.$router.replace({path:'/'})
+                    }).catch(function(error){
+                        Toast(error)
+                    })
+                }).catch(function(err){
+                    Toast(err)
+                })
+                
+            }
+        }
     }
 </script>
 <style scoped>

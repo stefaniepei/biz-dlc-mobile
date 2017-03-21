@@ -9,6 +9,8 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "md5": "^2.2.1",
     "mint-ui": "^2.2.1",
     "normalize.css": "^5.0.0",
     "vue": "^2.2.1",

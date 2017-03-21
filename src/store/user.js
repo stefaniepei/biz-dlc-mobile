@@ -5,15 +5,19 @@ export const USER_LOGIN_OUT = 'USER_LOGIN_OUT' //退出登录
 
 export default {
     state: {
-        user:JSON.parse(sessionStorage.getItem('user')) || {}
+        user:JSON.parse(sessionStorage.getItem('user')) || {},
+        accessToken:'',
+        userAuth:''
     },
     mutations: {
         [USER_LOGIN_IN](state, user) {
             sessionStorage.setItem('user', JSON.stringify(user))
+            sessionStorage.setItem('accessToken', JSON.stringify(user).accessToken)
             Object.assign(state, user)
         },
         [USER_LOGIN_OUT](state) {
             sessionStorage.removeItem('user')
+            sessionStorage.removeItem('accessToken')
             Object.keys(state).forEach(k => Vue.delete(state, k))
         }
     },
@@ -28,6 +32,12 @@ export default {
     getters: {
         user(state){
             return state.user
+        },
+        accessToken(state){
+            return state.user.accessToken
+        },
+        userAuth(state){
+            return 'Bearer ' + state.user.accessToken
         }
     }
 }

@@ -103,11 +103,19 @@
 			'user'
 		]),
         watch: {
-            
+            user:function(){
+                console.log(this.user)
+                
+            }
         },
         beforeRouteEnter (to, from, next) {
             next(vm=>{
                 vm.getProductDetail(vm.$route.params.id)
+                if(vm.user != null){
+                    vm.loginOut = false
+                }else{
+                    vm.loginOut = true
+                }
             })
         },
         // beforeRouteLeave (to, from, next) {
@@ -116,17 +124,17 @@
         //     })
         // },
         mounted () {
-            
+            console.log(this)
         },
         methods: {
             getProductDetail(id){
                 let _this = this
-                this.$http.get(`/products/${id}`).then(function(res){
+                this.$http.get(`/products/${id}`).then((res)=>{
                     _this.productDetail = res.data.data
                     _this.$store.dispatch('EDIT_TITLE',_this.productDetail.prodName)
                     _this.$store.dispatch('START_TIMER',Number.parseInt(_this.productDetail.ttl/1000))
                 }).catch(function(err){
-                    console.log(err)
+                    Toast(err)
                 });
             },
             addition(){
