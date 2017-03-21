@@ -27,6 +27,8 @@
 </div>
 </template>
 <script>
+    import { Toast } from 'mint-ui'
+
     export default{
         data() {
             return {
@@ -35,11 +37,21 @@
             }
         },
         mounted(){
-			
+			console.log(this)
+            Toast('Upload Complete')
+            Toast({
+                message: 'operation success',
+                iconClass: 'icon icon-success',
+                position: 'bottom',
+           });
 		},
     }
 </script>
 <style scoped>
+.reg-log{
+    width: 90%;
+    margin: 0 auto;
+}
 .company-logo {
     width: 100%;
     height: auto;
@@ -58,8 +70,8 @@
 
 .reg-log input {
     width: 100%;
-    padding: 10px 5px;
-    font-size: 1.5rem;
+    padding: 5px;
+    font-size: 1rem;
     border: none;
 }
 
@@ -71,7 +83,7 @@
     background-color: #3a80c8;
     color: #fff;
     border: 0;
-    font-size: 1.6rem;
+    font-size: 1.2rem;
     border-radius: 5px;
 }
 

@@ -38,15 +38,15 @@ a:visited {
 }
 
 .fz-12,.fz-small{
-    font-size: 1.2rem;
+    font-size: 0.8rem;
 }
 
 .fz-14,.fz-normal{
-    font-size: 1.4rem;
+    font-size: 1rem;
 }
 
 .fz-16,.fz-big{
-    font-size: 1.6rem;
+    font-size: 1.2rem;
 }
 
 .float-right{
