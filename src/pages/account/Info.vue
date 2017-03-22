@@ -1,5 +1,5 @@
 <template>
-    <span>{{msg}}</span>
+    <span>{{msg}},恭喜您已登录</span>
 </template>
 <script>
     export default{

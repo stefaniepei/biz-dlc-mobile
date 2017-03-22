@@ -1,49 +1,51 @@
 <template>
     <div class="product-detail container">
-        <div class="row prod-info">
+        <div class="prod-info">
             <div class="prod-earnings">
                 <section class="prod-earnings-left">
-                    <div class="col-xs-12">
+                    <div>
                         <p class="text-center">预期年化收益<span id="prodIconInfo"></span></p>
                     </div>
-                    <div class="col-xs-12 text-center">
+                    <div class="text-center mt-05">
                         <span class="earnings">{{productDetail.expectYearReturn}}</span>
-                        <span v-if="productDetail.invest2YearReturn > 0" class="earnings">~{{productDetail.invest2YearReturn}}</span>
                         <span style="color:#ff7742">%</span>
+                        <span v-if="productDetail.invest2YearReturn > 0" class="earnings">~{{productDetail.invest2YearReturn}}<span style="color:#ff7742">%</span></span>
                     </div>
                 </section>
                 <div id="prodStatus" class="prod-earnings-right"></div>
             </div>
-            <div class="prod-coupons">
-
+            <div class="prod-coupons text-center" v-show="fx || mj || jx">
+                <div class="coupon" v-show="fx">返现券</div>
+                <div class="coupon" v-show="mj">满减券</div>
+                <div class="coupon" v-show="jx">加息券</div>
             </div>
             <section class="prod-invest">
-                <div class="col-xs-5">
+                <div class="inline-block w50 text-line">
                     <p>{{productDetail.prodPeriod}}天</p>
                     <p>投资期限</p>
                 </div>
-                <div class="col-xs-2 text-center">
-                    <div class="line"></div>
-                </div>
-                <div class="col-xs-5 text-right">
+                <!--<div class="inline-block w02">
+                    <div class="vertical-line"></div>
+                </div>-->
+                <div class="inline-block w50 text-right">
                     <p>{{productDetail.maxRaisedAmount|toMillion}}万</p>
                     <p>项目金额</p>
                 </div>
             </section>
         </div>
-         <section class="row" style="color:#a1a1a1;">
-            <div class="col-xs-6">剩余可投(元)</div>
-            <div class="col-xs-6 text-right">预计收益(元)</div>
+         <section style="color:#a1a1a1;">
+            <div class="inline-block w50">剩余可投(元)</div>
+            <div class="inline-block w50 text-right">预计收益(元)</div>
         </section>
-        <section class="row" style="color:#f08e68;">
-            <div class="col-xs-6">{{productDetail.availableAmount|formatCurrency}}</div>
-            <div id="exprctYearInterest" class="col-xs-6 text-right">{{exprctYearInterest}}</div>
+        <section style="color:#f08e68;">
+            <div class="inline-block w50">{{productDetail.availableAmount|formatCurrency}}</div>
+            <div class="inline-block w50 text-right">{{exprctYearInterest}}</div>
         </section>
 
-        <section class="input-group input-group-lg line">
-            <span class="input-group-addon line-btn" @click="subtraction">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-            <input id="buyAmount" type="text" class="form-control line-input text-center" :placeholder="Number.parseInt(productDetail.minApplyAmount)+'元起投,'+Number.parseInt(productDetail.minAddAmount)+'元递增'" v-model="buyAmount" @keyup="boolAmount">
-            <span class="input-group-addon line-btn" @click="addition">&nbsp;&nbsp;+&nbsp;&nbsp;</span>
+        <section class="line">
+            <button class="btn line-btn-left" @click="subtraction">&nbsp;&nbsp;-&nbsp;&nbsp;</button>
+            <input id="buyAmount" type="text" class="line-input text-center" :placeholder="Number.parseInt(productDetail.minApplyAmount)+'元起投,'+Number.parseInt(productDetail.minAddAmount)+'元递增'" v-model="buyAmount" @keyup="boolAmount">
+            <button class="btn line-btn-right" @click="addition">&nbsp;&nbsp;+&nbsp;&nbsp;</button>
         </section>
 
         <section class="prod-explain">
@@ -54,6 +56,8 @@
         </section>
         <section class="prod-fill">
         </section>
+
+
         <router-link :to="{name:'productInfo',params:{id:productDetail.prodCodeId,source:this.$route.params.source}}" class="prod-arrow-line" tag="section">
             <span>项目介绍</span>
             <span class="arrow-right"></span>
@@ -66,24 +70,26 @@
             <span>投资记录</span>
             <span class="arrow-right"></span>
         </router-link>
-        <section style="height:1rem;margin-top:0.5rem">
+        <section class="prod-tips">
+            温馨提示：市场有风险，投资需谨慎
         </section>
-        <section>
-            <button id="createOrderBtn" type="button" class="btn btn-primary btn-lg btn-block pay-timer" :disabled="btnDisabled" v-on:btnState="toDisabled">{{btnVal}}</button>
+        <section style="margin-top:0.5rem;">
+            <button type="button" class="btn btn-big pay-timer" :disabled="btnDisabled" v-on:btnState="toDisabled">{{btnVal}}</button>
         </section>
-        <section class="row login-info">
-            <span class="col-xs-9">
+        <section class="login-info fz-small">
+            <div class="inline-block w70">
                 账户余额（元）：
-                <span v-show="!loginOut">{{user.balance}}</span>
+                <span v-show="!loginOut" class="dlc-red">{{balance}}</span>
                 <span v-show="loginOut"><router-link to="/login">登录可见</router-link></span>
-            </span>
-            <span class="col-xs-3 text-right"><router-link to="/recharge">充值 > </router-link></span>
+            </div>
+            <div class="inline-block w30 text-right"><router-link to="/recharge">充值 > </router-link></div>
         </section>
     </div>
 </template>
 <script>
     import {mapGetters,mapState} from 'vuex'
     import countDown from 'components/count-down.vue'
+    import { Cell } from 'mint-ui'
 
     export default{
         data(){
@@ -91,9 +97,13 @@
                 loginOut:true,
                 productDetail:{},
                 exprctYearInterest:'0.00',
+                balance:'0.00',
                 buyAmount:'',
                 btnDisabled:'disabled',
-                btnVal:'立即购买'
+                btnVal:'立即购买',
+                fx: false,
+                mj: false,
+                jx: false
             }
         },
         // computed: mapState({ 
@@ -131,11 +141,58 @@
                 let _this = this
                 this.$http.get(`/products/${id}`).then((res)=>{
                     _this.productDetail = res.data.data
+                    _this.setProductCoupons(_this.productDetail)
+                    _this.setBuyButton(_this.productDetail)
                     _this.$store.dispatch('EDIT_TITLE',_this.productDetail.prodName)
                     _this.$store.dispatch('START_TIMER',Number.parseInt(_this.productDetail.ttl/1000))
                 }).catch(function(err){
                     Toast(err)
                 });
+            },
+            setProductCoupons(productDetail){
+                if(productDetail.coupons){
+                    let _this = this
+                    for (let value of productDetail.coupons) {
+                        switch(value){
+                            case "2":
+                                _this.fx = true
+                                break
+                            case "3":
+                                _this.mj = true
+                                break
+                            case "4":
+                                _this.jx = true
+                                break
+                        }
+                    }
+                }
+            },
+            setBuyButton(productDetail){
+                if(productDetail.prodStatus){
+                    let _this = this
+                    for (let value of productDetail.prodStatus) {
+                        switch(value){
+                            case '1':
+                                _this.btnVal = '立即购买'
+                                break
+                            case '2':
+                                _this.btnVal = '已售罄'
+                                break
+                            case '3':
+                                _this.btnVal = '还款中'
+                                break
+                            case '4':
+                                _this.btnVal = '已流标'
+                                break
+                            case '7':
+                                _this.btnVal = '已兑付'
+                                break
+                            default:
+                                _this.btnVal = '已过期'
+                                break
+                        }
+                    }
+                }
             },
             addition(){
                 if(this.buyAmount === '')   this.buyAmount = 0
@@ -186,16 +243,46 @@
 .product-detail {
     background: #fff;
 }
-.product-detail .line-btn{
-    color:#398be1;
-    /*width: 4rem;*/
-    background: #fff;
-    border-color: #eee;
+.product-detail .vertical-line{
+    border: 1px solid #fff;
+    height: 2rem;
+}
+.product-detail .line-btn-left{
+    width: 20%;
+    height: 3rem;
+    color: #398be1;
+    font-size: 1rem;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background-color: #fff;
+    border: 1px solid #eee;
+    box-sizing: border-box;
+    /*border-right: 0;*/
+    margin-right: -.32rem;
+}
+.product-detail .line-btn-right{
+    width: 20%;
+    height: 3rem;
+    color: #398be1;
+    font-size: 1rem;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: #fff;
+    border: 1px solid #eee;
+    box-sizing: border-box;
+    /*border-left: 0;*/
+    margin-left: -.32rem;
 }
 .product-detail .line-input{
-    border-color: #eee;
-    box-shadow: none;
-    font-size: 1.4rem;
+    font-size: 0.8rem;
+    width: 60%;
+    height: 3rem;
+    border:0;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    box-sizing: border-box;
+    vertical-align: top;
+    border-radius: 0;
 }
 
 .product-detail .line input::-webkit-input-placeholder {
@@ -228,35 +315,35 @@
 }
 
 .product-detail section {
-    padding-left: 10%;
-    padding-right: 10%;
+    width: 80%;
+    margin: 0 auto;
     margin-top: 1rem;
     white-space: nowrap;
 }
 
 .product-detail .prod-info .prod-earnings {
-    padding-top: 0.5rem;
+    margin-top: -1rem;
     padding-bottom: 0.5rem;
 }
 
 .product-detail .prod-info .prod-earnings .earnings {
-    font-size: 2.2rem;
+    font-size: 1.2rem;
     color: #ff7742;
 }
 
-.product-detail .prod-info .prod-coupons {
-    padding-top: 0.5rem;
+.product-detail .prod-info .prod-invest {
     padding-bottom: 0.5rem;
 }
 
-.product-detail .prod-info .prod-invest {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+.product-detail .prod-info .prod-invest .text-line{
+    border-right: 2px solid #fff;
+    box-sizing: border-box;
 }
 
 .product-detail .prod-explain div{
     color: #a1a1a1;
-    font-size: 1.2rem;
+    font-size: 0.6rem;
+    
 }
 
 .product-detail .prod-fill {
@@ -267,10 +354,10 @@
 
 .product-detail .prod-arrow-line {
     border-bottom: 1px solid #eee;
-    font-size: 1.5rem;
+    font-size: 1rem;
     color: #999;
-    height: 5rem;
-    line-height: 5rem;
+    height: 3rem;
+    line-height: 3rem;
     margin-top: 0rem;
 }
 
@@ -281,8 +368,16 @@
     width: 40px;
     height: 20px;
     line-height: 20px;
-    margin-top: 2rem;
+    margin-top: 1rem;
     float:right;
+}
+
+.product-detail .prod-tips{
+    height: 1rem;
+    margin-top: 0.5rem;
+    color: #FD7924;
+    font-size: 0.6rem;
+    text-align: center;
 }
 
 .product-detail .login-info {
@@ -293,78 +388,16 @@
     color: #3892C2;
 }
 
-
-
-
-.product-detail .prod-info .prod-coupons .prod-coupons-fx {
-    background: url("../../assets/images/product/aim_coupon_fx_white.png") no-repeat;
-    background-size: cover;
+.product-detail .prod-info .prod-coupons .coupon{
+    font-size: 0.5rem;
+    color: #B3C9E1;
+    border: 1px solid #A3BEDB;
+    border-radius: 5px;
     display: inline-block;
-    margin-left: 5px;
+    margin-right: 5px;
     width: 50px;
     height: 18px;
+    line-height: 18px;
 }
 
-.product-detail .prod-info .prod-coupons .prod-coupons-mj {
-    background: url("../../assets/images/product/aim_coupon_mj_white.png") no-repeat;
-    background-size: cover;
-    display: inline-block;
-    margin-left: 5px;
-    width: 50px;
-    height: 18px;
-}
-
-.product-detail .prod-info .prod-coupons .prod-coupons-jx {
-    background: url("../../assets/images/product/aim_coupon_jx_white.png") no-repeat;
-    background-size: cover;
-    display: inline-block;
-    margin-left: 5px;
-    width: 50px;
-    height: 18px;
-}
-
-.product-detail .prod-info .prod-coupons .prod-coupons-jj {
-    background: url("/images/jjsx/img_voucher05@3x.png") no-repeat;
-    background-size: cover;
-    display: inline-block;
-    margin-left: 5px;
-    width: 112px;
-    height: 18px;
-}
-
-
-.product-detail .prod-info .prod-earnings .prod-status-used {
-    background: url("../../assets/images/product/newstate_img.png") no-repeat;
-    background-size: cover;
-}
-
-.product-detail .prod-info .prod-earnings .prod-status-overdue {
-    background: url("../../assets/images/product/aim_newerexp_overdue.png") 0px 50% no-repeat;
-    background-size: cover;
-}
-
-.product-detail .prod-info .prod-earnings .prod-status-none {
-    background: url("../../assets/images/product/aim_newerexp_none.png") 0px 50% no-repeat;
-    background-size: cover;
-}
-
-.product-detail .prod-info .prod-earnings .product_payment {
-    background: url("../../assets/images/product/product_payment.png") no-repeat;
-    background-size: cover;
-}
-
-.product-detail .prod-info .prod-earnings .product_settlement {
-    background: url("../../assets/images/product/product_settlement.png") 0px 50% no-repeat;
-    background-size: cover;
-}
-
-.product-detail .prod-info .prod-earnings .product_sold {
-    background: url("../../assets/images/product/product_sold.png") 0px 50% no-repeat;
-    background-size: cover;
-}
-
-.product-detail .prod-info .prod-earnings .product_standard {
-    background: url("../../assets/images/product/product_standard.png") 0px 50% no-repeat;
-    background-size: cover;
-}
 </style>
