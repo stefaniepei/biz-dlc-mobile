@@ -24,7 +24,7 @@
 				<a href="javascript:;">注册</a> | 
 			</router-link>
 			<router-link to="/productDetail/home/100049660" tag="span" active-class="active">
-				<a href="javascript:;">项目详情</a>
+				<a href="javascript:;">项目详情</a> | 
 			</router-link>
 			<router-link to="/account" tag="span" active-class="active">
 				<a href="javascript:;">账户中心</a>

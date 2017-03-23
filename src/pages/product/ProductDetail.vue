@@ -79,7 +79,7 @@
         <section class="login-info fz-small">
             <div class="inline-block w70">
                 账户余额（元）：
-                <span v-show="!loginOut" class="dlc-red">{{balance}}</span>
+                <span v-show="!loginOut" class="dlc-red">{{balance|formatCurrency(2,true)}}</span>
                 <span v-show="loginOut"><router-link to="/login">登录可见</router-link></span>
             </div>
             <div class="inline-block w30 text-right"><router-link to="/recharge">充值 > </router-link></div>
@@ -88,8 +88,8 @@
 </template>
 <script>
     import {mapGetters,mapState} from 'vuex'
+    import {Toast} from 'mint-ui'
     import countDown from 'components/count-down.vue'
-    import { Cell } from 'mint-ui'
 
     export default{
         data(){
@@ -110,13 +110,12 @@
         //     user: (state) => state.user
         // }),
         computed:mapGetters([
-			'user'
+			'user',
+            'userAccount',
+            'userAuth'
 		]),
         watch: {
-            user:function(){
-                console.log(this.user)
-                
-            }
+
         },
         beforeRouteEnter (to, from, next) {
             next(vm=>{
@@ -125,6 +124,9 @@
                     vm.loginOut = false
                 }else{
                     vm.loginOut = true
+                }
+                if(vm.userAccount != null && vm.userAccount.balance && vm.userAccount.balance.available){
+                    vm.balance = vm.userAccount.balance.available
                 }
             })
         },
@@ -147,7 +149,7 @@
                     _this.$store.dispatch('START_TIMER',Number.parseInt(_this.productDetail.ttl/1000))
                 }).catch(function(err){
                     Toast(err)
-                });
+                })
             },
             setProductCoupons(productDetail){
                 if(productDetail.coupons){

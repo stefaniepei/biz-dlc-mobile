@@ -7,11 +7,11 @@ export const toMillion = num => {
 //将数值四舍五入(保留2位小数)后格式化成金额形式
 //@precision 精度
 export const formatCurrency = (num, precision = 2, keep0cents = false) => {
-    if (Number.isNaN(num)) return 0
+    if (Number.isNaN(num) && Number.parseInt(num) === 0) return 0.00
     let pre = Math.pow(10, precision)
     num = num + ''
     num = num.replace(/\$|\,/g, '')
-    if (isNaN(num))
+    if (Number.isNaN(num))
         num = "0"
     let sign = (num == (num = Math.abs(num)))
     num = Math.floor(num * pre + 0.50000000001)

@@ -1,9 +1,10 @@
 import axios from 'axios'
+import { Indicator } from 'mint-ui'
 
 var debug = true
 //request to show loading
 axios.interceptors.request.use(function (config) {
-    // stores.dispatch('showLoading')
+    Indicator.open()
     return config
 }, function (error) {
     return Promise.reject(error)
@@ -11,18 +12,17 @@ axios.interceptors.request.use(function (config) {
 
 //response to hide loading
 axios.interceptors.response.use(function (response) {
-    // stores.dispatch('hideLoading')
+    Indicator.close();
     return response
 }, function (error) {
     return Promise.reject(error)
 })
 
-// console.log(axios.defaults)
-
 axios.defaults.baseURL = debug ? 'https://unstable-m.dianlc.com' : 'https://{{mobile}}.{{dns_name}}'
 
-axios.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded'
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
-axios.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded'
+axios.defaults.headers.get['Content-Type'] = 'application/json'
+axios.defaults.headers.post['Content-Type'] = 'application/json'
+axios.defaults.headers.put['Content-Type'] = 'application/json'
 
+// console.log(axios.defaults)
 export default axios

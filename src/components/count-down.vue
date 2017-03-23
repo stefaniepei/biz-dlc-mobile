@@ -35,7 +35,9 @@
                 let intDiff = Number.parseInt(this.leftSeconds)
                 let {day,hour,minute,second} = 0
                 let _this = this
-                let colck = setInterval(function(){
+                let colck
+                clearInterval(colck)
+                colck = setInterval(function(){
                     if(intDiff>=0){
                         day = Math.floor(intDiff / (60 * 60 * 24))
                         hour = Math.floor(intDiff / (60 * 60)) - (day * 24)
