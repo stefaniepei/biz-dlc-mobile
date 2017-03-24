@@ -1,14 +1,12 @@
 <template>
 	<div id="app">
 	
-		<mt-header title="点理财"
+		<mt-header :title="title"
 		           :style="{backgroundColor:'#346FAF'}">
 			<router-link to="/"
 			             slot="left">
 				<mt-button icon="back"></mt-button>
 			</router-link>
-			<mt-button icon="more"
-			           slot="right"></mt-button>
 		</mt-header>
 		<keep-alive>
 			<router-view class="router-view"></router-view>
@@ -98,7 +96,9 @@ import { mapGetters } from 'vuex'
 
 export default {
 	data() {
-		return {}
+		return {
+			title: '点理财'
+		}
 	},
 	computed: mapGetters([
 		'headerDisplay'
@@ -121,6 +121,9 @@ export default {
 			// }else{
 			// 	this.$store.dispatch('SHOW_HEAD_SUCC')
 			// }
+		},
+		toEditTitle(title){
+			this.title = title
 		}
 	},
 	components: {

@@ -39,7 +39,7 @@ export default {
     },
     beforeRouteEnter(to, from, next) {
         next(vm => {
-            vm.$store.dispatch('EDIT_TITLE', '投资记录')
+            vm.$parent.toEditTitle('投资记录')
             vm.fetchData()
         })
     },

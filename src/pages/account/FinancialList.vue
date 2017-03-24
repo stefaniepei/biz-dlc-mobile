@@ -73,6 +73,7 @@ export default {
             if (vm.userAccount != null && vm.userAccount.balance && vm.userAccount.balance.available) {
                 vm.total = vm.userAccount.balance.available
             }
+            vm.$parent.toEditTitle('我的理财')
             vm.fetchData()
         })
     },

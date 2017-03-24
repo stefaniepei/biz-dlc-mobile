@@ -20,6 +20,7 @@ const router = new VueRouter({
   scrollBehavior: () => ({ y: 0 }),
   base: __dirname
 })
+
 router.beforeEach(({meta, path}, from, next) => {
     let { auth = false } = meta
     let isLogin = Boolean(store.state.user.user.accessToken) //true用户已登录， false用户未登录

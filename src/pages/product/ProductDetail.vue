@@ -156,7 +156,7 @@ export default {
     },
     // beforeRouteLeave (to, from, next) {
     //     next(vm=>{
-    //          vm.$store.dispatch('EDIT_TITLE')
+    //          
     //     })
     // },
     mounted() {
@@ -169,7 +169,7 @@ export default {
                 _this.productDetail = res.data.data
                 _this.setProductCoupons(_this.productDetail)
                 _this.setBuyButton(_this.productDetail)
-                _this.$store.dispatch('EDIT_TITLE', _this.productDetail.prodName)
+                _this.$parent.toEditTitle(_this.productDetail.prodName)
                 _this.$store.dispatch('START_TIMER', Number.parseInt(_this.productDetail.ttl / 1000))
             }).catch(function (err) {
                 Toast(err)

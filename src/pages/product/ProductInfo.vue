@@ -74,7 +74,7 @@
                 let _this = this
                 this.$http.get(`/products/${id}`).then(function(res){
                     _this.productInfo = res.data.data.details
-                    _this.$store.dispatch('EDIT_TITLE','项目介绍')
+                    _this.$parent.toEditTitle('项目介绍')
                 }).catch(function(err){
                     console.log(err)
                 });

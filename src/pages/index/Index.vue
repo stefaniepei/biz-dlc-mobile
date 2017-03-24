@@ -32,6 +32,7 @@ export default {
         SwipeItem
     },
     mounted() {
+        this.$parent.toEditTitle('点理财')
         this.getSwiperData()
     },
     methods: {
