@@ -64,8 +64,8 @@ a:visited {
 }
 .btn-small {
     width: 50%;
-    height: 1.4rem;
-    line-height: 1.4rem;
+    height: 1.2rem;
+    line-height: 1.2rem;
     color: #398be1;
     font-size: 0.5rem;
     padding: 0;
@@ -76,8 +76,8 @@ a:visited {
 }
 .btn-mini {
     width: 30%;
-    height: 1.4rem;
-    line-height: 1.4rem;
+    height: 1.2rem;
+    line-height: 1.2rem;
     color: #398be1;
     font-size: 0.5rem;
     padding: 0;
@@ -113,11 +113,13 @@ a:visited {
 .inline-block{
     display: inline-block;
 }
-
+.w5{
+    width: 5%;
+}
 .w10{
     width: 10%;
 }
-.w02{
+.w002{
     width: 0.02%;
 }
 .w20{
@@ -128,6 +130,9 @@ a:visited {
 }
 .w40{
     width: 40%;
+}
+.w48{
+    width: 48%;
 }
 .w499{
     width: 49.9%;
@@ -160,10 +165,37 @@ a:visited {
 .dlc-gray{
     color:#eee;
 }
-
-.mt-05{
+.margin-auto{
+    margin: 0 auto;
+}
+.margin-left5{
+    margin-left: 5%;
+}
+.margin-left10{
+    margin-left: 10%;
+}
+.margin-top-05{
     margin-top: 0.5rem;
 }
-.mt-1{
+.margin-top-1{
     margin-top: 1rem;
+}
+
+.fill-div-05{
+    background: #f1f1f1;
+    height: 0.5rem;
+}
+.fill-div-1{
+    background: #f1f1f1;
+    height: 1rem;
+}
+
+.fetch-data {
+    color: #8d8d8d;
+    text-align: center;
+    margin-top: 3px;
+}
+
+.nowrap{
+    white-space: nowrap;
 }

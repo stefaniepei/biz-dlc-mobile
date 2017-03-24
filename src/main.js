@@ -13,28 +13,28 @@ Vue.use(VueRouter)
 Vue.prototype.$http = axios
 Vue.config.debug = true
 
+
 const router = new VueRouter({
   routes,
   mode: 'history',
   scrollBehavior: () => ({ y: 0 }),
   base: __dirname
 })
-
-// router.beforeEach(({meta, path}, from, next) => {
-//     var { auth = true } = meta
-//     var isLogin = Boolean(this.$store.accesstoken) //true用户已登录， false用户未登录
-//     if (auth && !isLogin) {
-//         return next({ path: '/login' })
-//     }
-//     next()
-// })
+router.beforeEach(({meta, path}, from, next) => {
+    var { auth = false } = meta
+    var isLogin = Boolean(store.state.user.user.accessToken) //true用户已登录， false用户未登录
+    console.log(auth,isLogin,store)
+    if (auth && !isLogin) {
+         return next({ path: '/login' })
+    }
+    next()
+})
 
 
 import * as filters from './filters/'
 Object.keys(filters).forEach(key => Vue.filter(key, filters[key]))//install filters
 
 import App from './App.vue'
-
 new Vue({
   el: '#app',
   router,
