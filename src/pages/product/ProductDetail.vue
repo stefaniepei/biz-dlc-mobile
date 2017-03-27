@@ -1,5 +1,10 @@
 <template>
     <div class="product-detail container">
+         <mt-header :title="productDetail.prodName" class="header-bg-color">
+            <router-link to="/" slot="left">
+                <mt-button icon="back"></mt-button>
+            </router-link>
+        </mt-header>
         <div class="prod-info">
             <div class="prod-earnings">
                 <section class="prod-earnings-left">
@@ -31,8 +36,8 @@
                     <p>投资期限</p>
                 </div>
                 <!--<div class="inline-block w002">
-                        <div class="vertical-line"></div>
-                    </div>-->
+                            <div class="vertical-line"></div>
+                        </div>-->
                 <div class="inline-block w50 text-right">
                     <p>{{productDetail.maxRaisedAmount|toMillion}}万</p>
                     <p>项目金额</p>
@@ -169,7 +174,6 @@ export default {
                 _this.productDetail = res.data.data
                 _this.setProductCoupons(_this.productDetail)
                 _this.setBuyButton(_this.productDetail)
-                _this.$parent.toEditTitle(_this.productDetail.prodName)
                 _this.$store.dispatch('START_TIMER', Number.parseInt(_this.productDetail.ttl / 1000))
             }).catch(function (err) {
                 Toast(err)

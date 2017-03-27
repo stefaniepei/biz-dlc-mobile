@@ -1,5 +1,10 @@
 <template>
     <div class="product-info" style="padding-bottom: 5%;">
+        <mt-header title="产品介绍" class="header-bg-color">
+            <router-link :to="'/productDetail/'+this.$route.params.source+'/'+this.$route.params.id" slot="left">
+                <mt-button icon="back"></mt-button>
+            </router-link>
+        </mt-header>
         <div class="introduce" style="margin-top:0">
             <div class="introduce-title">
                 <span class="introduce-icon"></span><span class="words">产品介绍</span>
@@ -74,7 +79,6 @@
                 let _this = this
                 this.$http.get(`/products/${id}`).then(function(res){
                     _this.productInfo = res.data.data.details
-                    _this.$parent.toEditTitle('项目介绍')
                 }).catch(function(err){
                     console.log(err)
                 });

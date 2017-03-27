@@ -1,13 +1,5 @@
 <template>
 	<div id="app">
-	
-		<mt-header :title="title"
-		           :style="{backgroundColor:'#346FAF'}">
-			<router-link to="/"
-			             slot="left">
-				<mt-button icon="back"></mt-button>
-			</router-link>
-		</mt-header>
 		<keep-alive>
 			<router-view class="router-view"></router-view>
 		</keep-alive>
@@ -101,20 +93,27 @@ export default {
 		}
 	},
 	computed: mapGetters([
-		
+		'headerDisplay'
 	]),
 	mounted() {
-
+		// var path=this.$router.path.substring(1);
+		// this.headerChange(path);
 	},
 	watch: {
 		$route(to) {
-
+			// var path=to.path.substring(1);
+			// console.log(to)
+			// this.headerChange(path);
 		}
 	},
 	methods: {
-		toEditTitle(title){
-			this.title = title
-		}
+		headerChange(path) {
+			// if(path=='user-info' || path=='user-reg' || path=='user-login' || path.indexOf('article')!=-1){
+			// 	this.$store.dispatch('SHOW_HEAD_FAIL')
+			// }else{
+			// 	this.$store.dispatch('SHOW_HEAD_SUCC')
+			// }
+		},
 	},
 	components: {
 

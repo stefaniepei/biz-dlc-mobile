@@ -1,5 +1,10 @@
 <template>
     <div class="order-list">
+         <mt-header title="我的理财" class="header-bg-color">
+            <router-link to="/account" slot="left">
+                <mt-button icon="back"></mt-button>
+            </router-link>
+        </mt-header>
         <div class="no-record"
              v-if="records === null">
             暂无数据
@@ -18,7 +23,7 @@
             </div>
             <div class="fill-div-05"></div>
         </div>
-
+    
         <mugen-scroll :handler="fetchData"
                       :should-handle="loading">
             <div class="fetch-data">{{loadingTitle}}</div>
@@ -44,7 +49,6 @@ export default {
     ]),
     beforeRouteEnter(to, from, next) {
         next(vm => {
-            vm.$parent.toEditTitle('我的订单')
             vm.fetchData()
         })
     },
@@ -86,6 +90,7 @@ export default {
     height: 2.5rem;
     line-height: 2.5rem;
 }
+
 .order-list .order-bottom {
     width: 90%;
     margin: 0 auto;
@@ -93,10 +98,12 @@ export default {
     height: 1.5rem;
     line-height: 1.5rem;
 }
-.order-list .order-one{
+
+.order-list .order-one {
     height: 5rem;
     line-height: 5rem;
 }
+
 .order-list .order-name {
     width: 70%;
     font-size: 0.8rem;
@@ -108,7 +115,7 @@ export default {
     width: 28%;
     font-size: 0.4rem;
     color: #ff7742;
-    text-align:center;
+    text-align: center;
 }
 
 .order-list .order-date {
@@ -136,9 +143,8 @@ span.sta-1 {
     background: #346faf;
 }
 
-span.sta-2,span.sta-3 {
+span.sta-2,
+span.sta-3 {
     background: #ff7742;
 }
-
-
 </style>

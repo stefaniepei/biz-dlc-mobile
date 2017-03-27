@@ -1,5 +1,10 @@
 <template>
     <div class="product-records">
+        <mt-header title="投资记录" class="header-bg-color">
+            <router-link :to="'/productDetail/'+this.$route.params.source+'/'+this.$route.params.id" slot="left">
+                <mt-button icon="back"></mt-button>
+            </router-link>
+        </mt-header>
         <ul>
             <li class="no-record"
                 v-if="records === null">
@@ -39,7 +44,6 @@ export default {
     },
     beforeRouteEnter(to, from, next) {
         next(vm => {
-            vm.$parent.toEditTitle('投资记录')
             vm.fetchData()
         })
     },

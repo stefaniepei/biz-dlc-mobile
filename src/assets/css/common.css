@@ -190,6 +190,10 @@ a:visited {
     height: 1rem;
 }
 
+.header-bg-color{
+    background-color:#346FAF;
+}
+
 .no-record {
     width: 100%;
     font-size: 1.2rem;

@@ -1,5 +1,10 @@
 <template>
     <div class="financial">
+        <mt-header title="我的理财" class="header-bg-color">
+            <router-link to="/account" slot="left">
+                <mt-button icon="back"></mt-button>
+            </router-link>
+        </mt-header>
         <div class="fill-div-05"></div>
         <div class="financial-total">
             <p><em></em>当前总投资额（元）：<span class="dlc-red">{{total|formatCurrency(2,true)}}</span></p>
@@ -78,7 +83,6 @@ export default {
             if (vm.userAccount != null && vm.userAccount.asset && vm.userAccount.asset.totalCapital) {
                 vm.total = vm.userAccount.asset.totalCapital
             }
-            vm.$parent.toEditTitle('我的理财')
             vm.fetchData()
         })
     },
