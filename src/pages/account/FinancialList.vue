@@ -6,6 +6,11 @@
         </div>
         <div class="fill-div-05"></div>
     
+        <div class="no-record"
+             v-if="records === null">
+            暂无数据
+        </div>
+    
         <div class="finaList"
              v-for="(value, key, index) in records">
             <div :class="'chapter chapter_'+value.status"></div>
@@ -70,8 +75,8 @@ export default {
     ]),
     beforeRouteEnter(to, from, next) {
         next(vm => {
-            if (vm.userAccount != null && vm.userAccount.balance && vm.userAccount.balance.available) {
-                vm.total = vm.userAccount.balance.available
+            if (vm.userAccount != null && vm.userAccount.asset && vm.userAccount.asset.totalCapital) {
+                vm.total = vm.userAccount.asset.totalCapital
             }
             vm.$parent.toEditTitle('我的理财')
             vm.fetchData()

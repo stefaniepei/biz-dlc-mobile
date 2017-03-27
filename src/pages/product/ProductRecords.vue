@@ -75,15 +75,6 @@ export default {
 }
 </script>
 <style scoped>
-.product-records .no-record {
-    width: 100%;
-    font-size: 1.2rem;
-    margin-top: 8rem;
-    color: #8d8d8d;
-    height: 100px;
-    line-height: 30px;
-    text-align: center;
-}
 
 .product-records .item {
     border-bottom: 1px solid #dedede;
