@@ -1,8 +1,8 @@
 <template>
     <div class="capital-list">
-        <mt-header title="资金明细"
+        <mt-header title="账户中心"
                    class="header-bg-color">
-            <router-link to="/info"
+            <router-link to="/"
                          slot="left">
                 <mt-button icon="back"></mt-button>
             </router-link>
@@ -13,34 +13,17 @@
             暂无数据
         </div>
     
-        <div class="capital-one"
-             v-for="(value, key, index) in records">
-            <div class="capital-date">{{value.createdAt|dateTimeFormat}}</div>
-            <div class="capital-money">
-                <span class="money">{{value.amount}}</span>
-                <span :class="'co bill_'+value.tradeType"></span>
-            </div>
-            <div class="fill-div-05"></div>
-        </div>
-    
-        <mugen-scroll :handler="fetchData"
-                      :should-handle="loading">
-            <div class="fetch-data">{{loadingTitle}}</div>
-        </mugen-scroll>
+        
     </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
 import { Toast } from 'mint-ui'
-import MugenScroll from 'vue-mugen-scroll'
 
 export default {
     data() {
         return {
             records: [{}],
-            page: 1,
-            loading: false,
-            loadingTitle: '加载中...'
         }
     },
     computed: mapGetters([
@@ -55,28 +38,10 @@ export default {
         },
         getCapitalList() {
             let _this = this;
-            let pageSize = 10
-            this.$http.get(`/trades/jour`, { params: { sort: 'created_at', asc: false, page: this.page, pageSize: pageSize }, headers: { 'Authorization': this.userAuth } }).then(function (res) {
-                if (_this.page === 1) {
-                    _this.records = res.data.data
-                } else {
-                    _this.records.push(...res.data.data)
-                }
-                if (res.data.data.length == pageSize) {
-                    _this.loading = true
-                    _this.page++
-                } else {
-                    _this.loading = false
-                    _this.loadingTitle = '暂无更多数据'
-                }
-
-            }).catch(function (err) {
-                Toast(err)
-            });
         },
     },
     components: {
-        MugenScroll
+
     }
 }
 </script>

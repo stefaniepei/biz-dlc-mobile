@@ -62,25 +62,26 @@ export default {
             return true
         },
         submitLogin() {
-            this.validateForm()
-            let _this = this
-            this.$http.get(`/user/signin/salt/${_this.userName}`).then((res) => {
-                _this.$http.post(`/user/signin`, { userName: _this.userName, password: md5(bcrypt.hashSync(this.loginPassword, res['data']['data']['salt'])) }).then((response) => {
-                    _this.$store.dispatch('USER_LOGIN_IN', response['data']['data'])
-                    let userAuth = 'Bearer ' + response.data.data.accessToken
-                    _this.$store.dispatch('USER_AUTH', userAuth)
-                    _this.$http.get(`/account`, { headers: { 'Authorization': userAuth } }).then((resolve) => {
-                        _this.$store.dispatch('USER_ACCOUNT', resolve.data.data)
-                        _this.$router.go(-1)
-                    }).catch(function (err) {
-                        Toast(err)
+            if (this.validateForm()) {
+                let _this = this
+                this.$http.get(`/user/signin/salt/${_this.userName}`).then((res) => {
+                    _this.$http.post(`/user/signin`, { userName: _this.userName, password: md5(bcrypt.hashSync(this.loginPassword, res['data']['data']['salt'])) }).then((response) => {
+                        _this.$store.dispatch('USER_LOGIN_IN', response['data']['data'])
+                        let userAuth = 'Bearer ' + response.data.data.accessToken
+                        _this.$store.dispatch('USER_AUTH', userAuth)
+                        _this.$http.get(`/account`, { headers: { 'Authorization': userAuth } }).then((resolve) => {
+                            _this.$store.dispatch('USER_ACCOUNT', resolve.data.data)
+                            _this.$router.go(-1)
+                        }).catch(function (err) {
+                            Toast(err)
+                        })
+                    }).catch(function (error) {
+                        Toast(error)
                     })
-                }).catch(function (error) {
-                    Toast(error)
+                }).catch(function (err) {
+                    Toast(err)
                 })
-            }).catch(function (err) {
-                Toast(err)
-            })
+            }
 
         }
     }

@@ -34,7 +34,7 @@ export default [
         component: resolve => require(['../pages/product/ProductDetail.vue'], resolve)
     },
     {
-        name:'productInfo',
+        name: 'productInfo',
         path: '/productInfo/:source/:id', //项目介绍
         component: resolve => require(['../pages/product/ProductInfo.vue'], resolve)
     },
@@ -44,7 +44,7 @@ export default [
         component: resolve => require(['../pages/product/ProductIntroduce.vue'], resolve)
     },
     {
-        name:'productRecords',
+        name: 'productRecords',
         path: '/productRecords/:source/:id', //投资记录
         component: resolve => require(['../pages/product/ProductRecords.vue'], resolve)
     },
@@ -52,9 +52,9 @@ export default [
 
 
     {
-        path: '/account', //账户中心
+        path: '/info', //账户中心
         meta: { auth: true },
-        component: resolve => require(['../pages/account/Info.vue'], resolve)
+        component: resolve => require(['../pages/account/AccountInfo.vue'], resolve)
     },
     {
         path: '/financialList', //我的理财

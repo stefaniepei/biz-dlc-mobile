@@ -1,7 +1,9 @@
 <template>
-    <div class="financial">
-        <mt-header title="我的理财" class="header-bg-color">
-            <router-link to="/account" slot="left">
+    <div class="financial-list">
+        <mt-header title="我的理财"
+                   class="header-bg-color">
+            <router-link to="/info"
+                         slot="left">
                 <mt-button icon="back"></mt-button>
             </router-link>
         </mt-header>
@@ -16,7 +18,7 @@
             暂无数据
         </div>
     
-        <div class="finaList"
+        <div class="financial-one"
              v-for="(value, key, index) in records">
             <div :class="'chapter chapter_'+value.status"></div>
             <div class="f-header">
@@ -78,13 +80,11 @@ export default {
         'userAccount',
         'userAuth'
     ]),
-    beforeRouteEnter(to, from, next) {
-        next(vm => {
-            if (vm.userAccount != null && vm.userAccount.asset && vm.userAccount.asset.totalCapital) {
-                vm.total = vm.userAccount.asset.totalCapital
-            }
-            vm.fetchData()
-        })
+    mounted() {
+        if (this.userAccount != null && this.userAccount.asset && this.userAccount.asset.totalCapital) {
+            this.total = this.userAccount.asset.totalCapital
+        }
+        this.fetchData()
     },
     methods: {
         fetchData() {
@@ -139,7 +139,7 @@ export default {
     background-size: 100%;
 }
 
-.finaList {
+.financial-one {
     background: #fff;
     margin-top: 8px;
     color: #999;
@@ -176,14 +176,14 @@ export default {
     background-size: 100%;
 }
 
-.finaList .f-header {
+.financial-one .f-header {
     font-size: 1rem;
     line-height: 30px;
     height: 30px;
     border-bottom: 1px solid #eee;
 }
 
-.finaList .prodName {
+.financial-one .prodName {
     font-size: 0.8rem;
     line-height: 30px;
     height: 30px;
@@ -191,39 +191,39 @@ export default {
     margin: 0 auto;
 }
 
-.finaList .f-content {
+.financial-one .f-content {
     border-bottom: 1px solid #eee;
     font-size: 0.8rem;
     padding: 15px 0 10px;
 }
 
-.finaList .f-content .flex {
+.financial-one .f-content .flex {
     width: 90%;
     margin: 0 auto;
 }
 
-.finaList .f-content .data1 {
+.financial-one .f-content .data1 {
     display: inline-block;
     width: 23%;
     white-space: nowrap;
 }
 
-.finaList .f-content .data2 {
+.financial-one .f-content .data2 {
     display: inline-block;
     width: 24%;
     white-space: nowrap;
 }
 
-.finaList .f-content .num-t {
+.financial-one .f-content .num-t {
     color: #346faf;
     font-size: 0.9rem;
 }
 
-.finaList .f-content .evt {
+.financial-one .f-content .evt {
     color: #ff7742;
 }
 
-.finaList .f-footer {
+.financial-one .f-footer {
     font-size: 0.8rem;
     line-height: 1.5rem;
     height: 1.5rem;

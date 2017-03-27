@@ -1,8 +1,10 @@
 <template>
 	<div id="app">
-		<keep-alive>
-			<router-view class="router-view"></router-view>
-		</keep-alive>
+		<transition enter-active-class="animated slideInLeft" leave-active-class="">
+			<keep-alive>
+				<router-view class="router-view"></router-view>
+			</keep-alive>
+		</transition>
 		<div class="nav"
 		     style="margin-top:2rem;">
 			<ul>
@@ -47,7 +49,7 @@
 					             active-class="active">
 						<a href="javascript:;">资金明细</a> |
 					</router-link>
-					<router-link to="/account"
+					<router-link to="/info"
 					             tag="span"
 					             active-class="active">
 						<a href="javascript:;">我的账户</a>
@@ -122,6 +124,5 @@ export default {
 
 </script>
 
-<style scoped>
-
+<style>
 </style>

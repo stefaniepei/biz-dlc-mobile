@@ -5,6 +5,7 @@ import store from './store'
 import MintUI from 'mint-ui'
 
 import 'normalize.css'
+import './assets/css/animate.css'
 import 'mint-ui/lib/style.css'
 import './assets/css/common.css'
 
@@ -24,6 +25,7 @@ const router = new VueRouter({
 router.beforeEach(({meta, path}, from, next) => {
     let { auth = false } = meta
     let isLogin = Boolean(store.state.user.user.accessToken) //true用户已登录， false用户未登录
+    console.log(auth,isLogin)
     if (auth && !isLogin) {
          return next({ path: '/login' })
     }
