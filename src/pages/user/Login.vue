@@ -1,7 +1,7 @@
 <template>
     <div class="container reg-log">
         <div class="company-logo">
-            <img src="../../assets/images/register/logo.png">
+            <img src="../../assets/images/login/dlc_logo.png" />
         </div>
     
         <div class="marReg">

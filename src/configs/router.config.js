@@ -7,6 +7,10 @@ export default [
         component: resolve => require(['../pages/user/Login.vue'], resolve)
     },
     {
+        path: '/logout', //登录
+        component: resolve => require(['../pages/user/LoginOut.vue'], resolve)
+    },
+    {
         path: '/signup', //注册
         component: resolve => require(['../pages/user/Signup.vue'], resolve)
     },
@@ -86,11 +90,27 @@ export default [
         meta: { auth: true },
         component: resolve => require(['../pages/account/Invite.vue'], resolve)
     },
+    {
+        path: '/coin', //我的点币
+        meta: { auth: true },
+        component: resolve => require(['../pages/account/Coin.vue'], resolve)
+    },
+    {
+        path: '/coupon', //我的优惠券
+        meta: { auth: true },
+        component: resolve => require(['../pages/account/Coupon.vue'], resolve)
+    },
+    {
+        path: '/setting', //账户设置
+        meta: { auth: true },
+        component: resolve => require(['../pages/account/Setting.vue'], resolve)
+    },
 
 
 
     {
         path: '/', //首页
+        name: 'home',
         component: resolve => require(['../pages/index/Index.vue'], resolve)
     },
     {

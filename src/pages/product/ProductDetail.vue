@@ -76,19 +76,19 @@
         </section>
     
         <router-link :to="{name:'productInfo',params:{id:productDetail.prodCodeId,source:this.$route.params.source}}"
-                     class="prod-arrow-line"
+                     class="arrow-line"
                      tag="section">
             <span>项目介绍</span>
             <span class="arrow-right"></span>
         </router-link>
         <router-link :to="{name:'productIntroduce',params:{id:productDetail.prodCodeId,source:this.$route.params.source}}"
-                     class="prod-arrow-line"
+                     class="arrow-line"
                      tag="section">
             <span>产品介绍</span>
             <span class="arrow-right"></span>
         </router-link>
         <router-link :to="{name:'productRecords',params:{id:productDetail.prodCodeId,source:this.$route.params.source}}"
-                     class="prod-arrow-line"
+                     class="arrow-line"
                      tag="section">
             <span>投资记录</span>
             <span class="arrow-right"></span>
@@ -383,26 +383,6 @@ export default {
     width: 100%;
     height: 0.5rem;
     background: #f5f5f5;
-}
-
-.product-detail .prod-arrow-line {
-    border-bottom: 1px solid #eee;
-    font-size: 1rem;
-    color: #999;
-    height: 3rem;
-    line-height: 3rem;
-    margin-top: 0rem;
-}
-
-.product-detail .prod-arrow-line .arrow-right {
-    background: url("../../assets/images/product/arrow_right.png") no-repeat;
-    background-size: cover;
-    background-position: center center;
-    width: 40px;
-    height: 20px;
-    line-height: 20px;
-    margin-top: 1rem;
-    float: right;
 }
 
 .product-detail .prod-tips {

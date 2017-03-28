@@ -1,6 +1,6 @@
 <template>
-    <div class="capital-list">
-        <mt-header title="账户中心"
+    <div class="account">
+        <mt-header title="我的账户"
                    class="header-bg-color">
             <router-link to="/"
                          slot="left">
@@ -8,37 +8,92 @@
             </router-link>
         </mt-header>
     
-        <div class="no-record"
-             v-if="records === null">
-            暂无数据
+        <div class="account-money">
+            <section>
+                <p class="text-center fz-biggest">{{balance}}</p>
+                <p class="text-center fz-small">账户余额（元）</p>
+            </section>
+            <section class="prod-invest">
+                <div class="inline-block w48">
+                    <p class="text-center fz-biggest">{{invest}}</p>
+                    <p class="text-center fz-small">累计收益</p>
+                </div>
+                <div class="inline-block w48">
+                    <p class="text-center fz-biggest">{{total}}</p>
+                    <p class="text-center fz-small">总资产（元）</p>
+                </div>
+            </section>
+        </div>
+        <div class="fill-div-05"></div>
+        <div class="account-link">
+            <router-link to="/coupon"
+                         class="arrow-line"
+                         tag="section">
+                <em><img src="../../assets/images/account/red_Pk.png" /></em>
+                <span>我的优惠券</span>
+                <span class="arrow-right"></span>
+            </router-link>
+
+            <router-link to="/coin"
+                         class="arrow-line"
+                         tag="section">
+                <em><img src="../../assets/images/account/coins_icon.png" /></em>
+                <span>我的点币</span>
+                <span class="arrow-right"></span>
+            </router-link>
+
+            <router-link to="/invite"
+                         class="arrow-line"
+                         tag="section">
+                <em><img src="../../assets/images/account/invitation_icon.png" /></em>
+                <span>邀请有礼</span>
+                <span class="arrow-right"></span>
+            </router-link>
+    
+            <div class="fill-div-05"></div>
+
+            <router-link to="/setting"
+                         class="arrow-line"
+                         tag="section">
+                <em><img src="../../assets/images/account/settings_icon.png" /></em>
+                <span>账户设置</span>
+                <span class="arrow-right"></span>
+            </router-link>
+
+            <router-link to="/logout"
+                         class="arrow-line"
+                         tag="section">
+                <em><img src="../../assets/images/account/signout_icon.png" /></em>
+                <span>退出</span>
+                <span class="arrow-right"></span>
+            </router-link>
+    
         </div>
     
-        
     </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { Toast } from 'mint-ui'
+import { Toast, Cell } from 'mint-ui'
 
 export default {
     data() {
         return {
-            records: [{}],
+            balance: '0.00',
+            invest: '0.00',
+            total: '0.00',
         }
     },
     computed: mapGetters([
-        'userAuth'
+        'userAccount'
     ]),
     mounted() {
-        this.fetchData()
+        this.balance = this.userAccount.balance.available
+        this.invest = this.userAccount.asset.totalProfit
+        this.total = this.userAccount.totalAsset
     },
     methods: {
-        fetchData() {
-            this.getCapitalList()
-        },
-        getCapitalList() {
-            let _this = this;
-        },
+
     },
     components: {
 
@@ -46,86 +101,20 @@ export default {
 }
 </script>
 <style scoped>
-.capital-one {
-    width: 90%;
-    margin: 0 auto;
-    height: 4.5rem;
-    line-height: 4.5rem;
+.account .account-money {
+    background: url("../../assets/images/account/account_bg.png") no-repeat;
+    background-size: 100% 100%;
+    color: #fff;
+    padding: 15px 0 10px;
 }
-
-.capital-date {
-    width: 60%;
+.account-link em {
     display: inline-block;
+    margin-left: 20px;
+    margin-right: 10px;
+}
+.account-link em img{
+    width: 1.5rem;
+    height: 1.5rem;
     vertical-align: middle;
-    height: 4rem;
-    line-height: 4rem;
-    color: #999;
-}
-
-.capital-money {
-    width: 38%;
-    display: inline-block;
-    text-align: right;
-    height: 4rem;
-    line-height: 4rem;
-}
-
-.capital-money .money {
-    vertical-align: middle;
-    color: #346faf;
-}
-
-.capital-money span.co {
-    display: inline-block;
-    width: 18px;
-    height: 20px;
-    font-size: 12px;
-    text-align: center;
-    vertical-align: middle;
-}
-
-.bill_0 {
-    background: url(../../assets/images/order/bill_0.png) no-repeat center 0;
-    background-size: 100%;
-}
-
-.bill_1 {
-    background: url(../../assets/images/order/bill_1.png) no-repeat center 0;
-    background-size: 100%;
-}
-
-.bill_2 {
-    background: url(../../assets/images/order/bill_2.png) no-repeat center 0;
-    background-size: 100%;
-}
-
-.bill_3 {
-    background: url(../../assets/images/order/bill_3.png) no-repeat center 0;
-    background-size: 100%;
-}
-
-.bill_5 {
-    background: url(../../assets/images/order/bill_5.png) no-repeat center 0;
-    background-size: 100%;
-}
-
-.bill_7 {
-    background: url(../../assets/images/order/bill_7.png) no-repeat center 0;
-    background-size: 100%;
-}
-
-.bill_10 {
-    background: url(../../assets/images/order/bill_10.png) no-repeat center 0;
-    background-size: 100%;
-}
-
-.bill_15 {
-    background: url(../../assets/images/order/bill_15.png) no-repeat center 0;
-    background-size: 100%;
-}
-
-.bill_16 {
-    background: url(../../assets/images/order/bill_16.png) no-repeat center 0;
-    background-size: 100%;
 }
 </style>

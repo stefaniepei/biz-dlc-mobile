@@ -2,6 +2,15 @@
     margin: 0;
     padding: 0;
 }
+html {
+    font-size: 62.5%;
+}
+body {
+    font-size: 1.4rem;
+}
+h1 {
+    font-size: 2.4rem;
+}
 
 ol, ul, li {
     list-style: none;
@@ -31,6 +40,7 @@ a:visited {
     clear: both;
 }
 
+/*button*/
 .btn{
     cursor: pointer;
 }
@@ -87,22 +97,33 @@ a:visited {
     border: 1px solid #eee;
 }
 
-.fz-08,.fz-small{
+/*font-size*/
+.fz-08,.fz-smallest{
     font-size: 0.8rem;
 }
-
-.fz-1,.fz-normal{
+.fz-1,.fz-smaller{
     font-size: 1rem;
 }
-
-.fz-12,.fz-big{
+.fz-12,.fz-small{
     font-size: 1.2rem;
 }
+.fz-14,.fz-normal{
+    font-size: 1.4rem;
+}
+.fz-16,.fz-big{
+    font-size: 1.6rem;
+}
+.fz-18,.fz-bigger{
+    font-size: 1.8rem;
+}
+.fz-2,.fz-biggest{
+    font-size: 2rem;
+}
 
+/*float,text*/
 .float-right{
     float: right;
 }
-
 .text-center{
     text-align:center;
 }
@@ -110,9 +131,12 @@ a:visited {
     text-align:right;
 }
 
+/*display*/
 .inline-block{
     display: inline-block;
 }
+
+/*width*/
 .w5{
     width: 5%;
 }
@@ -156,6 +180,7 @@ a:visited {
     width: 100%;
 }
 
+/*color*/
 .dlc-red{
     color:#f08e68;
 }
@@ -165,6 +190,8 @@ a:visited {
 .dlc-gray{
     color:#eee;
 }
+
+/*margin*/
 .margin-auto{
     margin: 0 auto;
 }
@@ -181,6 +208,7 @@ a:visited {
     margin-top: 1rem;
 }
 
+/*fill-div*/
 .fill-div-05{
     background: #f1f1f1;
     height: 0.5rem;
@@ -190,26 +218,49 @@ a:visited {
     height: 1rem;
 }
 
+/*header*/
 .header-bg-color{
     background-color:#346FAF;
 }
 
+/*data*/
 .no-record {
     width: 100%;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     margin-top: 8rem;
     color: #8d8d8d;
     height: 100px;
     line-height: 30px;
     text-align: center;
 }
-
 .fetch-data {
     color: #8d8d8d;
     text-align: center;
-    margin-top: 1rem;
+    margin-top: 1.4rem;
 }
 
+/*words*/
 .nowrap{
     white-space: nowrap;
+}
+
+/*arrow*/
+.arrow-line {
+    border-bottom: 1px solid #eee;
+    font-size: 1.4rem;
+    color: #999;
+    height: 4rem;
+    line-height: 4rem;
+    margin-top: 0rem;
+}
+.arrow-line .arrow-right {
+    background: url("../../assets/images/product/arrow_right.png") no-repeat;
+    background-size: cover;
+    background-position: center center;
+    width: 2rem;
+    height: 2rem;
+    line-height: 3rem;
+    margin-top: 1rem;
+    margin-right: 1rem;
+    float: right;
 }
