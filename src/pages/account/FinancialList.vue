@@ -91,7 +91,7 @@ export default {
             this.getFinancialList()
         },
         getFinancialList() {
-            let _this = this;
+            let _this = this
             let pageSize = 10
             this.$http.get(`/biz/accounts/share`, { params: { sort: 'created_at', asc: false, status: '', page: this.page, pageSize: pageSize }, headers: { 'Authorization': this.userAuth } }).then(function (res) {
                 if (_this.page === 1) {
@@ -109,7 +109,7 @@ export default {
 
             }).catch(function (err) {
                 Toast(err)
-            });
+            })
         },
     },
     components: {

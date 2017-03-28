@@ -55,7 +55,7 @@ export default {
             this.getOrderList()
         },
         getOrderList() {
-            let _this = this;
+            let _this = this
             let pageSize = 10
             this.$http.get(`/biz/orders`, { params: { asc: false, page: this.page, pageSize: pageSize }, headers: { 'Authorization': this.userAuth } }).then(function (res) {
                 if (_this.page === 1) {
@@ -73,7 +73,7 @@ export default {
 
             }).catch(function (err) {
                 Toast(err)
-            });
+            })
         },
     },
     components: {

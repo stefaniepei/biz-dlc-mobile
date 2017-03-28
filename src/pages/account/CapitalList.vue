@@ -54,7 +54,7 @@ export default {
             this.getCapitalList()
         },
         getCapitalList() {
-            let _this = this;
+            let _this = this
             let pageSize = 10
             this.$http.get(`/trades/jour`, { params: { sort: 'created_at', asc: false, page: this.page, pageSize: pageSize }, headers: { 'Authorization': this.userAuth } }).then(function (res) {
                 if (_this.page === 1) {
@@ -72,7 +72,7 @@ export default {
 
             }).catch(function (err) {
                 Toast(err)
-            });
+            })
         },
     },
     components: {
