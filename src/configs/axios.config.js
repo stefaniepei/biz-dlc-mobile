@@ -34,8 +34,8 @@ axios.defaults.headers.post['Content-Type'] = 'application/json'
 axios.defaults.headers.put['Content-Type'] = 'application/json'
 
 
-// axios.defaults.validateStatus = (status) =>{
-//     return (status >= 200 && status < 300) || status == 401;
-// }
+axios.defaults.validateStatus = (status) =>{
+    return (status >= 200 && status < 300) || status == 401;
+}
 // console.log(axios.defaults)
 export default axios

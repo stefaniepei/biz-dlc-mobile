@@ -4,13 +4,6 @@ var debug = true
 
 module.exports = {
   entry: './src/main.js',
-  // entry: {
-  //   'main': [
-  //     'webpack-dev-server/client?https://unstable-m.dianlc.com/',
-  //     'webpack/hot/only-dev-server',
-  //     './src/main.js'
-  //   ]
-  // },
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
@@ -44,7 +37,7 @@ module.exports = {
       {
         test: /\.(png|jpg)$/,
         exclude: /^node_modules$/,
-        loader: 'url-loader?limit=8192&name=./static/img/[hash].[ext]',
+        loader: 'url-loader?limit=8192&name=[name].[ext]?v=[hash]',
       },
       {
         test: /\.(eot|woff|svg|ttf|woff2|gif|appcache)(\?|$)/,
@@ -59,7 +52,7 @@ module.exports = {
       'assets': path.resolve(__dirname, './src/assets/'),
       'css': path.resolve(__dirname, './src/assets/css/'),
       'js': path.resolve(__dirname, './src/assets/js/'),
-      'images': path.resolve(__dirname, './src/../assets/images/'),
+      'images': path.resolve(__dirname, './src/assets/images/'),
       'components': path.resolve(__dirname, './src/components/'),
       'configs': path.resolve(__dirname, './src/configs/'),
       'filters': path.resolve(__dirname, './src/filters/'),

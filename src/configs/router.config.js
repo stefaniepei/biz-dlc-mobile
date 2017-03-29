@@ -106,8 +106,6 @@ export default [
         component: resolve => require(['../pages/account/Setting.vue'], resolve)
     },
 
-
-
     {
         path: '/', //首页
         name: 'home',
