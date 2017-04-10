@@ -2,17 +2,22 @@
     margin: 0;
     padding: 0;
 }
+
 html {
     font-size: 62.5%;
 }
+
 body {
     font-size: 1.4rem;
 }
+
 h1 {
     font-size: 2.4rem;
 }
 
-ol, ul, li {
+ol,
+ul,
+li {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -25,7 +30,7 @@ img {
 a {
     text-decoration: none;
     cursor: pointer;
-    color:#398be1;
+    color: #398be1;
 }
 
 a:link {
@@ -40,251 +45,35 @@ a:visited {
     clear: both;
 }
 
-/*button*/
-.btn{
-    cursor: pointer;
-}
-.btn:hover {
-    background-color: #3a80c8;
-}
-.btn:disabled{
-    background-color: #e5e5e5;
-    border: none;
-    color: #bababa;
-}
-.btn-big {
-    width: 100%;
-    height: 38px;
-    line-height: 0rem;
-    color: #fff;
-    border: none;
-    font-size: 1.2rem;
-    background-color: #346faf;
-    border-radius: 5px;
-}
-.btn-normal {
-    width: 80%;
-    height: 38px;
-    line-height: 0rem;
-    color: #fff;
-    border: none;
-    font-size: 1.2rem;
-    border-radius: 5px;
-    background-color: #346faf;
-}
-.btn-small {
-    width: 50%;
-    height: 1.2rem;
-    line-height: 1.2rem;
-    color: #398be1;
-    font-size: 0.5rem;
-    padding: 0;
-    margin: 0;
-    border-radius: 5px;
-    background-color: #fff;
-    border: 1px solid #eee;
-}
-.btn-mini {
-    width: 30%;
-    height: 1.2rem;
-    line-height: 1.2rem;
-    color: #398be1;
-    font-size: 0.5rem;
-    padding: 0;
-    margin: 0;
-    border-radius: 5px;
-    background-color: #fff;
-    border: 1px solid #eee;
-}
-
-/*font-size*/
-.fz-08,.fz-smallest{
-    font-size: 0.8rem;
-}
-.fz-1,.fz-smaller{
-    font-size: 1rem;
-}
-.fz-12,.fz-small{
-    font-size: 1.2rem;
-}
-.fz-14,.fz-normal{
-    font-size: 1.4rem;
-}
-.fz-16,.fz-big{
-    font-size: 1.6rem;
-}
-.fz-18,.fz-bigger{
-    font-size: 1.8rem;
-}
-.fz-2,.fz-biggest{
-    font-size: 2rem;
-}
-
-/*float,text*/
-.float-right{
-    float: right;
-}
-.text-center{
-    text-align:center;
-}
-.text-right{
-    text-align:right;
-}
-
-/*display*/
-.inline-block{
-    display: inline-block;
-}
-
-/*width*/
-.w5{
-    width: 5%;
-}
-.w10{
-    width: 10%;
-}
-.w002{
-    width: 0.02%;
-}
-.w20{
-    width: 20%;
-}
-.w30{
-    width: 30%;
-}
-.w40{
-    width: 40%;
-}
-.w48{
-    width: 48%;
-}
-.w499{
-    width: 49.9%;
-}
-.w50{
-    width: 50%;
-}
-.w60{
-    width: 60%;
-}
-.w70{
-    width: 70%;
-}
-.w80{
-    width: 80%;
-}
-.w90{
-    width: 90%;
-}
-.w100{
-    width: 100%;
-}
-
-/*color*/
-.dlc-red{
-    color:#f08e68;
-}
-.dlc-blue{
-    color:#398be1;
-}
-.dlc-gray{
-    color:#eee;
-}
-
-/*margin*/
-.margin-auto{
-    margin: 0 auto;
-}
-.margin-left5{
-    margin-left: 5%;
-}
-.margin-left10{
-    margin-left: 10%;
-}
-.margin-right5{
-    margin-right: 5%;
-}
-.margin-right10{
-    margin-right: 10%;
-}
-.margin-top-05{
-    margin-top: 0.5rem;
-}
-.margin-top-1{
-    margin-top: 1rem;
-}
-.margin-bottom-05{
-    margin-bottom: 0.5rem;
-}
-.margin-bottom-1{
-    margin-bottom: 1rem;
-}
-.margin-left-05{
-    margin-left: 0.5rem;
-}
-.margin-left-1{
-    margin-left: 1rem;
-}
-.margin-right-05{
-    margin-right: 0.5rem;
-}
-.margin-right-1{
-    margin-right: 1rem;
-}
-
-/*fill-div*/
-.fill-div-05{
-    background: #f1f1f1;
-    height: 0.5rem;
-}
-.fill-div-1{
-    background: #f1f1f1;
-    height: 1rem;
-}
-
-/*header*/
-.header-bg-color{
-    background-color:#346FAF;
-}
-
-/*data*/
-.no-record {
-    width: 100%;
-    font-size: 1.4rem;
-    margin-top: 8rem;
-    color: #8d8d8d;
-    height: 100px;
-    line-height: 30px;
-    text-align: center;
-}
-.fetch-data {
-    color: #8d8d8d;
-    text-align: center;
-    margin-top: 1.4rem;
-}
 
 /*words*/
-.nowrap{
+
+.nowrap {
     white-space: nowrap;
 }
 
-/*arrow*/
-.arrow-line {
-    border-bottom: 1px solid #eee;
-    font-size: 1.4rem;
-    color: #999;
-    height: 4rem;
-    line-height: 4rem;
-    margin-top: 0rem;
-}
-.arrow-line .arrow-right {
-    background: url("../../assets/images/product/arrow_right.png") no-repeat;
-    background-size: cover;
-    background-position: center center;
-    width: 2rem;
-    height: 2rem;
-    line-height: 3rem;
-    margin-top: 1rem;
-    margin-right: 1rem;
+
+/*float,text*/
+
+.float-right {
     float: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+
+/*display*/
+
+.inline-block {
+    display: inline-block;
+}
+
+.block {
+    display: block;
 }
