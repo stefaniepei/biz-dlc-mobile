@@ -1,7 +1,12 @@
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import store from '../store'
+
+Vue.use(VueRouter)
 /**
  * auth true 需要登录才能访问，false不需要登录，默认false
  */
-export default [
+const routes = [
     //index and 404
     {
         path: '/', //首页
@@ -145,31 +150,41 @@ export default [
     {
         name: 'bindCard',
         path: '/bindCard', //绑卡
-        meta: { auth: true },
+        meta: {
+            auth: true
+        },
         component: resolve => require(['../pages/pay/BindCard.vue'], resolve)
     },
     {
         name: 'realName',
         path: '/realName', //实名绑卡
-        meta: { auth: true },
+        meta: {
+            auth: true
+        },
         component: resolve => require(['../pages/pay/RealName.vue'], resolve)
     },
     {
         name: 'pay',
         path: '/pay/:order', //支付
-        meta: { auth: true },
+        meta: {
+            auth: true
+        },
         component: resolve => require(['../pages/pay/PayOrder.vue'], resolve)
     },
     {
         name: 'paySelectCoin',
         path: '/paySelectCoin/:order', //支付选择点币
-        meta: { auth: true },
+        meta: {
+            auth: true
+        },
         component: resolve => require(['../pages/pay/PaySelectCoin.vue'], resolve)
     },
     {
         name: 'paySelectCoupon',
         path: '/paySelectCoupon/:order', //支付选择优惠券
-        meta: { auth: true },
+        meta: {
+            auth: true
+        },
         component: resolve => require(['../pages/pay/PaySelectCoupon.vue'], resolve)
     },
 
@@ -177,56 +192,82 @@ export default [
     //account
     {
         path: '/financialList', //我的理财
-        meta: { auth: true },
+        meta: {
+            auth: true
+        },
         component: resolve => require(['../pages/account/FinancialList.vue'], resolve)
     },
     {
         path: '/orderList', //订单列表
-        meta: { auth: true },
+        meta: {
+            auth: true
+        },
         component: resolve => require(['../pages/account/OrderList.vue'], resolve)
     },
     {
         path: '/capitalList', //资金明细
-        meta: { auth: true },
+        meta: {
+            auth: true
+        },
         component: resolve => require(['../pages/account/CapitalList.vue'], resolve)
     },
     {
         path: '/info', //账户中心
         name: 'account',
-        meta: { auth: true },
+        meta: {
+            auth: true
+        },
         component: resolve => require(['../pages/account/AccountInfo.vue'], resolve)
     },
     {
         path: '/recharge', //充值
-        meta: { auth: true },
+        meta: {
+            auth: true
+        },
         component: resolve => require(['../pages/account/Recharge.vue'], resolve)
     },
     {
         path: '/cash', //提现
-        meta: { auth: true },
+        meta: {
+            auth: true
+        },
         component: resolve => require(['../pages/account/Cash.vue'], resolve)
     },
     {
         path: '/invite', //邀请有礼
-        meta: { auth: true },
+        meta: {
+            auth: true
+        },
         component: resolve => require(['../pages/account/Invite.vue'], resolve)
     },
     {
         path: '/coin', //我的点币
-        meta: { auth: true },
+        meta: {
+            auth: true
+        },
         component: resolve => require(['../pages/account/Coin.vue'], resolve)
     },
     {
         path: '/coupon', //我的优惠券
-        meta: { auth: true },
+        meta: {
+            auth: true
+        },
         component: resolve => require(['../pages/account/Coupon.vue'], resolve)
     },
     {
         path: '/setting', //账户设置
-        meta: { auth: true },
+        meta: {
+            auth: true
+        },
         component: resolve => require(['../pages/account/Setting.vue'], resolve)
     },
-
+    {
+        path: '/safe', //安全保障
+        meta: {
+            auth: true
+        },
+        component: resolve => require(['../pages/account/Safe.vue'], resolve)
+    },
 
     //article
     {
@@ -241,8 +282,8 @@ export default [
 
     //aboutUs
     {
-        path: '/invitePolite/:type', //邀请有礼
-        component: resolve => require(['../pages/aboutUs/InvitePolite.vue'], resolve)
+        path: '/more/:type', //更多
+        component: resolve => require(['../pages/aboutUs/More.vue'], resolve)
     },
     {
         path: '/insurance/:type', //安全保障
@@ -272,6 +313,23 @@ export default [
         path: '/contact/:type', //联系我们
         component: resolve => require(['../pages/aboutUs/Contact.vue'], resolve)
     },
+    {
+        path: '/coinRule', //点币规则
+        component: resolve => require(['../pages/contract/CoinRule.vue'], resolve)
+    },
+    {
+        path: '/couponRule', //优惠券规则
+        component: resolve => require(['../pages/contract/CouponRule.vue'], resolve)
+    },
+    {
+        path: '/cashRule', //提现规则
+        component: resolve => require(['../pages/contract/CashRule.vue'], resolve)
+    },
+    {
+        path: '/withholdContract', //协议
+        component: resolve => require(['../pages/contract/WithholdContract.vue'], resolve)
+    },
+
 
     //question
     {
@@ -317,8 +375,48 @@ export default [
         component: resolve => require(['../pages/activity/LuckDraw.vue'], resolve)
     },
     {
+        path: '/invitePolite/:type', //邀请有礼
+        component: resolve => require(['../pages/activity/InvitePolite.vue'], resolve)
+    },
+    {
         path: '*', //其他页面
         redirect: '/404'
     }
-    
+
 ]
+
+// when page was refresh,to get user
+// if (window.sessionStorage.getItem('user')) {
+//     store.dispatch('USER_LOGIN_IN', window.localStorage.getItem('token'))
+// }
+
+const router = new VueRouter({
+    routes,
+    mode: 'history',
+    scrollBehavior: () => ({
+        y: 0
+    }),
+    base: __dirname
+})
+
+router.beforeEach(({
+    meta,
+    path
+}, from, next) => {
+    let {
+        auth = false
+    } = meta
+    let isLogin = false
+    if (Boolean(store.state.user) && Boolean(store.state.user.user) && Boolean(store.state.user.user.accessToken)) {
+        isLogin = true //true用户已登录， false用户未登录
+    }
+    console.log(auth, isLogin)
+    if (auth && !isLogin) {
+        next({
+            path: '/login'
+        })
+    }
+    next()
+})
+
+export default router

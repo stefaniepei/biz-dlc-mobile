@@ -1,10 +1,5 @@
 <template>
     <div class="content">
-        <mt-header title="点理财" class="header-bg-color">
-            <router-link to="/" slot="left">
-                <mt-button icon="back"></mt-button>
-            </router-link>
-        </mt-header>
         <mt-swipe :style="{width:''+imgW,height:''+imgH}"
                   :speed="1000">
             <mt-swipe-item v-for="(value, key, index) in imgData"
