@@ -63,7 +63,7 @@
             <router-link to="/logout"
                          class="arrow-line"
                          tag="section">
-                <em><img src="../../assets/images/account/signout_icon.png" /></em>
+                <em><img src="../../assets/images/account/login-out.png" /></em>
                 <span>退出</span>
                 <span class="arrow-right"></span>
             </router-link>

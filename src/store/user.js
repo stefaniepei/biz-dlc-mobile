@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 export const USER_LOGIN_IN = 'USER_LOGIN_IN' //登录成功
 export const USER_LOGIN_OUT = 'USER_LOGIN_OUT' //退出登录
-export const USER_AUTH = 'USER_AUTH'  //鉴权token
+export const USER_AUTH = 'USER_AUTH' //鉴权token
 export const USER_ACCOUNT = 'USER_ACCOUNT' //用户账户信息
 
 export default {
@@ -30,16 +30,24 @@ export default {
         }
     },
     actions: {
-        [USER_LOGIN_IN]({ commit }, user) {
+        [USER_LOGIN_IN]({
+            commit
+        }, user) {
             commit(USER_LOGIN_IN, user)
         },
-        [USER_LOGIN_OUT]({ commit }) {
+        [USER_LOGIN_OUT]({
+            commit
+        }) {
             commit(USER_LOGIN_OUT)
         },
-        [USER_AUTH]({ commit }, userAuth) {
+        [USER_AUTH]({
+            commit
+        }, userAuth) {
             commit(USER_AUTH, userAuth)
         },
-        [USER_ACCOUNT]({ commit }, userAccount) {
+        [USER_ACCOUNT]({
+            commit
+        }, userAccount) {
             commit(USER_ACCOUNT, userAccount)
         },
     },
