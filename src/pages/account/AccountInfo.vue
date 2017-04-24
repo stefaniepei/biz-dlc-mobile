@@ -1,5 +1,5 @@
 <template>
-    <div class="account">
+    <div class="page account">
         <mt-header title="我的账户"
                    class="header-bg-color">
             <router-link to="/"
@@ -10,16 +10,16 @@
     
         <div class="account-money">
             <section>
-                <p class="text-center fz-biggest">{{balance}}</p>
+                <p class="text-center fz-biggest">{{this.userAccount.balance.available}}</p>
                 <p class="text-center fz-small">账户余额（元）</p>
             </section>
             <section class="prod-invest">
                 <div class="inline-block w48">
-                    <p class="text-center fz-biggest">{{invest}}</p>
+                    <p class="text-center fz-biggest">{{this.userAccount.asset.totalProfit}}</p>
                     <p class="text-center fz-small">累计收益</p>
                 </div>
                 <div class="inline-block w48">
-                    <p class="text-center fz-biggest">{{total}}</p>
+                    <p class="text-center fz-biggest">{{this.userAccount.totalAsset}}</p>
                     <p class="text-center fz-small">总资产（元）</p>
                 </div>
             </section>
@@ -74,23 +74,19 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { Toast, Cell } from 'mint-ui'
+import { Toast } from 'mint-ui'
 
 export default {
     data() {
         return {
-            balance: '0.00',
-            invest: '0.00',
-            total: '0.00',
+
         }
     },
     computed: mapGetters([
         'userAccount'
     ]),
     mounted() {
-        this.balance = this.userAccount.balance.available
-        this.invest = this.userAccount.asset.totalProfit
-        this.total = this.userAccount.totalAsset
+
     },
     methods: {
 

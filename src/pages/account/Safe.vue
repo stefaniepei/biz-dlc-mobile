@@ -12,19 +12,26 @@
             <section class="arrow-line">
                 <em><img src="../../assets/images/account/real-name.png" /></em>
                 <span>实名认证</span>
-                <span class="float-right margin-right-15">王**(092X)</span>
+                
+                <span class="float-right margin-right-15" v-if="this.userAccount && this.userAccount.name && this.userAccount.idNo">{{this.userAccount.name}}({{this.userAccount.idNo|lastChar}})</span>
+                <span style="float: right;" v-else>未实名
+                        <span class="arrow-right"></span>
+                </span>
             </section>
 
             <section class="arrow-line">
                 <em><img src="../../assets/images/account/bank-card.png" /></em>
                 <span>银行卡</span>
-                <div class="bank-N-O">
+                <div class="bank-N-O" v-if="this.userAccount && this.userAccount.hasCard && this.userAccount.cards && this.userAccount.cards[0]">
                     <div class="inline-block float-right">
-                        <span class="bank-top">中国银行</span>
-                        <span class="dlc-blue bank-bottom">尾号<em>9629</em></span>
+                        <span class="bank-top">{{this.userAccount.cards[0].bankName}}</span>
+                        <span class="dlc-blue bank-bottom">尾号<em>{{this.userAccount.cards[0].cardNo|lastChar}}</em></span>
                     </div>
                     <div class="inline-block bank-icon bank_icon_104"></div>
                 </div>
+                <span style="float: right;" v-else>未绑卡
+                        <span class="arrow-right"></span>
+                </span>
             </section>
 
             <router-link to="/transactionPwd" class="arrow-line" tag="section">
@@ -40,22 +47,12 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
-    data() {
-        return {
-            cellphone:''
-        }
-    },
     computed:mapGetters([
         'userAccount'
     ]),
-    mounted(){
-        this.cellphone = this.userAccount.cellphone
-    }
 }
 </script>
 <style scoped>
-
-
 .bank-N-O {
     float: right;
     line-height: 4rem;

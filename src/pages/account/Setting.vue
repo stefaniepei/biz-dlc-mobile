@@ -12,7 +12,7 @@
             <section class="arrow-line">
                 <em><img src="../../assets/images/account/me.png" /></em>
                 <span>手机号</span>
-                <span class="float-right margin-right-15">{{this.cellphone}}</span>
+                <span class="float-right margin-right-15">{{this.userAccount.cellphone}}</span>
             </section>
 
             <router-link to="/changePwd/back"
@@ -38,36 +38,11 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
-    data() {
-        return {
-            cellphone:''
-        }
-    },
     computed:mapGetters([
         'userAccount'
     ]),
-    mounted(){
-        this.cellphone = this.userAccount.cellphone
-    }
 }
 </script>
 <style scoped>
 
-
-.bank-N-O {
-    float: right;
-    line-height: 4rem;
-    margin-right: 1.5rem;
-}
-
-.bank-top,
-.bank-bottom {
-    display: block;
-    line-height: 2rem;
-    padding-left: 0.5rem;
-}
-
-.bank-bottom em {
-    padding: 0;
-}
 </style>
