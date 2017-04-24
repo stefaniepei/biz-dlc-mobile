@@ -1,6 +1,6 @@
 <template>
     <div class="product-detail container">
-         <mt-header :title="productDetail.prodName" class="header-bg-color">
+         <mt-header :title="productDetail.prodName" class="header-bg-color2">
             <router-link to="/" slot="left">
                 <mt-button icon="back"></mt-button>
             </router-link>

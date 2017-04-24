@@ -2,13 +2,13 @@ import Vue from 'vue'
 import axios from './api/axios.config'
 import router from './router/router.config'
 import store from './store'
-// import MintUI from 'mint-ui'
+import MintUI from 'mint-ui'
 
 import 'normalize.css'
 import 'mint-ui/lib/style.css'
 import './assets/css/index'
 
-// Vue.use(MintUI)
+Vue.use(MintUI)
 Vue.prototype.$http = axios
 Vue.config.debug = true
 

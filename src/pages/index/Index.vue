@@ -9,6 +9,7 @@
                 </a>
             </mt-swipe-item>
         </mt-swipe>
+        <bottomMenu></bottomMenu>
     </div>
 </template>
 <script>
@@ -17,6 +18,7 @@ import Vue from 'vue'
 
 Vue.component(Swipe.name, Swipe)
 Vue.component(SwipeItem.name, SwipeItem)
+import bottomMenu from 'components/bottom-menu.vue'
 
 export default {
     data() {
@@ -29,7 +31,8 @@ export default {
     },
     components: {
         Swipe,
-        SwipeItem
+        SwipeItem,
+        bottomMenu
     },
     mounted() {
         this.getSwiperData()

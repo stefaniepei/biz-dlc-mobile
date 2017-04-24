@@ -13,8 +13,12 @@
 
 /*header*/
 
+.header-bg-color1 {
+    background-color: #fff;
+}
+
 .header-bg-color {
-    background-color: #346FAF;
+    background-color: #3871C7;
 }
 
 
