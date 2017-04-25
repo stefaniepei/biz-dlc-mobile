@@ -1,22 +1,22 @@
 <template>
     <div class="WeChat-footer">
     <ul>
-        <router-link to="/" class="" tag="li">
+        <router-link to="/" tag="li">
             <img src="../assets/images/account/home-on.png" v-if="'/' == this.$route.path" />
             <img src="../assets/images/account/home-off.png" v-else />
             <p>首页</p>
         </router-link>
-        <router-link to="/productAllList" class="" tag="li">
-            <img src="../assets/images/account/my-on.png" v-if="'/productAllList' == this.$route.path" />
-            <img src="../assets/images/account/my-off.png" v-else />
+        <router-link to="/productAllList" tag="li">
+            <img src="../assets/images/account/financing-on.png" v-if="'/productAllList' == this.$route.path" />
+            <img src="../assets/images/account/financing-off.png" v-else />
             <p>理财</p>
         </router-link>
-        <router-link to="/info" class="" tag="li">
-            <img src="../assets/images/account/home-on.png" v-if="'/info' == this.$route.path" />
-            <img src="../assets/images/account/home-off.png" v-else />
+        <router-link to="/info" tag="li">
+            <img src="../assets/images/account/my-on.png" v-if="'/info' == this.$route.path" />
+            <img src="../assets/images/account/my-off.png" v-else />
             <p>我</p>
         </router-link>
-        <router-link to="/more/WeChat" class="" tag="li">
+        <router-link to="/more/WeChat" tag="li">
             <img src="../assets/images/account/more-on.png" v-if="'/more/WeChat' == this.$route.path" />
             <img src="../assets/images/account/more-off.png" v-else />
             <p>更多</p>
@@ -29,7 +29,7 @@
 <script>
     export default{
         mounted() {
-            console.log(this)
+            
         },
     }
 </script>
@@ -48,7 +48,7 @@
     float: left;
     width: 25%;
     text-align: center;
-    padding-top: 2%;
+    padding: 0.5rem 0;
 }
 .WeChat-footer li img {
     width: 20px;

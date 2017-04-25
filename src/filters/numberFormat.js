@@ -1,7 +1,7 @@
 //将数值转换为万元
 export const toMillion = num => {
     if (Number.isNaN(num)) return 0
-    return (Number.parseInt(num) / 10000).toFixed(0)
+    return Number.parseInt((num) / 10000)
 }
 
 //将数值四舍五入(保留2位小数)后格式化成金额形式
@@ -26,7 +26,7 @@ export const formatCurrency = (num, precision = 2, keep0cents = false) => {
     }
     for (let i = 0; i < Math.floor((num.length - (1 + i)) / 3); i++)
         num = num.substring(0, num.length - (4 * i + 3)) + ',' +
-            num.substring(num.length - (4 * i + 3))
+        num.substring(num.length - (4 * i + 3))
     return (((sign) ? '' : '-') + num + cents)
 }
 
@@ -36,7 +36,7 @@ export const currencyToNormal = stringNum => {
 }
 
 //把不是数字的当0返回
-export const naN = num =>{
+export const naN = num => {
     if (Number.isNaN(num)) return 0
     return num
 }
