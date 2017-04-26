@@ -82,7 +82,7 @@ export default {
             let _this = this;
             let pageSize = 10
             _this.loading = false
-            this.$http.get('/products', { params: { page: 1, pageSize: pageSize } }).then((res) => {
+            this.$http.get('/products', { params: { page: _this.page, pageSize: pageSize } }).then((res) => {
                 if (_this.page === 1) {
                     _this.productList = res.data.data
                 } else {
