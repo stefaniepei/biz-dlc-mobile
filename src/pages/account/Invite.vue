@@ -1,16 +1,13 @@
 <template>
     <div class="invite">
-        <mt-header title="邀请有礼"
-                   class="header-bg-color">
-            <router-link to="/info"
-                         slot="left">
+        <mt-header title="邀请有礼" class="header-bg-color">
+            <router-link to="/info" slot="left">
                 <mt-button icon="back"></mt-button>
             </router-link>
         </mt-header>
     
         <div class="politebanner">
-            <img src="../../assets/images/account/polirebanner.png"
-                 class="img-responsive">
+            <img src="../../assets/images/account/polirebanner.png" class="img-responsive">
         </div>
     
         <div v-if="this.userAccount.hasCard">
@@ -36,8 +33,7 @@
     
         </div>
     
-        <div class="authbutton"
-             v-else>
+        <div class="authbutton" v-else>
             <p>主人,请先<a href="/bindCard">实名认证和绑卡</a>,方便邀请好友和提现奖励哦！</p>
             <button class="bindCardBut">立即绑卡</button>
         </div>
@@ -58,7 +54,7 @@ export default {
             page2: 1,
             page3: 1,
             pageSize: 10,
-            loading1: false,
+            loading1: true,
             loading2: false,
             loading3: false,
             loadingTitle1: '加载中...',

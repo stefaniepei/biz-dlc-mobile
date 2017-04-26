@@ -145,29 +145,21 @@ export default {
     methods: {
         getSwiperData() {
             let _this = this
-            this.$http.get('/utils/bulletin', { params: { createdFrom: '2016-12-01', type: 3, page: 1, pageSize: 5 } }).then(function (res) {
-                _this.imgData = res.data.data
-            }).catch(function (err) {
-                Toast(err)
-            });
+            this.$http.get('/utils/bulletin', { params: { createdFrom: '2016-12-01', type: 3, page: 1, pageSize: 5 } })
+                .then((res) => _this.imgData = res.data.data)
+                .catch((err) => Toast(err))
         },
         getNewHand() {
             let _this = this
-            this.$http.get('/products', { params: { tag: 'newbie', page: 1, pageSize: 1 } }).then(function (res) {
-                _this.newHand = res.data.data[0]
-                console.log(res.data.data)
-            }).catch(function (err) {
-                Toast(err)
-            });
+            this.$http.get('/products', { params: { tag: 'newbie', page: 1, pageSize: 1 } })
+                .then((res) => _this.newHand = res.data.data[0])
+                .catch((err) => Toast(err))
         },
         getProductList() {
             let _this = this
-            this.$http.get('/products', { params: { page: 1, pageSize: 3 } }).then(function (res) {
-                console.log(res.data.data)
-                _this.productList = res.data.data
-            }).catch(function (err) {
-                Toast(err)
-            });
+            this.$http.get('/products', { params: { page: 1, pageSize: 3 } })
+                .then((res) => _this.productList = res.data.data)
+                .catch((err) => Toast(err))
         }
     }
 }

@@ -1,16 +1,14 @@
 <template>
     <div class="order-list">
-         <mt-header title="我的理财" class="header-bg-color">
+        <mt-header title="我的理财" class="header-bg-color">
             <router-link to="/info" slot="left">
                 <mt-button icon="back"></mt-button>
             </router-link>
         </mt-header>
-        <div class="no-record"
-             v-if="records === null">
+        <div class="no-record" v-if="records === null">
             暂无数据
         </div>
-        <div class="order-one"
-             v-for="(value,key,index) in records">
+        <div class="order-one" v-for="(value,key,index) in records">
             <div class="order-top">
                 <div class="inline-block order-name">{{value.productName}}</div>
                 <div class="inline-block order-money">{{value.entrustAmount}}</div>
@@ -24,8 +22,7 @@
             <div class="fill-div-05"></div>
         </div>
     
-        <mugen-scroll :handler="fetchData"
-                      :should-handle="loading">
+        <mugen-scroll :handler="fetchData" :should-handle="loading">
             <div class="fetch-data">{{loadingTitle}}</div>
         </mugen-scroll>
     </div>
@@ -40,7 +37,7 @@ export default {
             total: '0.00',
             records: [{}],
             page: 1,
-            loading: false,
+            loading: true,
             loadingTitle: '加载中...'
         }
     },
@@ -57,6 +54,7 @@ export default {
         getOrderList() {
             let _this = this
             let pageSize = 10
+            _this.loading = false
             this.$http.get(`/biz/orders`, { params: { asc: false, page: this.page, pageSize: pageSize }, headers: { 'Authorization': this.userAuth } }).then(function (res) {
                 if (_this.page === 1) {
                     _this.records = res.data.data
@@ -67,7 +65,6 @@ export default {
                     _this.loading = true
                     _this.page++
                 } else {
-                    _this.loading = false
                     _this.loadingTitle = '暂无更多数据'
                 }
 

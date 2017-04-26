@@ -6,12 +6,10 @@
             </router-link>
         </mt-header>
         <ul>
-            <li class="no-record"
-                v-if="records === null">
+            <li class="no-record" v-if="records === null">
                 暂无数据
             </li>
-            <li class="item"
-                v-for="(record,index) in records">
+            <li class="item" v-for="(record,index) in records">
                 <div class="item-left">
                     <span class="s1">{{record.cellphone}}</span>
                     <span class="s2">{{record.investedAt|dateTimeFormat}}</span>
@@ -21,8 +19,7 @@
                 </div>
             </li>
         </ul>
-        <mugen-scroll :handler="fetchData"
-                      :should-handle="loading">
+        <mugen-scroll :handler="fetchData" :should-handle="loading">
             <div class="fetch-data">{{loadingTitle}}</div>
         </mugen-scroll>
     </div>
@@ -35,7 +32,7 @@ export default {
         return {
             records: [{}],
             page: 1,
-            loading: false,
+            loading: true,
             loadingTitle: '加载中...'
         }
     },
@@ -54,6 +51,7 @@ export default {
         getProductRecords(id) {
             let _this = this;
             let pageSize = 20
+            _this.loading = false
             this.$http.get(`/trades/invest/list`, { params: { prodCodeId: id, page: this.page, pageSize: pageSize } }).then(function (res) {
                 if (_this.page === 1) {
                     _this.records = res.data.data
@@ -64,7 +62,6 @@ export default {
                     _this.loading = true
                     _this.page++
                 } else {
-                    _this.loading = false
                     _this.loadingTitle = '暂无更多数据'
                 }
 
@@ -79,7 +76,6 @@ export default {
 }
 </script>
 <style scoped>
-
 .product-records .item {
     border-bottom: 1px solid #dedede;
     display: -moz-box;
@@ -124,5 +120,4 @@ export default {
     box-sizing: border-box;
     width: 10%;
 }
-
 </style>

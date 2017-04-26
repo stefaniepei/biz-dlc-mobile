@@ -1,25 +1,21 @@
 <template>
     <div class="financial-list">
-        <mt-header title="我的理财"
-                   class="header-bg-color">
-            <router-link to="/info"
-                         slot="left">
+        <mt-header title="我的理财" class="header-bg-color">
+            <router-link to="/info" slot="left">
                 <mt-button icon="back"></mt-button>
             </router-link>
         </mt-header>
         <div class="fill-div-05"></div>
         <div class="financial-total">
-            <p><em></em>当前总投资额（元）：<span class="dlc-red">{{total|formatCurrency(2,true)}}</span></p>
+            <p><em></em>当前总投资额（元）：<span class="dlc-red">{{this.userAccount.asset.totalCapital|formatCurrency(2,true)}}</span></p>
         </div>
         <div class="fill-div-05"></div>
     
-        <div class="no-record"
-             v-if="records === null">
+        <div class="no-record" v-if="records === null">
             暂无数据
         </div>
     
-        <div class="financial-one"
-             v-for="(value, key, index) in records">
+        <div class="financial-one" v-for="(value, key, index) in records">
             <div :class="'chapter chapter_'+value.status"></div>
             <div class="f-header">
                 <div class=" prodName">{{value.productName}}</div>
@@ -31,10 +27,8 @@
                         <p>投资期限</p>
                     </div>
                     <div class="data1">
-                        <p class="num-t"
-                           v-if="value.addedRate > 0">{{value.productRate}}+{{value.addedRate}}%</p>
-                        <p class="num-t"
-                           v-else>{{value.productRate}}</p>
+                        <p class="num-t" v-if="value.addedRate > 0">{{value.productRate}}+{{value.addedRate}}%</p>
+                        <p class="num-t" v-else>{{value.productRate}}</p>
                         <p>年化利率</p>
                     </div>
                     <div class="data2">
@@ -49,14 +43,12 @@
             </div>
             <div class="f-footer">
                 <div class="inline-block w49">投资日期：{{value.updatedAt|dateFormat}}</div>
-                <div v-if="value.status!=0 && value.status!=3 && value.status!=4"
-                     class="inline-block w49">结束日期：{{value.cashInAt|dateFormat}}</div>
+                <div v-if="value.status!=0 && value.status!=3 && value.status!=4" class="inline-block w49">结束日期：{{value.cashInAt|dateFormat}}</div>
             </div>
             <div class="fill-div-05"></div>
         </div>
     
-        <mugen-scroll :handler="fetchData"
-                      :should-handle="loading">
+        <mugen-scroll :handler="fetchData" :should-handle="loading">
             <div class="fetch-data">{{loadingTitle}}</div>
         </mugen-scroll>
     </div>
@@ -69,10 +61,9 @@ import MugenScroll from 'vue-mugen-scroll'
 export default {
     data() {
         return {
-            total: '0.00',
             records: [{}],
             page: 1,
-            loading: false,
+            loading: true,
             loadingTitle: '加载中...'
         }
     },
@@ -81,9 +72,6 @@ export default {
         'userAuth'
     ]),
     mounted() {
-        if (this.userAccount != null && this.userAccount.asset && this.userAccount.asset.totalCapital) {
-            this.total = this.userAccount.asset.totalCapital
-        }
         this.fetchData()
     },
     methods: {
@@ -92,6 +80,7 @@ export default {
         },
         getFinancialList() {
             let _this = this
+            _this.loading = false
             let pageSize = 10
             this.$http.get(`/biz/accounts/share`, { params: { sort: 'created_at', asc: false, status: '', page: this.page, pageSize: pageSize }, headers: { 'Authorization': this.userAuth } }).then(function (res) {
                 if (_this.page === 1) {
@@ -103,7 +92,6 @@ export default {
                     _this.loading = true
                     _this.page++
                 } else {
-                    _this.loading = false
                     _this.loadingTitle = '暂无更多数据'
                 }
 
