@@ -80,7 +80,7 @@
                         <div class="w">
                             <div class="num-item mun-one">
                                 <p class="word word-one">预期年化收益</p>
-                                <p class="num word-one"><span>{{product.expectYearReturn}}</span><span class="s">%</span>{{product.invest2YearReturn}}</p>
+                                <p class="num word-one"><span>{{product.expectYearReturn}}</span><span class="s">%</span><span v-show="product.invest2YearReturn >0">+{{product.invest2YearReturn}}%</span></p>
                             </div>
                             <div class="num-item mun-two color6c">
                                 <p class="word">投资期限</p>
