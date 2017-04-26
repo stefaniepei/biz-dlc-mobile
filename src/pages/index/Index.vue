@@ -57,7 +57,9 @@
                             <div class="clear"></div>
                         </div>
                         <div class="progress-div">
-                            <div id="newHandBuy" class="btn new-hand">立即抢购</div>
+                            <router-link :to="'/experienceProductDetail/WeChat/'+this.newHand.prodCodeId" tag="div" class="btn new-hand">
+                                立即抢购
+                            </router-link>
                             <div class="progress-line">
                                 <p class="progress-title">每位新用户限投一次</p>
                             </div>
@@ -74,7 +76,12 @@
         <div class="noviceMark product-list">
             <div class="item detailSrc" v-for="(product,index) in this.productList">
                 <p class="item-title">
-                    <span class="name cursor_pointer">{{product.name}}</span>one_icon fx mj jx sxlp</p>
+                    <span class="name cursor_pointer">{{product.prodName}}</span>
+                    <span class="icon-you">优</span>
+                    <span class="icon-fx" v-show="new Set(product.coupons).has('2')">返现券</span>
+                    <span class="icon-mj" v-show="new Set(product.coupons).has('3')">满减券</span>
+                    <span class="icon-jx" v-show="new Set(product.coupons).has('4')">加息券</span>
+                </p>
                 <div class="context">
                     <div class="b1">
                         <div class="w">
@@ -93,9 +100,11 @@
                             <div class="clear"></div>
                         </div>
                         <div class="progress-div">
-                            <div class="progressBut bgBlue detailSrc">butWord</div>
+                            <router-link :to="'/productDetail/WeChat/'+product.prodCodeId" tag="div" class="progressBut">
+                                {{product.prodStatus|productDict('prodStatus')}}
+                            </router-link>
                             <div class="progress-bar-bg">
-                                <p class="width progressWidth progress-bar"></p>
+                                <p class="progress-bar" :style="{width:''+product.quotaProgress+'%'}"></p>
                             </div>
                             <div class="progressNo">{{product.quotaProgress}}%</div>
                         </div>
@@ -356,5 +365,45 @@ export default {
     font-size: 1.2rem;
     background: #f7f7f7;
     margin-bottom: 43px;
+}
+
+.product-list .item .b1 .progressBut {
+    display: block;
+    text-align: center;
+    height: 3rem;
+    line-height: 3rem;
+    float: right;
+    width: 29%;
+    color: #fff;
+    background: #346FAF;
+    border: none;
+    border-radius: 3px;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.product-list .item .b1 .progressNo {
+    color: #398be1;
+    font-size: 1.2rem;
+    padding-left: 1%;
+    width: 18%;
+    float: left;
+    height: 3rem;
+    line-height: 3.3rem;
+    overflow: hidden;
+}
+
+.product-list .item .b1 .progress-bar-bg {
+    background: #ddd;
+    height: 0.15rem;
+    margin-top: 1.5rem;
+    width: 50%;
+    float: left;
+}
+
+.product-list .item .b1 .progress-bar {
+    background: #398be1;
+    border-radius: 3px;
+    height: 2px;
 }
 </style>
