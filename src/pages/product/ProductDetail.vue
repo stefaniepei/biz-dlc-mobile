@@ -1,6 +1,6 @@
 <template>
-    <div class="product-detail container">
-         <mt-header :title="productDetail.prodName" class="header-bg-color2">
+    <div class="page product-detail">
+        <mt-header :title="productDetail.prodName" class="header-bg-color2">
             <router-link to="/" slot="left">
                 <mt-button icon="back"></mt-button>
             </router-link>
@@ -14,21 +14,15 @@
                     <div class="text-center margin-top-05">
                         <span class="earnings">{{productDetail.expectYearReturn}}</span>
                         <span style="color:#ff7742">%</span>
-                        <span v-if="productDetail.invest2YearReturn > 0"
-                              class="earnings">~{{productDetail.invest2YearReturn}}<span style="color:#ff7742">%</span></span>
+                        <span v-if="productDetail.invest2YearReturn > 0" class="earnings">~{{productDetail.invest2YearReturn}}<span style="color:#ff7742">%</span></span>
                     </div>
                 </section>
-                <div id="prodStatus"
-                     class="prod-earnings-right"></div>
+                <div id="prodStatus" class="prod-earnings-right"></div>
             </div>
-            <div class="prod-coupons text-center"
-                 v-show="fx || mj || jx">
-                <div class="coupon"
-                     v-show="fx">返现券</div>
-                <div class="coupon"
-                     v-show="mj">满减券</div>
-                <div class="coupon"
-                     v-show="jx">加息券</div>
+            <div class="prod-coupons text-center" v-show="fx || mj || jx">
+                <div class="coupon" v-show="fx">返现券</div>
+                <div class="coupon" v-show="mj">满减券</div>
+                <div class="coupon" v-show="jx">加息券</div>
             </div>
             <section class="prod-invest">
                 <div class="inline-block w50 text-line">
@@ -36,8 +30,8 @@
                     <p>投资期限</p>
                 </div>
                 <!--<div class="inline-block w002">
-                            <div class="vertical-line"></div>
-                        </div>-->
+                                        <div class="vertical-line"></div>
+                                    </div>-->
                 <div class="inline-block w50 text-right">
                     <p>{{productDetail.maxRaisedAmount|toMillion}}万</p>
                     <p>项目金额</p>
@@ -54,16 +48,9 @@
         </section>
     
         <section class="line">
-            <button class="btn line-btn-left"
-                    @click="subtraction">&nbsp;&nbsp;-&nbsp;&nbsp;</button>
-            <input id="buyAmount"
-                   type="text"
-                   class="line-input text-center"
-                   :placeholder="Number.parseInt(productDetail.minApplyAmount)+'元起投,'+Number.parseInt(productDetail.minAddAmount)+'元递增'"
-                   v-model="buyAmount"
-                   @keyup="boolAmount">
-            <button class="btn line-btn-right"
-                    @click="addition">&nbsp;&nbsp;+&nbsp;&nbsp;</button>
+            <button class="btn line-btn-left" @click="subtraction">&nbsp;&nbsp;-&nbsp;&nbsp;</button>
+            <input id="buyAmount" type="text" class="line-input text-center" :placeholder="Number.parseInt(productDetail.minApplyAmount)+'元起投,'+Number.parseInt(productDetail.minAddAmount)+'元递增'" v-model="buyAmount" @keyup="boolAmount">
+            <button class="btn line-btn-right" @click="addition">&nbsp;&nbsp;+&nbsp;&nbsp;</button>
         </section>
     
         <section class="prod-explain">
@@ -75,21 +62,15 @@
         <section class="prod-fill">
         </section>
     
-        <router-link :to="{name:'productInfo',params:{id:productDetail.prodCodeId,source:this.$route.params.source}}"
-                     class="arrow-line"
-                     tag="section">
+        <router-link :to="{name:'productInfo',params:{id:productDetail.prodCodeId,source:this.$route.params.source}}" class="arrow-line" tag="section">
             <span>项目介绍</span>
             <span class="arrow-right"></span>
         </router-link>
-        <router-link :to="{name:'productIntroduce',params:{id:productDetail.prodCodeId,source:this.$route.params.source}}"
-                     class="arrow-line"
-                     tag="section">
+        <router-link :to="{name:'productIntroduce',params:{id:productDetail.prodCodeId,source:this.$route.params.source}}" class="arrow-line" tag="section">
             <span>产品介绍</span>
             <span class="arrow-right"></span>
         </router-link>
-        <router-link :to="{name:'productRecords',params:{id:productDetail.prodCodeId,source:this.$route.params.source}}"
-                     class="arrow-line"
-                     tag="section">
+        <router-link :to="{name:'productRecords',params:{id:productDetail.prodCodeId,source:this.$route.params.source}}" class="arrow-line" tag="section">
             <span>投资记录</span>
             <span class="arrow-right"></span>
         </router-link>
@@ -97,16 +78,12 @@
             温馨提示：市场有风险，投资需谨慎
         </section>
         <section style="margin-top:0.5rem;">
-            <button type="button"
-                    class="btn btn-big pay-timer"
-                    :disabled="btnDisabled"
-                    v-on:btnState="toDisabled">{{btnVal}}</button>
+            <button type="button" class="btn btn-big pay-timer" :disabled="btnDisabled" v-on:btnState="toDisabled">{{btnVal}}</button>
         </section>
         <section class="login-info fz-small">
             <div class="inline-block w70">
                 账户余额（元）：
-                <span v-show="!loginOut"
-                      class="dlc-red">{{balance|formatCurrency(2,true)}}</span>
+                <span v-show="!loginOut" class="dlc-red">{{balance|formatCurrency(2,true)}}</span>
                 <span v-show="loginOut"><router-link to="/login">登录可见</router-link></span>
             </div>
             <div class="inline-block w30 text-right">

@@ -6,5 +6,6 @@ import './widthHeight.css'
 import './fontSize.css'
 import './button.css'
 import './dlc.css'
+import './product.css'
 
 import './bank.css'

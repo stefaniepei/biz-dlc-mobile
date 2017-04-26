@@ -1,0 +1,155 @@
+.product-list {
+    width: 100%;
+    background: #f7f7f7;
+}
+
+.product-list .item {
+    background: #fff;
+    display: inline-block;
+    margin-bottom: 1rem;
+    width: 100%;
+    position: relative;
+}
+
+.product-list .item-title {
+    border-bottom: 1px solid #eee;
+    height: 4rem;
+    line-height: 4.2rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.product-list .item-title .name {
+    color: #666;
+    font-weight: 300;
+    font-size: 1.6rem;
+    margin: 0 1.0rem;
+}
+
+.product-list .item .context {
+    display: inline-block;
+    height: auto;
+    width: 100%;
+}
+
+.product-list .item .b1 {
+    display: inline-block;
+    width: 100%;
+}
+
+.product-list .item .b1 .w {
+    margin: 0.7rem auto;
+    white-space: nowrap;
+    width: 95%;
+}
+
+.product-list .item .b1 .mun-one {
+    width: 44%;
+}
+
+.product-list .item .b1 .mun-two {
+    width: 38%;
+}
+
+.product-list .item .b1 .last {
+    width: 18%;
+    color: #6C6C6C;
+}
+
+.product-list .item .b1 .num-item {
+    color: #ff7742;
+    display: inline-block;
+    float: left;
+    font-size: 1.6rem;
+}
+
+.product-list .item .b1 .w .word-one {
+    padding-left: 2px;
+}
+
+.product-list .item .b1 .w .word {
+    color: #6C6C6C;
+    font-size: 1.2rem;
+    white-space: nowrap;
+}
+
+.product-list .item .b1 .w .num {
+    height: 2.0rem;
+    line-height: 1.8rem;
+    margin-top: 0.5rem;
+}
+
+.product-list .item .b1 .progress-div {
+    width: 95%;
+    margin: 0 auto;
+    margin-bottom: 2%;
+    overflow: hidden;
+}
+
+.product-list .item .b1 .progressBut {
+    display: block;
+    text-align: center;
+    height: 3rem;
+    line-height: 3rem;
+    float: right;
+    width: 29%;
+    color: #fff;
+    background: #346FAF;
+    border: none;
+    border-radius: 3px;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.product-list .item .b1 .progressNo {
+    color: #398be1;
+    font-size: 1.2rem;
+    padding-left: 1%;
+    width: 18%;
+    float: left;
+    height: 3rem;
+    line-height: 3.3rem;
+    overflow: hidden;
+}
+
+.product-list .item .b1 .progress-bar-bg {
+    background: #ddd;
+    height: 0.15rem;
+    margin-top: 1.5rem;
+    width: 50%;
+    float: left;
+}
+
+.product-list .item .b1 .progress-bar {
+    background: #398be1;
+    border-radius: 3px;
+    height: 2px;
+}
+
+.product-list .product-list-title {
+    width: 100%;
+    padding: 3%;
+    font-size: 1.4rem;
+    color: #666;
+    background: #f7f7f7;
+}
+
+.product-list .product-list-title span {
+    line-height: 1.5rem;
+    height: 1.5rem;
+    vertical-align: top;
+}
+
+.product-list .product-list-title img {
+    width: 1.6rem;
+    height: 1.5rem;
+    margin-right: 5px;
+}
+
+.product-list .product-list-title .title-right {
+    float: right;
+    margin-right: 5%;
+    font-size: 1.2rem;
+    color: #398be1;
+}

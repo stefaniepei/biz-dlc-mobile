@@ -32,7 +32,7 @@
             </ul>
             <div class="clear"></div>
         </div>
-        <div class="noviceMark product-list">
+        <div class="novice-mark product-list">
             <div class="item" style="margin-bottom: 0rem;">
                 <p class="item-title">
                     <span class="name cursor_pointer">新手福利标</span><span class="limit-invest">限量发布</span></p>
@@ -73,7 +73,7 @@
             <span><img src="../../assets/images/dlc/safe-blue.png" /> 资金交易过程由太平洋保险提供安全保障</span>
         </router-link>
     
-        <div class="noviceMark product-list">
+        <div class="product-list">
             <div class="item detailSrc" v-for="(product,index) in this.productList">
                 <p class="item-title">
                     <span class="name cursor_pointer">{{product.prodName}}</span>
@@ -95,7 +95,7 @@
                             </div>
                             <div class="num-item last">
                                 <p class="word">项目金额</p>
-                                <p class="num"><span class="s">{{product.maxRaisedAmount}}万</span></p>
+                                <p class="num"><span class="s">{{product.maxRaisedAmount|toMillion}}万</span></p>
                             </div>
                             <div class="clear"></div>
                         </div>
@@ -166,7 +166,7 @@ export default {
         },
         getProductList() {
             let _this = this
-            this.$http.get('/products', { params: { page: 1, pageSize: 3 } })
+            this.$http.get('/products', { params: { page: 1, pageSize: 2 } })
                 .then((res) => _this.productList = res.data.data)
                 .catch((err) => Toast(err))
         }
@@ -205,36 +205,12 @@ export default {
     background: #f7f7f7;
 }
 
-.noviceMark {
+.novice-mark {
     margin-top: 1rem;
     position: relative;
 }
 
-.product-list .item {
-    background: #fff;
-    display: inline-block;
-    margin-bottom: 1rem;
-    width: 100%;
-    position: relative;
-}
-
-.product-list .item-title {
-    border-bottom: 1px solid #eee;
-    height: 4rem;
-    line-height: 4.2rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.product-list .item-title .name {
-    color: #666;
-    font-weight: 300;
-    font-size: 1.6rem;
-    margin: 0 1.0rem;
-}
-
-.noviceMark .limit-invest {
+.novice-mark .limit-invest {
     border: 1px solid #ff7742;
     font-size: 1.2rem;
     color: #ff7742;
@@ -243,67 +219,7 @@ export default {
     border-radius: 6px;
 }
 
-.product-list .item .context {
-    display: inline-block;
-    height: auto;
-    width: 100%;
-}
-
-.product-list .item .b1 {
-    display: inline-block;
-    width: 100%;
-}
-
-.product-list .item .b1 .w {
-    margin: 0.7rem auto;
-    white-space: nowrap;
-    width: 95%;
-}
-
-.product-list .item .b1 .mun-one {
-    width: 44%;
-}
-
-.product-list .item .b1 .mun-two {
-    width: 38%;
-}
-
-.product-list .item .b1 .last {
-    width: 18%;
-    color: #6C6C6C;
-}
-
-.product-list .item .b1 .num-item {
-    color: #ff7742;
-    display: inline-block;
-    float: left;
-    font-size: 1.6rem;
-}
-
-.product-list .item .b1 .w .word-one {
-    padding-left: 2px;
-}
-
-.product-list .item .b1 .w .word {
-    color: #6C6C6C;
-    font-size: 1.2rem;
-    white-space: nowrap;
-}
-
-.product-list .item .b1 .w .num {
-    height: 2.0rem;
-    line-height: 1.8rem;
-    margin-top: 0.5rem;
-}
-
-.product-list .item .b1 .progress-div {
-    width: 95%;
-    margin: 0 auto;
-    margin-bottom: 2%;
-    overflow: hidden;
-}
-
-.noviceMark .new-hand {
+.novice-mark .new-hand {
     display: inline-block;
     text-align: center;
     height: 2rem;
@@ -317,7 +233,7 @@ export default {
     font-size: 1.2rem;
 }
 
-.noviceMark .progress-line {
+.novice-mark .progress-line {
     background: #e5e5e5;
     height: 0.1rem;
     margin-top: 0.7rem;
@@ -325,7 +241,7 @@ export default {
     float: left;
 }
 
-.noviceMark .progress-title {
+.novice-mark .progress-title {
     color: #ff7742;
     font-size: 1.2rem;
     margin-top: 0.5rem;
@@ -365,45 +281,5 @@ export default {
     font-size: 1.2rem;
     background: #f7f7f7;
     margin-bottom: 43px;
-}
-
-.product-list .item .b1 .progressBut {
-    display: block;
-    text-align: center;
-    height: 3rem;
-    line-height: 3rem;
-    float: right;
-    width: 29%;
-    color: #fff;
-    background: #346FAF;
-    border: none;
-    border-radius: 3px;
-    font-size: 1.2rem;
-    cursor: pointer;
-}
-
-.product-list .item .b1 .progressNo {
-    color: #398be1;
-    font-size: 1.2rem;
-    padding-left: 1%;
-    width: 18%;
-    float: left;
-    height: 3rem;
-    line-height: 3.3rem;
-    overflow: hidden;
-}
-
-.product-list .item .b1 .progress-bar-bg {
-    background: #ddd;
-    height: 0.15rem;
-    margin-top: 1.5rem;
-    width: 50%;
-    float: left;
-}
-
-.product-list .item .b1 .progress-bar {
-    background: #398be1;
-    border-radius: 3px;
-    height: 2px;
 }
 </style>
