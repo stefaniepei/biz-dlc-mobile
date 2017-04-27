@@ -41,8 +41,13 @@ export default {
     computed: mapGetters([
         'userAuth'
     ]),
+    beforeRouteEnter(to, from, next) {
+        next(vm => {
+            this.fetchData()
+        })
+    },
     mounted() {
-        this.fetchData()
+
     },
     methods: {
         fetchData() {

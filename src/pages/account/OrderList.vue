@@ -1,5 +1,5 @@
 <template>
-    <div class="order-list">
+    <div class="page order-list">
         <mt-header title="我的理财" class="header-bg-color">
             <router-link to="/info" slot="left">
                 <mt-button icon="back"></mt-button>
@@ -44,8 +44,13 @@ export default {
     computed: mapGetters([
         'userAuth'
     ]),
+    beforeRouteEnter(to, from, next) {
+        next(vm => {
+            this.fetchData()
+        })
+    },
     mounted() {
-        this.fetchData()
+
     },
     methods: {
         fetchData() {

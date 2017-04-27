@@ -1,5 +1,5 @@
 <template>
-    <div class="coupon-list">
+    <div class="page coupon-list">
         <mt-header title="我的优惠券" class="header-bg-color">
             <router-link to="/info" slot="left">
                 <mt-button icon="back"></mt-button>
@@ -24,13 +24,13 @@
                         <div class="redPkt-act-right">
                             <div class="cp-con-top">
                                 <em v-if="'fx' == value.classType || 'mj' == value.classType">
-                                                        <span class="icon-rmb">￥</span><span class="unit">{{value.amount}}</span> 
-                                                    </em>
+                                                                        <span class="icon-rmb">￥</span><span class="unit">{{value.amount}}</span> 
+                                                                    </em>
     
                                 <em v-else-if="'jx' == value.classType">
-                                                        <span class="unit" style="margin-left:1.4rem">{{value.amount}}</span>
-                                                        <span class="icon-rmb" style="vertical-align: bottom;">%</span> 
-                                                    </em>
+                                                                        <span class="unit" style="margin-left:1.4rem">{{value.amount}}</span>
+                                                                        <span class="icon-rmb" style="vertical-align: bottom;">%</span> 
+                                                                    </em>
                             </div>
                             <div class="cp-con-bottom">
                                 <p v-if="0 == Number.parseInt(value.minInvestAmount) && 2147483647 == Number.parseInt(value.maxInvestAmount)">1.单笔投资无限制</p>
@@ -60,13 +60,13 @@
                         <div class="redPkt-act-right">
                             <div class="cp-con-top">
                                 <em v-if="'fx' == value.classType || 'mj' == value.classType">
-                                                        <span class="icon-rmb">￥</span><span class="unit">{{value.amount}}</span> 
-                                                    </em>
+                                                                        <span class="icon-rmb">￥</span><span class="unit">{{value.amount}}</span> 
+                                                                    </em>
     
                                 <em v-else-if="'jx' == value.classType">
-                                                        <span class="unit" style="margin-left:1.4rem">{{value.amount}}</span>
-                                                        <span class="icon-rmb" style="vertical-align: bottom;">%</span> 
-                                                    </em>
+                                                                        <span class="unit" style="margin-left:1.4rem">{{value.amount}}</span>
+                                                                        <span class="icon-rmb" style="vertical-align: bottom;">%</span> 
+                                                                    </em>
                             </div>
                             <div class="cp-con-bottom">
                                 <p v-if="0 == Number.parseInt(value.minInvestAmount) && 2147483647 == Number.parseInt(value.maxInvestAmount)">1.单笔投资无限制</p>
@@ -96,13 +96,13 @@
                         <div class="redPkt-act-right">
                             <div class="cp-con-top">
                                 <em v-if="'fx' == value.classType || 'mj' == value.classType">
-                                                        <span class="icon-rmb">￥</span><span class="unit">{{value.amount}}</span> 
-                                                    </em>
+                                                                        <span class="icon-rmb">￥</span><span class="unit">{{value.amount}}</span> 
+                                                                    </em>
     
                                 <em v-else-if="'jx' == value.classType">
-                                                        <span class="unit" style="margin-left:1.4rem">{{value.amount}}</span>
-                                                        <span class="icon-rmb" style="vertical-align: bottom;">%</span> 
-                                                    </em>
+                                                                        <span class="unit" style="margin-left:1.4rem">{{value.amount}}</span>
+                                                                        <span class="icon-rmb" style="vertical-align: bottom;">%</span> 
+                                                                    </em>
                             </div>
                             <div class="cp-con-bottom">
                                 <p v-if="0 == Number.parseInt(value.minInvestAmount) && 2147483647 == Number.parseInt(value.maxInvestAmount)">1.单笔投资无限制</p>
@@ -153,8 +153,13 @@ export default {
     computed: mapGetters([
         'userAuth'
     ]),
+    beforeRouteEnter(to, from, next) {
+        next(vm => {
+            this.fetchData1()
+        })
+    },
     mounted() {
-        this.fetchData1()
+
     },
     watch: {
         'selected': 'watchNavBar'

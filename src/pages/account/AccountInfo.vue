@@ -29,7 +29,7 @@
             </router-link>
         </div>
     
-        <div style="height:1rem;background-color:#f5f5f5;"></div>
+        <div style="height:0.6rem;background-color:#f5f5f5;"></div>
     
         <div class="icon-div">
             <router-link to="/financialList" tag="div">
@@ -60,7 +60,7 @@
             </router-link>
         </div>
     
-        <div style="height:1rem;background-color:#f5f5f5;"></div>
+        <div style="height:0.6rem;background-color:#f5f5f5;"></div>
     
         <bottomMenu></bottomMenu>
     </div>

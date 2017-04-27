@@ -412,6 +412,7 @@ router.beforeEach(({
     }
     console.log(auth, isLogin)
     if (auth && !isLogin) {
+        store.dispatch('USER_LOGIN_OUT')
         next({
             path: '/login'
         })

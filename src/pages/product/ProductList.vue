@@ -71,8 +71,13 @@ export default {
         MugenScroll,
         bottomMenu
     },
+    beforeRouteEnter(to, from, next) {
+        next(vm => {
+            this.fetchData()
+        })
+    },
     mounted() {
-        this.fetchData()
+
     },
     methods: {
         fetchData() {

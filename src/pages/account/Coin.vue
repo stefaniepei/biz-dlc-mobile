@@ -1,5 +1,5 @@
 <template>
-    <div class="coin-list">
+    <div class="page coin-list">
         <mt-header title="我的点币" class="header-bg-color">
             <router-link to="/info" slot="left">
                 <mt-button icon="back"></mt-button>
@@ -93,8 +93,13 @@ export default {
         'userAuth',
         'userAccount'
     ]),
+    beforeRouteEnter(to, from, next) {
+        next(vm => {
+            this.fetchData1()
+        })
+    },
     mounted() {
-        this.fetchData1()
+
     },
     watch: {
         'selected': 'watchNavBar'
