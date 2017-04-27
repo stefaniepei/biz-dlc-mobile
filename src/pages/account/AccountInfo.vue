@@ -1,12 +1,5 @@
 <template>
     <div class="page account">
-        <mt-header title="我的账户"
-                   class="header-bg-color">
-            <router-link to="/"
-                         slot="left">
-                <mt-button icon="back"></mt-button>
-            </router-link>
-        </mt-header>
         <div class="account-money">
             <router-link to="/setting" style="text-align:right;margin-right: 2.5rem;" tag="div">
                 <span class="setting-icon"></span><span>设置</span>
@@ -26,7 +19,7 @@
                 </div>
             </section>
         </div>
-
+    
         <div class="cash_withdrawal">
             <router-link to="/recharge" class="withdrawal" tag="div">
                 <span class="icon"></span><span>充值</span>
@@ -35,9 +28,9 @@
                 <span class="icon"></span><span>提现</span>
             </router-link>
         </div>
-
+    
         <div style="height:1rem;background-color:#f5f5f5;"></div>
-
+    
         <div class="icon-div">
             <router-link to="/financialList" tag="div">
                 <p><span class="record-icon"></span></p>
@@ -52,7 +45,7 @@
                 <p class="label">我的优惠券</p>
             </router-link>
         </div>
-        <div class="icon-div">
+        <div class="icon-div last">
             <router-link to="/coin" tag="div">
                 <p><span class="coin-icon"></span></p>
                 <p class="label">我的点币</p>
@@ -66,9 +59,9 @@
                 <p class="label">邀请有礼</p>
             </router-link>
         </div>
-
+    
         <div style="height:1rem;background-color:#f5f5f5;"></div>
-
+    
         <bottomMenu></bottomMenu>
     </div>
 </template>
@@ -98,13 +91,13 @@ export default {
 }
 </script>
 <style scoped>
-
 .account .account-money {
     background: url("../../assets/images/account/bg-img.png") no-repeat;
     background-size: 100% 100%;
     color: #fff;
     padding: 1rem 0 5rem;
 }
+
 .account .setting-icon {
     background: url("../../assets/images/account/setting.png") no-repeat;
     background-size: 100% 100%;
@@ -114,12 +107,14 @@ export default {
     vertical-align: middle;
     margin-right: 3px;
 }
+
 .account-link em {
     display: inline-block;
     margin-left: 20px;
     margin-right: 10px;
 }
-.account-link em img{
+
+.account-link em img {
     width: 1.5rem;
     height: 1.5rem;
     vertical-align: middle;
@@ -200,102 +195,7 @@ export default {
     display: inline-block;
 }
 
-.icon-div {
-    /*text-align: center;*/
-}
-
-.icon-div div {
-    display: inline-block;
-    width: 32%;
-    height: 7rem;
-    box-sizing: border-box;
-    border-right: 1px solid #f5f5f5;
-    border-bottom: 1px solid #f5f5f5;
-}
-
-.icon-div div.last {
-    border-right: 0;
-}
-
-.icon-div div:hover {
-    background-color: #F5F5F5;
-}
-
-.icon-div div p {    
-    text-align: center;
-    padding-bottom: 0.5rem;
-}
-
-.icon-div .label {
-    color: #888;
-    font-weight: 300;
-    font-size: 1.4rem;
-}
-
-.icon-div div span {
-    width: 3rem;
-    height: 3rem;    
-    margin-top: 1rem;
-    display: inline-block;
-}
-
-.icon-div .notice-icon {
-    background: url(../../assets/images/more/notice.png) no-repeat;
-    background-size: cover;
-}
-
-.icon-div .question-icon {
-    background: url(../../assets/images/more/question.png) no-repeat;
-    background-size: cover;
-}
-
-.icon-div .about-us-icon {
-    background: url(../../assets/images/more/about-us.png) no-repeat;
-    background-size: cover;
-}
-
-.icon-div .complaint-icon {
-    background: url(../../assets/images/more/complaint.png) no-repeat;
-    background-size: cover;
-}
-
-.icon-div .article-icon {
-    background: url(../../assets/images/more/article.png) no-repeat;
-    background-size: cover;
-}
-
-.icon-div .wechat-icon {
-    background: url(../../assets/images/more/wechat.png) no-repeat;
-    background-size: cover;
-}
-
-.icon-div .record-icon {
-    background: url(../../assets/images/account/invest-list.png) no-repeat;
-    background-size: cover;
-}
-
-.icon-div .detail-icon {
-    background: url(../../assets/images/account/capital-list.png) no-repeat;
-    background-size: cover;
-}
-
-.icon-div .coupon-icon {
-    background: url(../../assets/images/account/coupon.png) no-repeat;
-    background-size: cover;
-}
-
-.icon-div .coin-icon {
-    background: url(../../assets/images/account/coin.png) no-repeat;
-    background-size: cover;
-}
-
-.icon-div .safe-icon {
-    background: url(../../assets/images/account/safe.png) no-repeat;
-    background-size: cover;
-}
-
-.icon-div .invite-icon {
-    background: url(../../assets/images/account/invite.png) no-repeat;
-    background-size: cover;
+.icon-div.last div {
+    border-bottom: 0;
 }
 </style>

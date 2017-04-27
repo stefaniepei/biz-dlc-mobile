@@ -56,8 +56,16 @@ a:visited {
 
 /*float,text*/
 
+.float-left {
+    float: left;
+}
+
 .float-right {
     float: right;
+}
+
+.text-left {
+    text-align: left;
 }
 
 .text-center {
@@ -71,10 +79,12 @@ a:visited {
 
 /*display*/
 
-.inline-block {
+.inline-block,
+.display-inline-block {
     display: inline-block;
 }
 
-.block {
+.block,
+.display-block {
     display: block;
 }
