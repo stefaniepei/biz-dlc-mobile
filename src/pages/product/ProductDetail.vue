@@ -1,46 +1,73 @@
 <template>
     <div class="page product-detail">
-        <mt-header :title="productDetail.prodName" class="header-bg-color2">
+        <mt-header :title="productDetail.prodName" class="header-bg-color" fixed>
             <router-link to="/" slot="left">
                 <mt-button icon="back"></mt-button>
             </router-link>
         </mt-header>
-        <div class="prod-info">
-            <div class="prod-earnings">
-                <section class="prod-earnings-left">
-                    <div>
-                        <p class="text-center">预期年化收益<span id="prodIconInfo"></span></p>
-                    </div>
-                    <div class="text-center margin-top-05">
-                        <span class="earnings">{{productDetail.expectYearReturn}}</span>
-                        <span style="color:#ff7742">%</span>
-                        <span v-if="productDetail.invest2YearReturn > 0" class="earnings">~{{productDetail.invest2YearReturn}}<span style="color:#ff7742">%</span></span>
-                    </div>
-                </section>
-                <div id="prodStatus" class="prod-earnings-right"></div>
-            </div>
+        <div class="prod-info header-margin">
             <div class="prod-coupons text-center" v-show="fx || mj || jx">
                 <div class="coupon" v-show="fx">返现券</div>
                 <div class="coupon" v-show="mj">满减券</div>
                 <div class="coupon" v-show="jx">加息券</div>
             </div>
-            <section class="prod-invest">
-                <div class="inline-block w50 text-line">
-                    <p>{{productDetail.prodPeriod}}天</p>
-                    <p>投资期限</p>
+            <div class="prod-earnings">
+                <section class="prod-earnings-left text-center">
+                    <div>
+                        <span class="earnings">{{productDetail.expectYearReturn}}</span>
+                        <span style="color:#ff7742">%</span>
+                        <span v-if="productDetail.invest2YearReturn > 0" class="earnings">~{{productDetail.invest2YearReturn}}<span style="color:#ff7742">%</span></span>
+                    </div>
+                    <div class="margin-top-05">
+                        <p>平均历史年化收益<span id="prodIconInfo"></span></p>
+                    </div>
+                </section>
+                <div id="prodStatus" class="prod-earnings-right"></div>
+            </div>
+            <div class="progress-div">
+                <span class="progressWord">当前进度</span>
+                <span class="progressNo">{{productDetail.quotaProgress}}%</span>
+            </div>
+            <div class="progress-div margin-bottom-15">
+                <div class="progress-bar-bg">
+                    <p :style="{width:''+productDetail.quotaProgress+'%'}" class="progress-bar"></p>
                 </div>
-                <!--<div class="inline-block w002">
-                                        <div class="vertical-line"></div>
-                                    </div>-->
-                <div class="inline-block w50 text-right">
+            </div>
+            <section class="prod-invest">
+                <div class="inline-block w35">
                     <p>{{productDetail.maxRaisedAmount|toMillion}}万</p>
                     <p>项目金额</p>
                 </div>
+                <div class="inline-block w26 text-center">
+                    <p>{{productDetail.prodPeriod}}天</p>
+                    <p>投资期限</p>
+                </div>
+                <div class="inline-block w35 text-right">
+                    <p>{{productDetail.availableAmount|formatCurrency}}</p>
+                    <p>剩余可投</p>
+                </div>
             </section>
         </div>
+        <section class="prod-explain">
+            <section>
+                <span class="prod-explain-left"><img src="../../assets/images/product/repayment.png" style="width: 1.5rem;height: 1.5rem;">还款方式</span>
+                <span class="invest-type prod-explain-right">{{productDetail.interestType|productDict('interestTypeList')}}</span>
+            </section>
+            <section>
+                <span class="prod-explain-left"><img src="../../assets/images/product/start.png" style="width: 1.5rem;height: 1.5rem;">起息时间</span>
+                <span class="prod-explain-right">T（满标日）+1天</span>
+            </section>
+            <section>
+                <span class="prod-explain-left"><img src="../../assets/images/product/last.png" style="width: 1.5rem;height: 1.5rem;">剩余时间</span>
+                <span class="prod-explain-right">
+                                                                                    <count-down></count-down>
+                                                                                </span>
+            </section>
+        </section>
+    
         <section style="color:#a1a1a1;">
             <div class="inline-block w50">剩余可投(元)</div>
-            <div class="inline-block w50 text-right">预计收益(元)</div>
+            <div class="inline-block w50 text-right">历史到期平均总收益</div>
         </section>
         <section style="color:#f08e68;">
             <div class="inline-block w50">{{productDetail.availableAmount|formatCurrency}}</div>
@@ -53,12 +80,6 @@
             <button class="btn line-btn-right" @click="addition">&nbsp;&nbsp;+&nbsp;&nbsp;</button>
         </section>
     
-        <section class="prod-explain">
-            <div>
-                <span>还款方式：</span><span class="invest-type">{{productDetail.interestType|productDict('interestTypeList')}}</span>
-            </div>
-            <count-down></count-down>
-        </section>
         <section class="prod-fill">
         </section>
     
@@ -321,7 +342,7 @@ export default {
 }
 
 .product-detail .prod-info {
-    background: #346faf;
+    background: #346FCA;
     color: #fff;
 }
 
@@ -333,12 +354,11 @@ export default {
 }
 
 .product-detail .prod-info .prod-earnings {
-    margin-top: -1rem;
     padding-bottom: 0.5rem;
 }
 
 .product-detail .prod-info .prod-earnings .earnings {
-    font-size: 1.2rem;
+    font-size: 2.2rem;
     color: #ff7742;
 }
 
@@ -351,7 +371,7 @@ export default {
     box-sizing: border-box;
 }
 
-.product-detail .prod-explain div {
+.product-detail .prod-explain {
     color: #a1a1a1;
     font-size: 0.6rem;
 }
@@ -388,5 +408,45 @@ export default {
     width: 50px;
     height: 18px;
     line-height: 18px;
+}
+
+.product-detail .prod-info .progressWord {
+    font-size: 1rem;
+    color: #fff;
+    text-align: left;
+    width: 78%;
+    display: inline-block;
+}
+
+.product-detail .prod-info .progressNo {
+    font-size: 1rem;
+    color: #fff;
+    display: inline-block;
+    text-align: right;
+    width: 20%;
+}
+
+.product-detail .prod-info .progress-div {
+    overflow: hidden;
+    padding: 0 10%;
+}
+
+.product-detail .prod-info .progress-div .progress-bar-bg {
+    background: #ddd;
+    height: 0.1rem;
+    width: 100%;
+    float: left;
+}
+
+.product-detail .prod-explain .prod-explain-left {
+    display: inline-block;
+    text-align: left;
+    width: 45%;
+}
+
+.product-detail .prod-explain .prod-explain-right {
+    display: inline-block;
+    text-align: right;
+    width: 53%;
 }
 </style>
