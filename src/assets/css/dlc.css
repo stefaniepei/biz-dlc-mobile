@@ -194,6 +194,7 @@
     height: 4rem;
     line-height: 4rem;
     margin-top: 0rem;
+    padding: 0 10%;
 }
 
 .arrow-line .arrow-right {
@@ -217,4 +218,88 @@
     width: 1.5rem;
     height: 1.5rem;
     vertical-align: middle;
+}
+
+.overlay {
+    background: #000;
+    filter: alpha(opacity=50);
+    opacity: 0.5;
+}
+
+
+/*keyboard*/
+
+.keyboard {
+    width: 100%;
+    background: #fff;
+}
+
+.keyboard .numkey {
+    width: 100%;
+    background: #fff;
+    display: table;
+}
+
+.keyboard .numkey ul,
+.keyboard .numkey li {
+    text-decoration: none;
+    list-style: none;
+    vertical-align: middle;
+}
+
+.keyboard .numkey ul {
+    padding: 0;
+    margin: 0;
+}
+
+.keyboard .numkey ul li.top {
+    border-top: 1px solid #b3b3b3;
+}
+
+.keyboard .numkey ul li {
+    width: 33.3%;
+    border-bottom: 1px solid #b3b3b3;
+    border-right: 1px solid #b3b3b3;
+    height: 5rem;
+    float: left;
+    font-size: 28px;
+    font-family: "Helvetica neue", Verdana, Geneva, sans-serif;
+    text-align: center;
+    background: #FFF;
+    color: #000;
+    cursor: pointer;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
+    box-sizing: border-box;
+}
+
+.keyboard .numkey ul li div {
+    color: #000;
+}
+
+.keyboard .numkey ul li span {
+    position: relative;
+    font-size: 12px;
+    top: -8px;
+    color: #000;
+}
+
+.keyboard .numkey ul li.othernum {
+    background-color: #D1D5DA;
+    line-height: 50px;
+}
+
+.keyboard .numkey ul li.delete {
+    background-image: url(../images/product/backspace.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 30px;
+    background-color: #D1D5DA;
+}
+
+.keyboard .numkey ul li:nth-child(3n) {
+    border-right: none;
 }

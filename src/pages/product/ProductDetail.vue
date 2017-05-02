@@ -49,35 +49,18 @@
             </section>
         </div>
         <section class="prod-explain">
-            <section>
-                <span class="prod-explain-left"><img src="../../assets/images/product/repayment.png" style="width: 1.5rem;height: 1.5rem;">还款方式</span>
+            <section class="w100">
+                <span class="prod-explain-left"><img src="../../assets/images/product/repayment.png">还款方式</span>
                 <span class="invest-type prod-explain-right">{{productDetail.interestType|productDict('interestTypeList')}}</span>
             </section>
-            <section>
-                <span class="prod-explain-left"><img src="../../assets/images/product/start.png" style="width: 1.5rem;height: 1.5rem;">起息时间</span>
+            <section class="w100">
+                <span class="prod-explain-left"><img src="../../assets/images/product/start.png">起息时间</span>
                 <span class="prod-explain-right">T（满标日）+1天</span>
             </section>
-            <section>
-                <span class="prod-explain-left"><img src="../../assets/images/product/last.png" style="width: 1.5rem;height: 1.5rem;">剩余时间</span>
-                <span class="prod-explain-right">
-                                                                                    <count-down></count-down>
-                                                                                </span>
+            <section class="w100">
+                <span class="prod-explain-left"><img src="../../assets/images/product/last.png">剩余时间</span>
+                <span class="prod-explain-right"><count-down></count-down></span>
             </section>
-        </section>
-    
-        <section style="color:#a1a1a1;">
-            <div class="inline-block w50">剩余可投(元)</div>
-            <div class="inline-block w50 text-right">历史到期平均总收益</div>
-        </section>
-        <section style="color:#f08e68;">
-            <div class="inline-block w50">{{productDetail.availableAmount|formatCurrency}}</div>
-            <div class="inline-block w50 text-right">{{exprctYearInterest}}</div>
-        </section>
-    
-        <section class="line">
-            <button class="btn line-btn-left" @click="subtraction">&nbsp;&nbsp;-&nbsp;&nbsp;</button>
-            <input id="buyAmount" type="text" class="line-input text-center" :placeholder="Number.parseInt(productDetail.minApplyAmount)+'元起投,'+Number.parseInt(productDetail.minAddAmount)+'元递增'" v-model="buyAmount" @keyup="boolAmount">
-            <button class="btn line-btn-right" @click="addition">&nbsp;&nbsp;+&nbsp;&nbsp;</button>
         </section>
     
         <section class="prod-fill">
@@ -98,19 +81,88 @@
         <section class="prod-tips">
             温馨提示：市场有风险，投资需谨慎
         </section>
-        <section style="margin-top:0.5rem;">
-            <button type="button" class="btn btn-big pay-timer" :disabled="btnDisabled" v-on:btnState="toDisabled">{{btnVal}}</button>
+        <section class="prod-to-pay">
+            <span class="buy-amount show-amount" @click="showAmountView">投资金额</span>
+            <button class="btn btn-detail pay-timer" :disabled="btnDisabled" v-on:btnState="toDisabled">{{btnVal}}</button>
         </section>
-        <section class="login-info fz-small">
-            <div class="inline-block w70">
-                账户余额（元）：
-                <span v-show="!loginOut" class="dlc-red">{{balance|formatCurrency(2,true)}}</span>
-                <span v-show="loginOut"><router-link to="/login">登录可见</router-link></span>
+        <div class="keyboard" v-show="amountView" :style="bottomView" @touchmove.prevent @scroll.prevent>
+            <div class="overlay" :style="fillOverlay" @click="hideAmountView"></div>
+            <div class="adjust-buy-info">
+                <p>
+                    <span class="sps1">起投金额</span>
+                    <span class="sps2">账户余额</span>
+                </p>
+                <p>
+                    <span class="sps1" id="min">{{Number.parseInt(productDetail.minApplyAmount)}}</span>
+                    <span class="sps2" id="login-info">{{balance|formatCurrency(2,true)}}元</span>
+                </p>
+                <p>
+                    <span class="sps1">递增金额</span>
+                    <span class="sps2">预计收益</span>
+                </p>
+                <p>
+                    <span class="sps1" id="minAdd">{{Number.parseInt(productDetail.minAddAmount)}}</span>
+                    <span class="sps2" id="exprctYearInterest">{{exprctYearInterest}}元</span>
+                </p>
             </div>
-            <div class="inline-block w30 text-right">
-                <router-link to="/recharge">充值 > </router-link>
+            <section class="prod-to-pay">
+                <span class="buy-amount show-amount" v-model="buyAmount">投资金额</span>
+                <button class="btn btn-detail pay-timer" :disabled="btnDisabled" v-on:btnState="toDisabled">{{btnVal}}</button>
+            </section>
+            <section class="contarct-agree">
+                <input type="checkbox" style="display:none" id="chkContract" checked="checked" />
+                <span class="checkboxIcon checked" id="zfxy"></span>
+                <span>已阅读并同意<a href="javascript:;" id="dqsqs">《定向委托投资管理协议》</a></span>
+            </section>
+            <div class="numkey">
+                <ul>
+                    <li class="num top">
+                        <div>1</div>
+                        <span></span>
+                    </li>
+                    <li class="num top">
+                        <div>2</div>
+                        <span>ABC</span>
+                    </li>
+                    <li class="num top">
+                        <div>3</div>
+                        <span>DEF</span>
+                    </li>
+                    <li class="num">
+                        <div>4</div>
+                        <span>GHI</span>
+                    </li>
+                    <li class="num">
+                        <div>5</div>
+                        <span>JKL</span>
+                    </li>
+                    <li class="num">
+                        <div>6</div>
+                        <span>MNO</span>
+                    </li>
+                    <li class="num">
+                        <div>7</div>
+                        <span>PQRS</span>
+                    </li>
+                    <li class="num">
+                        <div>8</div>
+                        <span>TUV</span>
+                    </li>
+                    <li class="num">
+                        <div>9</div>
+                        <span>WXYZ</span>
+                    </li>
+                    <li class="num othernum">
+                        <div>00</div>
+                    </li>
+                    <li class="num" style="line-height: 50px;">
+                        <div>0</div>
+                    </li>
+                    <li class="delete"></li>
+                </ul>
             </div>
-        </section>
+        </div>
+    
     </div>
 </template>
 <script>
@@ -128,9 +180,21 @@ export default {
             buyAmount: '',
             btnDisabled: 'disabled',
             btnVal: '立即购买',
+            bottomView: {
+                position: 'absolute',
+                bottom: 0,
+            },
+            fillOverlay: {
+                position: 'absolute',
+                height: window.innerHeight - 401 + 'px',
+                width: '100%',
+                bottom: 401 + 'px',
+                zIndex: 2
+            },
             fx: false,
             mj: false,
-            jx: false
+            jx: false,
+            amountView: false,
         }
     },
     // computed: mapState({ 
@@ -194,6 +258,17 @@ export default {
                     }
                 }
             }
+        },
+        showAmountView() {
+            var bottomVal = '-' + window.scrollY + 'px'
+            this.bottomView = {
+                position: 'absolute',
+                bottom: bottomVal
+            }
+            this.amountView = true
+        },
+        hideAmountView() {
+            this.amountView = false
         },
         setBuyButton(productDetail) {
             if (productDetail.prodStatus) {
@@ -376,6 +451,12 @@ export default {
     font-size: 0.6rem;
 }
 
+.product-detail .prod-explain img {
+    width: 1.5rem;
+    height: 1.5rem;
+    vertical-align: middle;
+}
+
 .product-detail .prod-fill {
     width: 100%;
     height: 0.5rem;
@@ -383,11 +464,11 @@ export default {
 }
 
 .product-detail .prod-tips {
-    height: 1rem;
+    height: 2rem;
+    line-height: 2rem;
     margin-top: 0.5rem;
-    color: #FD7924;
-    font-size: 0.6rem;
-    text-align: center;
+    font-size: 1.2rem;
+    color: #999;
 }
 
 .product-detail .login-info {
@@ -448,5 +529,64 @@ export default {
     display: inline-block;
     text-align: right;
     width: 53%;
+}
+
+.product-detail .prod-to-pay {
+    border-top: 1px solid #F1F1F1;
+    width: 100%;
+}
+
+.product-detail .prod-to-pay .buy-amount {
+    text-align: center;
+    display: inline-block;
+    border: 1px solid #DFDFDF;
+    border-radius: 5px;
+    box-sizing: border-box;
+    width: 60%;
+    height: 3rem;
+    line-height: 3rem;
+    margin: 0.5rem 5%;
+}
+
+.product-detail .prod-to-pay .btn-detail {
+    width: 28%;
+    border: 0;
+    padding: 0;
+    border-radius: 0;
+    font-size: 1.4rem;
+    height: 4rem;
+    line-height: 4rem;
+    background: #3871C7;
+    color: #fff;
+    float: right;
+    display: inline-block;
+}
+
+.product-detail .adjust-buy-info {
+    margin: 0.5rem 5%;
+    font-size: 1.2rem;
+    color: #000;
+    /*color: #9E9E9E;*/
+}
+
+.adjust-buy-info p {
+    margin: 0.5rem 0;
+}
+
+.product-detail .adjust-buy-info .sps1 {
+    width: 49%;
+    display: inline-block;
+}
+
+.product-detail .adjust-buy-info .sps2 {
+    width: 49%;
+    display: inline-block;
+}
+
+.product-detail .contarct-agree {
+    margin-left: 5%;
+    font-size: 1.3rem;
+    line-height: 2rem;
+    margin-top: 0rem;
 }
 </style>
