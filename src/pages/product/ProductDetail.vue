@@ -82,7 +82,7 @@
             温馨提示：市场有风险，投资需谨慎
         </section>
         <section class="prod-to-pay">
-            <span class="buy-amount show-amount" @click="showAmountView">投资金额</span>
+            <span class="buy-amount show-amount" @click="showAmountView">{{buyAmount}}</span>
             <button class="btn btn-detail pay-timer" :disabled="btnDisabled" v-on:btnState="toDisabled">{{btnVal}}</button>
         </section>
         <div class="keyboard" v-show="amountView" :style="bottomView" @touchmove.prevent @scroll.prevent>
@@ -106,7 +106,7 @@
                 </p>
             </div>
             <section class="prod-to-pay">
-                <span class="buy-amount show-amount" v-model="buyAmount">投资金额</span>
+                <span class="buy-amount show-amount">{{buyAmount}}</span>
                 <button class="btn btn-detail pay-timer" :disabled="btnDisabled" v-on:btnState="toDisabled">{{btnVal}}</button>
             </section>
             <section class="contarct-agree">
@@ -116,49 +116,49 @@
             </section>
             <div class="numkey">
                 <ul>
-                    <li class="num top">
+                    <li class="num top" @click="inputNum('1')">
                         <div>1</div>
                         <span></span>
                     </li>
-                    <li class="num top">
+                    <li class="num top" @click="inputNum('2')">
                         <div>2</div>
                         <span>ABC</span>
                     </li>
-                    <li class="num top">
+                    <li class="num top" @click="inputNum('3')">
                         <div>3</div>
                         <span>DEF</span>
                     </li>
-                    <li class="num">
+                    <li class="num" @click="inputNum('4')">
                         <div>4</div>
                         <span>GHI</span>
                     </li>
-                    <li class="num">
+                    <li class="num" @click="inputNum('5')">
                         <div>5</div>
                         <span>JKL</span>
                     </li>
-                    <li class="num">
+                    <li class="num" @click="inputNum('6')">
                         <div>6</div>
                         <span>MNO</span>
                     </li>
-                    <li class="num">
+                    <li class="num" @click="inputNum('7')">
                         <div>7</div>
                         <span>PQRS</span>
                     </li>
-                    <li class="num">
+                    <li class="num" @click="inputNum('8')">
                         <div>8</div>
                         <span>TUV</span>
                     </li>
-                    <li class="num">
+                    <li class="num" @click="inputNum('9')">
                         <div>9</div>
                         <span>WXYZ</span>
                     </li>
-                    <li class="num othernum">
+                    <li class="num othernum" @click="inputNum('00')">
                         <div>00</div>
                     </li>
-                    <li class="num" style="line-height: 50px;">
+                    <li class="num" style="line-height: 50px;" @click="inputNum('0')">
                         <div>0</div>
                     </li>
-                    <li class="delete"></li>
+                    <li class="delete" @click="inputNum('-1')"></li>
                 </ul>
             </div>
         </div>
@@ -177,7 +177,7 @@ export default {
             productDetail: {},
             exprctYearInterest: '0.00',
             balance: '0.00',
-            buyAmount: '',
+            buyAmount: '投资金额',
             btnDisabled: 'disabled',
             btnVal: '立即购买',
             bottomView: {
@@ -197,9 +197,6 @@ export default {
             amountView: false,
         }
     },
-    // computed: mapState({ 
-    //     user: (state) => state.user
-    // }),
     computed: mapGetters([
         'user',
         'userAccount',
@@ -297,29 +294,31 @@ export default {
                 }
             }
         },
-        addition() {
-            if (this.buyAmount === '') this.buyAmount = 0
-            let res = Number.parseInt(this.buyAmount) + Number.parseInt(this.productDetail.minAddAmount)
-            this.calu(res)
-        },
-        subtraction() {
-            if (this.buyAmount === '') this.buyAmount = 0
-            let res = Number.parseInt(this.buyAmount) - Number.parseInt(this.productDetail.minAddAmount)
-            this.calu(res)
+        inputNum(num) {
+            if (this.buyAmount === '投资金额') this.buyAmount = 0
+            let val = 0
+            if (Number.parseInt(num) >= 0) {
+                val = String(this.buyAmount) + String(num)
+            } else {
+                val = String(this.buyAmount).substr(0, String(this.buyAmount).length - 1)
+            }
+            console.log(val)
+            val = isNaN(Number.parseInt(val)) ? '' : Number.parseInt(val)
+            console.log(val)
+            this.buyAmount = val
+            this.calu(val)
         },
         calu(res) {
-            if (res > Number.parseInt(this.productDetail.availableAmount)) {
+            if (res == '' || isNaN(res)) {
+                this.buyAmount = '投资金额'
+            } else if (res > Number.parseInt(this.productDetail.availableAmount)) {
                 this.buyAmount = Number.parseInt(this.productDetail.availableAmount)
             } else if (res < Number.parseInt(this.productDetail.minApplyAmount)) {
                 this.buyAmount = Number.parseInt(this.productDetail.minApplyAmount)
             } else {
-                if (res == '' || isNaN(res)) {
-                    this.buyAmount = ''
-                } else {
-                    this.buyAmount = res
-                }
+                this.buyAmount = res
             }
-            if (this.buyAmount !== '') {
+            if (this.buyAmount !== '投资金额') {
                 this.exprctYearInterest = (Number.parseInt(this.buyAmount) * Number.parseInt(this.productDetail.expectYearReturn) / 100 / Number.parseInt(this.productDetail.yearDays) * Number.parseInt(this.productDetail.prodPeriod)).toFixed(2)
             } else {
                 this.exprctYearInterest = '0.00'
@@ -517,6 +516,11 @@ export default {
     height: 0.1rem;
     width: 100%;
     float: left;
+}
+
+.product-detail .prod-info .progress-div .progress-bar-bg .progress-bar {
+    background: #398be1;
+    height: 0.1rem;
 }
 
 .product-detail .prod-explain .prod-explain-left {
