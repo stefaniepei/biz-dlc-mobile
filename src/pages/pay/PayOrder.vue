@@ -6,70 +6,53 @@
             </a>
         </mt-header>
         <section class="order-info header-margin">
-            <div class="w50 inline-block float-left">
+            <div class="w50 inline-block float-left height-4 line-height-4">
                 <span class="margin-left10">产品名称：</span>
             </div>
-            <div class="w50 inline-block float-left text-right">
+            <div class="w50 inline-block float-left text-right height-4 line-height-4">
                 <span class="margin-right10">{{order.productName}}</span>
             </div>
     
-            <div class="w35 inline-block float-left">
-                <p class="margin-left10">
+            <div class="w50 inline-block float-left height-4 line-height-4 v-line">
+                <p class="margin-left10 height-2 line-height-2">
                     <span class="expected" id="annualYield">{{order.productRate}}</span>
                     <span class="expected" id="annualYieldJX"></span>
                 </p>
-                <p class="margin-left10"><span class="expected-desc">预期年化收益</span></p>
+                <p class="margin-left10 height-2 line-height-2"><span class="expected-desc">预期年化收益</span></p>
             </div>
-            <div class="w30 inline-block float-left text-center">|</div>
-            <div class="w35 inline-block float-left">
-                <p class="margin-right10">
+            <div class="w50 inline-block float-left text-right height-4 line-height-4">
+                <p class="margin-right10 height-2 line-height-2">
                     <span class="expected" id="anticipatedIncome">{{order.expectedProfit}}</span>
                     <span class="expected" id="anticipatedIncomeJX"></span>
                 </p>
-                <p class="margin-right10"><span class="expected-desc">预计收益(元)</span></p>
+                <p class="margin-right10 height-2 line-height-2"><span class="expected-desc">预计收益(元)</span></p>
             </div>
         </section>
-        <section class="prod-fill"></section>
-        <section class="pay-list" id="pay-redBag" style="background: #fff;">
-            <div class="pay-list-left">
-                <span class="rem-15" style="display: inline-block;">优惠券</span>
+        <section class="fill-div-05"></section>
+    
+        <section class="bgc-fff height-4 line-height-4">
+            <div class="w50 inline-block float-left height-4 line-height-4">
+                <span class="margin-left10">优惠券</span>
                 <span class="red-bag-wenhao" id="showCouponRule"></span>
             </div>
-            <div class="pay-list-right" id="pay-redBag-show">
-                <span id="redBagAmount" style="color:#346faf" class="rem1-4">无可用券</span>
-                <span class="arrow-right" id="arrow-coin"></span>
+            <div class="w50 inline-block float-left text-right height-4 line-height-4">
+                <span>无可用券</span>
+                <span class="arrow-right"></span>
             </div>
         </section>
-        <section class="prod-fill"></section>
-        <section class="pay-list" id="pay-coin" style="background: #fff;">
-            <div class="pay-list-left" style="width:4rem">
-                <span class="rem-15">点币</span>
+        <section class="fill-div-05"></section>
+    
+        <section class="bgc-fff height-4 line-height-4">
+            <div class="w50 inline-block float-left height-4 line-height-4">
+                <span class="margin-left10">订单金额</span>
             </div>
-            <div class="pay-list-right" id="pay-coin-show">
-                <span id="coinText" style="font-size:1.4rem;display:inline-block;">无点币</span>
-                <input type="checkbox" class="hide" id="chkCoin" />
-                <span class="checkboxIcon" style="display:none;margin-left:10px;" id="chkCoinIcon"></span>
-            </div>
-        </section>
-        <section class="prod-fill"></section>
-        <section class="pay-list" style="background: #fff;">
-            <div class="pay-list-left">
-                <span class="rem-15">订单金额</span>
-            </div>
-            <div class="pay-list-right" id="pay-list-right-coupon">
-                <span id="orderTotal" class="rem-15" style="color:#346faf"></span>
+            <div class="w50 inline-block float-left text-right height-4 line-height-4">
+                <span class="margin-right10" style="color:#346faf">{{order.total}}</span>
             </div>
         </section>
-        <section class="pay-list" style="background: #fff;">
-            <div class="pay-list-left">
-                <span class="rem-15" id="purposeField"></span>
-            </div>
-            <div class="pay-list-right" id="pay-list-right-coupon">
-                <span id="coinAmount" class="rem-15" style="color:#346faf"></span>
-            </div>
-        </section>
-        <section style="background: #f5f5f5;height:0.6rem;"></section>
-        <section style="fixed bottom w100">
+        <section class="fill-div-05"></section>
+    
+        <section class="fixed bottom w100 bgc-fff">
             <section class="pay-xys-2">
                 <section class="reg-agree">
                     <input type="checkbox" style="display:none" id="chkContract" checked="checked" />
@@ -80,7 +63,7 @@
             <section>
                 <div class="pay-btn-left">
                     <span style="color:#333;font-size:1.4rem;">应付总额：</span>
-                    <span id="needPay" style="color:#ff0036;font-size:1.4rem">￥0.00</span>
+                    <span id="needPay" style="color:#ff0036;font-size:1.4rem">￥{{order.total}}</span>
                 </div>
                 <button type="button" id="pay" @click="payOrderTrade" :disabled="btnDisabled" v-on:btnState="toDisabled" class="pay-btn pay-timer">{{buyBtnVal}}</button>
             </section>
@@ -157,7 +140,53 @@ export default {
 
 .order-info {
     background-color: #fff;
-    line-height: 10.2rem;
-    height: 10.2rem;
+    line-height: 9rem;
+    height: 9rem;
+}
+
+.pay-xys-2 {
+    height: 3.5rem;
+    line-height: 3.5rem;
+    background: #E6E6E6;
+    margin-bottom: 2px;
+}
+
+.reg-agree {
+    position: relative;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.pay-btn-left {
+    float: left;
+    display: inline-block;
+    height: 4.2rem;
+    line-height: 4.2rem;
+    text-align: center;
+    width: 70%;
+    margin-top: -2px;
+}
+
+.pay-btn {
+    width: 30%;
+    float: right;
+    display: inline-block;
+    height: 4.2rem;
+    line-height: 0rem;
+    color: #fff;
+    border: none;
+    font-size: 1.4rem;
+    border-radius: 0px;
+    background-color: #346faf;
+    margin-top: -2px;
+}
+
+.red-bag-wenhao {
+    background: url(../../assets/images/pay/wenhao.png) no-repeat;
+    width: 15px;
+    height: 15px;
+    background-size: cover;
+    display: inline-block;
+    vertical-align: super;
 }
 </style>
