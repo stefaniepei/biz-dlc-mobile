@@ -72,23 +72,22 @@ export default {
     methods: {
         fetchData1() {
             let _this = this
-            this.$http.get(`/account/points/jour`, { params: { page: this.page1, pageSize: this.pageSize }, headers: { 'Authorization': this.userAuth } }).then(function (res) {
-                let souce = res.data.data
-                if (_this.page1 === 1) {
-                    _this.records1 = souce
-                } else {
-                    _this.records1.push(...souce)
-                }
-                if (_this.pageSize == souce.length) {
-                    _this.loading1 = true
-                    _this.page1++
-                } else {
-                    _this.loading1 = false
-                    _this.loadingTitle1 = '暂无更多数据'
-                }
-            }).catch(function (err) {
-                Toast(err)
-            })
+            this.$http.get(`/account/points/jour`, { params: { page: this.page1, pageSize: this.pageSize }, headers: { 'Authorization': this.userAuth } })
+                .then((res) => {
+                    let souce = res.data.data
+                    if (_this.page1 === 1) {
+                        _this.records1 = souce
+                    } else {
+                        _this.records1.push(...souce)
+                    }
+                    if (_this.pageSize == souce.length) {
+                        _this.loading1 = true
+                        _this.page1++
+                    } else {
+                        _this.loading1 = false
+                        _this.loadingTitle1 = '暂无更多数据'
+                    }
+                }).catch((err) => Toast(err))
         },
     },
     components: {

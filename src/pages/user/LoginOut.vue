@@ -5,7 +5,7 @@ export default {
         next(vm => {
             vm.$store.dispatch('USER_LOGIN_OUT')
             // next({ path: '/login' })
-            vm.$router.push({ path: 'home' })
+            vm.$router.push({ path: '/' })
         })
     },
 

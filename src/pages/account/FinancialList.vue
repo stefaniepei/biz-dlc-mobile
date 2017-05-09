@@ -87,22 +87,23 @@ export default {
             let _this = this
             _this.loading = false
             let pageSize = 10
-            this.$http.get(`/biz/accounts/share`, { params: { sort: 'created_at', asc: false, status: '', page: this.page, pageSize: pageSize }, headers: { 'Authorization': this.userAuth } }).then(function (res) {
-                if (_this.page === 1) {
-                    _this.records = res.data.data
-                } else {
-                    _this.records.push(...res.data.data)
-                }
-                if (res.data.data.length == pageSize) {
-                    _this.loading = true
-                    _this.page++
-                } else {
-                    _this.loadingTitle = '暂无更多数据'
-                }
+            this.$http.get(`/biz/accounts/share`, { params: { sort: 'created_at', asc: false, status: '', page: this.page, pageSize: pageSize }, headers: { 'Authorization': this.userAuth } })
+                .then((res) => {
+                    if (_this.page === 1) {
+                        _this.records = res.data.data
+                    } else {
+                        _this.records.push(...res.data.data)
+                    }
+                    if (res.data.data.length == pageSize) {
+                        _this.loading = true
+                        _this.page++
+                    } else {
+                        _this.loadingTitle = '暂无更多数据'
+                    }
 
-            }).catch(function (err) {
-                Toast(err)
-            })
+                }).catch((err) => {
+                    Toast(err)
+                })
         },
     },
     components: {

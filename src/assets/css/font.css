@@ -1,36 +1,51 @@
 /*font-size*/
 
 .fz-08,
-.fz-smallest {
+.fz-smallest,
+.rem-08 {
     font-size: 0.8rem;
 }
 
 .fz-1,
-.fz-smaller {
+.fz-smaller,
+.rem-1 {
     font-size: 1rem;
 }
 
 .fz-12,
-.fz-small {
+.fz-small,
+.rem-12 {
     font-size: 1.2rem;
 }
 
 .fz-14,
-.fz-normal {
+.fz-normal,
+.rem-14 {
     font-size: 1.4rem;
 }
 
 .fz-16,
-.fz-big {
+.fz-big,
+.rem-16 {
     font-size: 1.6rem;
 }
 
 .fz-18,
-.fz-bigger {
+.fz-bigger,
+.rem-18 {
     font-size: 1.8rem;
 }
 
 .fz-2,
-.fz-biggest {
+.fz-biggest,
+.rem-2 {
     font-size: 2rem;
+}
+
+.rem-15 {
+    font-size: 1.5rem;
+}
+
+.rem-22 {
+    font-size: 2.2rem;
 }

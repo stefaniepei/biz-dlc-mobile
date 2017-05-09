@@ -24,13 +24,13 @@
                         <div class="redPkt-act-right">
                             <div class="cp-con-top">
                                 <em v-if="'fx' == value.classType || 'mj' == value.classType">
-                                                                        <span class="icon-rmb">￥</span><span class="unit">{{value.amount}}</span> 
-                                                                    </em>
+                                    <span class="icon-rmb">￥</span><span class="unit">{{value.amount}}</span> 
+                                </em>
     
                                 <em v-else-if="'jx' == value.classType">
-                                                                        <span class="unit" style="margin-left:1.4rem">{{value.amount}}</span>
-                                                                        <span class="icon-rmb" style="vertical-align: bottom;">%</span> 
-                                                                    </em>
+                                    <span class="unit" style="margin-left:1.4rem">{{value.amount}}</span>
+                                    <span class="icon-rmb" style="vertical-align: bottom;">%</span> 
+                                </em>
                             </div>
                             <div class="cp-con-bottom">
                                 <p v-if="0 == Number.parseInt(value.minInvestAmount) && 2147483647 == Number.parseInt(value.maxInvestAmount)">1.单笔投资无限制</p>
@@ -60,13 +60,13 @@
                         <div class="redPkt-act-right">
                             <div class="cp-con-top">
                                 <em v-if="'fx' == value.classType || 'mj' == value.classType">
-                                                                        <span class="icon-rmb">￥</span><span class="unit">{{value.amount}}</span> 
-                                                                    </em>
+                                    <span class="icon-rmb">￥</span><span class="unit">{{value.amount}}</span> 
+                                </em>
     
                                 <em v-else-if="'jx' == value.classType">
-                                                                        <span class="unit" style="margin-left:1.4rem">{{value.amount}}</span>
-                                                                        <span class="icon-rmb" style="vertical-align: bottom;">%</span> 
-                                                                    </em>
+                                    <span class="unit" style="margin-left:1.4rem">{{value.amount}}</span>
+                                    <span class="icon-rmb" style="vertical-align: bottom;">%</span> 
+                                </em>
                             </div>
                             <div class="cp-con-bottom">
                                 <p v-if="0 == Number.parseInt(value.minInvestAmount) && 2147483647 == Number.parseInt(value.maxInvestAmount)">1.单笔投资无限制</p>
@@ -96,13 +96,13 @@
                         <div class="redPkt-act-right">
                             <div class="cp-con-top">
                                 <em v-if="'fx' == value.classType || 'mj' == value.classType">
-                                                                        <span class="icon-rmb">￥</span><span class="unit">{{value.amount}}</span> 
-                                                                    </em>
+                                    <span class="icon-rmb">￥</span><span class="unit">{{value.amount}}</span> 
+                                </em>
     
                                 <em v-else-if="'jx' == value.classType">
-                                                                        <span class="unit" style="margin-left:1.4rem">{{value.amount}}</span>
-                                                                        <span class="icon-rmb" style="vertical-align: bottom;">%</span> 
-                                                                    </em>
+                                    <span class="unit" style="margin-left:1.4rem">{{value.amount}}</span>
+                                    <span class="icon-rmb" style="vertical-align: bottom;">%</span> 
+                                </em>
                             </div>
                             <div class="cp-con-bottom">
                                 <p v-if="0 == Number.parseInt(value.minInvestAmount) && 2147483647 == Number.parseInt(value.maxInvestAmount)">1.单笔投资无限制</p>
@@ -177,113 +177,110 @@ export default {
         fetchData1() {
             let _this = this
             _this.loading1 = false
-            this.$http.get(`/account/coupons`, { params: { categoryId: 2, status: 0, page: this.page1, pageSize: this.pageSize }, headers: { 'Authorization': this.userAuth } }).then(function (res) {
-                let souce = res.data.data
-                for (let s of souce) {
-                    if (s.status == 0) {
-                        s.classState = 'noUse'
-                    } else if (s.status == 1) {
-                        s.classState = 'use'
-                    } else {
-                        s.classState = 'exp'
-                    }
+            this.$http.get(`/account/coupons`, { params: { categoryId: 2, status: 0, page: this.page1, pageSize: this.pageSize }, headers: { 'Authorization': this.userAuth } })
+                .then((res) => {
+                    let souce = res.data.data
+                    for (let s of souce) {
+                        if (s.status == 0) {
+                            s.classState = 'noUse'
+                        } else if (s.status == 1) {
+                            s.classState = 'use'
+                        } else {
+                            s.classState = 'exp'
+                        }
 
-                    if (s.categoryType == 4) {
-                        s.classType = 'jx'
-                    } else if (s.categoryType == 3) {
-                        s.classType = 'mj'
-                    } else if (s.categoryType == 2) {
-                        s.classType = 'fx'
+                        if (s.categoryType == 4) {
+                            s.classType = 'jx'
+                        } else if (s.categoryType == 3) {
+                            s.classType = 'mj'
+                        } else if (s.categoryType == 2) {
+                            s.classType = 'fx'
+                        }
                     }
-                }
-                if (_this.page1 === 1) {
-                    _this.records1 = souce
-                } else {
-                    _this.records1.push(...souce)
-                }
-                if (_this.pageSize == souce.length) {
-                    _this.loading1 = true
-                    _this.page1++
-                } else {
-                    _this.loadingTitle1 = '暂无更多数据'
-                }
-            }).catch(function (err) {
-                Toast(err)
-            })
+                    if (_this.page1 === 1) {
+                        _this.records1 = souce
+                    } else {
+                        _this.records1.push(...souce)
+                    }
+                    if (_this.pageSize == souce.length) {
+                        _this.loading1 = true
+                        _this.page1++
+                    } else {
+                        _this.loadingTitle1 = '暂无更多数据'
+                    }
+                }).catch((err) => Toast(err))
         },
         fetchData2() {
             let _this = this
             _this.loading2 = false
-            this.$http.get(`/account/coupons`, { params: { categoryId: 2, status: 1, page: this.page2, pageSize: this.pageSize }, headers: { 'Authorization': this.userAuth } }).then(function (res) {
-                let souce = res.data.data
-                for (let s of souce) {
-                    if (s.status == 0) {
-                        s.classState = 'noUse'
-                    } else if (s.status == 1) {
-                        s.classState = 'use'
-                    } else {
-                        s.classState = 'exp'
-                    }
+            this.$http.get(`/account/coupons`, { params: { categoryId: 2, status: 1, page: this.page2, pageSize: this.pageSize }, headers: { 'Authorization': this.userAuth } })
+                .then((res) => {
+                    let souce = res.data.data
+                    for (let s of souce) {
+                        if (s.status == 0) {
+                            s.classState = 'noUse'
+                        } else if (s.status == 1) {
+                            s.classState = 'use'
+                        } else {
+                            s.classState = 'exp'
+                        }
 
-                    if (s.categoryType == 4) {
-                        s.classType = 'jx'
-                    } else if (s.categoryType == 3) {
-                        s.classType = 'mj'
-                    } else if (s.categoryType == 2) {
-                        s.classType = 'fx'
+                        if (s.categoryType == 4) {
+                            s.classType = 'jx'
+                        } else if (s.categoryType == 3) {
+                            s.classType = 'mj'
+                        } else if (s.categoryType == 2) {
+                            s.classType = 'fx'
+                        }
                     }
-                }
-                if (_this.page2 === 1) {
-                    _this.records2 = souce
-                } else {
-                    _this.records2.push(...souce)
-                }
-                if (_this.pageSize == souce.length) {
-                    _this.loading2 = true
-                    _this.page2++
-                } else {
-                    _this.loadingTitle2 = '暂无更多数据'
-                }
-            }).catch(function (err) {
-                Toast(err)
-            })
+                    if (_this.page2 === 1) {
+                        _this.records2 = souce
+                    } else {
+                        _this.records2.push(...souce)
+                    }
+                    if (_this.pageSize == souce.length) {
+                        _this.loading2 = true
+                        _this.page2++
+                    } else {
+                        _this.loadingTitle2 = '暂无更多数据'
+                    }
+                }).catch((err) => Toast(err))
         },
         fetchData3() {
             let _this = this
             _this.loading3 = false
-            this.$http.get(`/account/coupons`, { params: { categoryId: 2, status: 2, page: this.page3, pageSize: this.pageSize }, headers: { 'Authorization': this.userAuth } }).then(function (res) {
-                let souce = res.data.data
-                for (let s of souce) {
-                    if (s.status == 0) {
-                        s.classState = 'noUse'
-                    } else if (s.status == 1) {
-                        s.classState = 'use'
-                    } else {
-                        s.classState = 'exp'
-                    }
+            this.$http.get(`/account/coupons`, { params: { categoryId: 2, status: 2, page: this.page3, pageSize: this.pageSize }, headers: { 'Authorization': this.userAuth } })
+                .then((res) => {
+                    let souce = res.data.data
+                    for (let s of souce) {
+                        if (s.status == 0) {
+                            s.classState = 'noUse'
+                        } else if (s.status == 1) {
+                            s.classState = 'use'
+                        } else {
+                            s.classState = 'exp'
+                        }
 
-                    if (s.categoryType == 4) {
-                        s.classType = 'jx'
-                    } else if (s.categoryType == 3) {
-                        s.classType = 'mj'
-                    } else if (s.categoryType == 2) {
-                        s.classType = 'fx'
+                        if (s.categoryType == 4) {
+                            s.classType = 'jx'
+                        } else if (s.categoryType == 3) {
+                            s.classType = 'mj'
+                        } else if (s.categoryType == 2) {
+                            s.classType = 'fx'
+                        }
                     }
-                }
-                if (_this.page3 === 1) {
-                    _this.records3 = souce
-                } else {
-                    _this.records3.push(...souce)
-                }
-                if (_this.pageSize == souce.length) {
-                    _this.loading3 = true
-                    _this.page3++
-                } else {
-                    _this.loadingTitle3 = '暂无更多数据'
-                }
-            }).catch(function (err) {
-                Toast(err)
-            })
+                    if (_this.page3 === 1) {
+                        _this.records3 = souce
+                    } else {
+                        _this.records3.push(...souce)
+                    }
+                    if (_this.pageSize == souce.length) {
+                        _this.loading3 = true
+                        _this.page3++
+                    } else {
+                        _this.loadingTitle3 = '暂无更多数据'
+                    }
+                }).catch((err) => Toast(err))
         },
     },
     components: {
