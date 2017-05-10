@@ -73,7 +73,7 @@ export default {
     ]),
     beforeRouteEnter(to, from, next) {
         next(vm => {
-            this.fetchData()
+            vm.fetchData()
         })
     },
     mounted() {
@@ -90,20 +90,18 @@ export default {
             this.$http.get(`/biz/accounts/share`, { params: { sort: 'created_at', asc: false, status: '', page: this.page, pageSize: pageSize }, headers: { 'Authorization': this.userAuth } })
                 .then((res) => {
                     if (_this.page === 1) {
-                        _this.records = res.data.data
+                        _this.records = res.data
                     } else {
-                        _this.records.push(...res.data.data)
+                        _this.records.push(...res.data)
                     }
-                    if (res.data.data.length == pageSize) {
+                    if (res.data.length == pageSize) {
                         _this.loading = true
                         _this.page++
                     } else {
                         _this.loadingTitle = '暂无更多数据'
                     }
 
-                }).catch((err) => {
-                    Toast(err)
-                })
+                }).catch((err) => Toast(err))
         },
     },
     components: {

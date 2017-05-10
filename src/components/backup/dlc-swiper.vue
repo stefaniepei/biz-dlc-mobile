@@ -11,7 +11,7 @@
             <!-- 以下控件元素均为可选（使用具名slot来确定并应用一些操作控件元素） -->
             <div class="swiper-pagination" slot="pagination"></div>
             <!--<div class="swiper-button-prev" slot="button-prev"></div>
-                    <div class="swiper-button-next" slot="button-next"></div>-->
+                        <div class="swiper-button-next" slot="button-next"></div>-->
             <div class="swiper-scrollbar" slot="scrollbar"></div>
         </swiper>
     </div>
@@ -73,7 +73,7 @@ export default {
         getSwiperData() {
             let _this = this
             this.$http.get('/utils/bulletin', { params: { createdFrom: '2016-12-01', type: 3, page: 1, pageSize: 5 } })
-                .then((res) => _this.imgData = res.data.data)
+                .then((res) => _this.imgData = res.data)
                 .catch((err) => Toast(err))
         }
     }

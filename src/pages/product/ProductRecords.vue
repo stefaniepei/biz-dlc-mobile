@@ -56,11 +56,11 @@ export default {
             this.$http.get(`/trades/invest/list`, { params: { prodCodeId: id, page: this.page, pageSize: pageSize } })
                 .then((res) => {
                     if (_this.page === 1) {
-                        _this.records = res.data.data
+                        _this.records = res.data
                     } else {
-                        _this.records.push(...res.data.data)
+                        _this.records.push(...res.data)
                     }
-                    if (res.data.data.length == pageSize) {
+                    if (res.data.length == pageSize) {
                         _this.loading = true
                         _this.page++
                     } else {

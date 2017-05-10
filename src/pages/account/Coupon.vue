@@ -24,13 +24,13 @@
                         <div class="redPkt-act-right">
                             <div class="cp-con-top">
                                 <em v-if="'fx' == value.classType || 'mj' == value.classType">
-                                    <span class="icon-rmb">￥</span><span class="unit">{{value.amount}}</span> 
-                                </em>
+                                        <span class="icon-rmb">￥</span><span class="unit">{{value.amount}}</span> 
+                                    </em>
     
                                 <em v-else-if="'jx' == value.classType">
-                                    <span class="unit" style="margin-left:1.4rem">{{value.amount}}</span>
-                                    <span class="icon-rmb" style="vertical-align: bottom;">%</span> 
-                                </em>
+                                        <span class="unit" style="margin-left:1.4rem">{{value.amount}}</span>
+                                        <span class="icon-rmb" style="vertical-align: bottom;">%</span> 
+                                    </em>
                             </div>
                             <div class="cp-con-bottom">
                                 <p v-if="0 == Number.parseInt(value.minInvestAmount) && 2147483647 == Number.parseInt(value.maxInvestAmount)">1.单笔投资无限制</p>
@@ -60,13 +60,13 @@
                         <div class="redPkt-act-right">
                             <div class="cp-con-top">
                                 <em v-if="'fx' == value.classType || 'mj' == value.classType">
-                                    <span class="icon-rmb">￥</span><span class="unit">{{value.amount}}</span> 
-                                </em>
+                                        <span class="icon-rmb">￥</span><span class="unit">{{value.amount}}</span> 
+                                    </em>
     
                                 <em v-else-if="'jx' == value.classType">
-                                    <span class="unit" style="margin-left:1.4rem">{{value.amount}}</span>
-                                    <span class="icon-rmb" style="vertical-align: bottom;">%</span> 
-                                </em>
+                                        <span class="unit" style="margin-left:1.4rem">{{value.amount}}</span>
+                                        <span class="icon-rmb" style="vertical-align: bottom;">%</span> 
+                                    </em>
                             </div>
                             <div class="cp-con-bottom">
                                 <p v-if="0 == Number.parseInt(value.minInvestAmount) && 2147483647 == Number.parseInt(value.maxInvestAmount)">1.单笔投资无限制</p>
@@ -96,13 +96,13 @@
                         <div class="redPkt-act-right">
                             <div class="cp-con-top">
                                 <em v-if="'fx' == value.classType || 'mj' == value.classType">
-                                    <span class="icon-rmb">￥</span><span class="unit">{{value.amount}}</span> 
-                                </em>
+                                        <span class="icon-rmb">￥</span><span class="unit">{{value.amount}}</span> 
+                                    </em>
     
                                 <em v-else-if="'jx' == value.classType">
-                                    <span class="unit" style="margin-left:1.4rem">{{value.amount}}</span>
-                                    <span class="icon-rmb" style="vertical-align: bottom;">%</span> 
-                                </em>
+                                        <span class="unit" style="margin-left:1.4rem">{{value.amount}}</span>
+                                        <span class="icon-rmb" style="vertical-align: bottom;">%</span> 
+                                    </em>
                             </div>
                             <div class="cp-con-bottom">
                                 <p v-if="0 == Number.parseInt(value.minInvestAmount) && 2147483647 == Number.parseInt(value.maxInvestAmount)">1.单笔投资无限制</p>
@@ -155,7 +155,7 @@ export default {
     ]),
     beforeRouteEnter(to, from, next) {
         next(vm => {
-            this.fetchData1()
+            vm.fetchData1()
         })
     },
     mounted() {
@@ -179,7 +179,7 @@ export default {
             _this.loading1 = false
             this.$http.get(`/account/coupons`, { params: { categoryId: 2, status: 0, page: this.page1, pageSize: this.pageSize }, headers: { 'Authorization': this.userAuth } })
                 .then((res) => {
-                    let souce = res.data.data
+                    let souce = res.data
                     for (let s of souce) {
                         if (s.status == 0) {
                             s.classState = 'noUse'
@@ -215,7 +215,7 @@ export default {
             _this.loading2 = false
             this.$http.get(`/account/coupons`, { params: { categoryId: 2, status: 1, page: this.page2, pageSize: this.pageSize }, headers: { 'Authorization': this.userAuth } })
                 .then((res) => {
-                    let souce = res.data.data
+                    let souce = res.data
                     for (let s of souce) {
                         if (s.status == 0) {
                             s.classState = 'noUse'
@@ -251,7 +251,7 @@ export default {
             _this.loading3 = false
             this.$http.get(`/account/coupons`, { params: { categoryId: 2, status: 2, page: this.page3, pageSize: this.pageSize }, headers: { 'Authorization': this.userAuth } })
                 .then((res) => {
-                    let souce = res.data.data
+                    let souce = res.data
                     for (let s of souce) {
                         if (s.status == 0) {
                             s.classState = 'noUse'

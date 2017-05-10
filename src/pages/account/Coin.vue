@@ -95,7 +95,7 @@ export default {
     ]),
     beforeRouteEnter(to, from, next) {
         next(vm => {
-            this.fetchData1()
+            vm.fetchData1()
         })
     },
     mounted() {
@@ -119,7 +119,7 @@ export default {
             _this.loading1 = false
             this.$http.get(`/account/points/jour`, { params: { page: this.page1, pageSize: this.pageSize }, headers: { 'Authorization': this.userAuth } })
                 .then((res) => {
-                    let souce = res.data.data
+                    let souce = res.data
                     if (_this.page1 === 1) {
                         _this.records1 = souce
                     } else {
@@ -138,7 +138,7 @@ export default {
             _this.loading2 = false
             this.$http.get(`/account/points/jour`, { params: { type: 0, page: this.page2, pageSize: this.pageSize }, headers: { 'Authorization': this.userAuth } })
                 .then((res) => {
-                    let souce = res.data.data
+                    let souce = res.data
                     if (_this.page2 === 1) {
                         _this.records2 = souce
                     } else {
@@ -157,7 +157,7 @@ export default {
             _this.loading3 = false
             this.$http.get(`/account/points/jour`, { params: { type: 2, page: this.page3, pageSize: this.pageSize }, headers: { 'Authorization': this.userAuth } })
                 .then((res) => {
-                    let souce = res.data.data
+                    let souce = res.data
                     if (_this.page3 === 1) {
                         _this.records3 = souce
                     } else {

@@ -1,7 +1,7 @@
 <template>
     <div class="page pay-order">
         <mt-header title="订单支付" class="header-bg-color" fixed>
-            <a @click="this.$route.go(-1)" slot="left">
+            <a @click="this.$router.go(-1)" slot="left">
                 <mt-button icon="back"></mt-button>
             </a>
         </mt-header>
@@ -72,11 +72,12 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { Toast } from 'mint-ui'
+import { Toast, MessageBox } from 'mint-ui'
 export default {
     data() {
         return {
             order: [{}],
+            needPay: 0.00,
             btnDisabled: 'disabled',
             buyBtnVal: '立即支付',
         }
@@ -103,8 +104,8 @@ export default {
         getOrderDetail(order) {
             let _this = this
             this.$http.get(`/biz/orders/${order}`, { headers: { 'Authorization': this.userAuth } }).then((res) => {
-                _this.order = res.data.data
-                if (_this.order.orderStatus == 0 || _this.order == 2) {
+                _this.order = res.data
+                if (_this.order.status == 0 || _this.order.status == 2) {
                     _this.toEnabled()
                     _this.createOrderTrade(order)
                 } else {
@@ -115,11 +116,54 @@ export default {
         createOrderTrade(order) {
             let _this = this
             this.$http.post(`/biz/orders/${order}/trade`, {}, { headers: { 'Authorization': this.userAuth } }).then((res) => {
-                _this.trade = res.data.data
+                _this.trade = res.data
             }).catch((err) => Toast(err))
         },
         payOrderTrade() {
+            let _this = this
+            MessageBox({
+                title: '',
+                message: '请输入交易密码',
+                showCancelButton: true,
+                cancelButtonText: '取消',
+                confirmButtonText: '确认',
+                showInput: true,
+                inputPlaceholder: '请输入交易密码'
+            }).then(({ value, action }) => {
+                if ('confirm' === action) {
+                    // this.needPay
+                    let param = {
+                        acceptTos: true,
+                        tradeSerialNo: _this.trade.tradeSerialNo,
+                        tradePassword: value,
+                        items: []
+                    }
+                    //balance
+                    if (Number.parseFloat(_this.balancePamount) > 0) {
+                        param.items.push({
+                            assetType: '1',
+                            amount: Number.parseFloat(_this.balancePamount)
+                        })
+                    }
+                    //coupon
+                    if (Number.parseFloat(_this.redBagPamount) > 0) {
+                        param.items.push({
+                            assetType: '3',
+                            assetId: _this.coupon.couponId,
+                            amount: Number.parseFloat(_this.redBagPamount)
+                        })
+                    }
 
+                    _this.$http.get(`/user/signin/salt/${_this.userName}`)
+                    .then((saltRes) => {
+                        let salt = saltRes.data.salt
+                        _this.$http.post(`/user/password/validate`, { productId: this.$route.params.id, amount: this.buyAmount }, { headers: { 'Authorization': this.userAuth } })
+                        .then((pwdRes) => {
+                            let orderNo = pwdRes.data.orderNo
+                        }).catch((pwdErr) => Toast(pwdErr))
+                    }).catch((saltErr) => Toast(saltErr))
+                }
+            })
         },
         toEnabled() {
             this.btnDisabled = false

@@ -74,7 +74,7 @@ export default {
             let _this = this
             this.$http.get(`/account/points/jour`, { params: { page: this.page1, pageSize: this.pageSize }, headers: { 'Authorization': this.userAuth } })
                 .then((res) => {
-                    let souce = res.data.data
+                    let souce = res.data
                     if (_this.page1 === 1) {
                         _this.records1 = souce
                     } else {

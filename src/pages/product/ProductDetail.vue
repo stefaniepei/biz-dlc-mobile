@@ -234,7 +234,7 @@ export default {
         getProductDetail(id) {
             let _this = this
             this.$http.get(`/products/${id}`).then((res) => {
-                _this.productDetail = res.data.data
+                _this.productDetail = res.data
                 _this.setProductCoupons(_this.productDetail)
                 _this.setBuyButton(_this.productDetail)
                 _this.$store.dispatch('START_TIMER', Number.parseInt(_this.productDetail.ttl / 1000))
@@ -322,8 +322,8 @@ export default {
                 } else {
                     //create order no
                     this.$http.post(`/biz/orders`, { productId: this.$route.params.id, amount: this.buyAmount }, { headers: { 'Authorization': this.userAuth } }).then((res) => {
-                        let orderNo = res.data.data.orderNo
-                        console.log(res.data.data, orderNo)
+                        let orderNo = res.data.orderNo
+                        console.log(res.data, orderNo)
                         _this.$router.push({ path: '/pay/' + orderNo })
                     }).catch((err) => Toast(err))
                 }
