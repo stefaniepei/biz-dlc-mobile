@@ -16,16 +16,20 @@
             <div class="w50 inline-block float-left height-4 line-height-4 v-line">
                 <p class="margin-left10 height-2 line-height-2">
                     <span class="expected" id="annualYield">{{order.productRate}}</span>
-                    <span class="expected" id="annualYieldJX"></span>
+                    <span class="expected" id="annualYieldJX">{{jxBite}}</span>
                 </p>
-                <p class="margin-left10 height-2 line-height-2"><span class="expected-desc">预期年化收益</span></p>
+                <p class="margin-left10 height-2 line-height-2">
+                    <span class="expected-desc">预期年化收益</span>
+                </p>
             </div>
             <div class="w50 inline-block float-left text-right height-4 line-height-4">
                 <p class="margin-right10 height-2 line-height-2">
                     <span class="expected" id="anticipatedIncome">{{order.expectedProfit}}</span>
-                    <span class="expected" id="anticipatedIncomeJX"></span>
+                    <span class="expected" id="anticipatedIncomeJX">{{jxMoney}}</span>
                 </p>
-                <p class="margin-right10 height-2 line-height-2"><span class="expected-desc">预计收益(元)</span></p>
+                <p class="margin-right10 height-2 line-height-2">
+                    <span class="expected-desc">预计收益(元)</span>
+                </p>
             </div>
         </section>
         <section class="fill-div-05"></section>
@@ -36,7 +40,7 @@
                 <span class="red-bag-wenhao" id="showCouponRule"></span>
             </div>
             <div class="w50 inline-block float-left text-right height-4 line-height-4">
-                <span>无可用券</span>
+                <span>{{couponTxt}}</span>
                 <span class="arrow-right"></span>
             </div>
         </section>
@@ -57,13 +61,15 @@
                 <section class="reg-agree">
                     <input type="checkbox" style="display:none" id="chkContract" checked="checked" />
                     <span class="checkboxIcon checked" id="zfxy"></span>
-                    <span>已阅读并同意<a href="javascript:;" id="dqsqs">《点理财平台委托代扣授权书》</a></span>
+                    <span>已阅读并同意
+                        <a href="javascript:;" id="dqsqs">《点理财平台委托代扣授权书》</a>
+                    </span>
                 </section>
             </section>
             <section>
                 <div class="pay-btn-left">
                     <span style="color:#333;font-size:1.4rem;">应付总额：</span>
-                    <span id="needPay" style="color:#ff0036;font-size:1.4rem">￥{{order.total}}</span>
+                    <span style="color:#ff0036;font-size:1.4rem">￥{{balancePamount}}</span>
                 </div>
                 <button type="button" id="pay" @click="payOrderTrade" :disabled="btnDisabled" v-on:btnState="toDisabled" class="pay-btn pay-timer">{{buyBtnVal}}</button>
             </section>
@@ -72,14 +78,26 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import bcrypt from 'bcryptjs'
+import md5 from 'md5'
 import { Toast, MessageBox } from 'mint-ui'
 export default {
     data() {
         return {
             order: [{}],
-            needPay: 0.00,
             btnDisabled: 'disabled',
             buyBtnVal: '立即支付',
+            balancePamount: 0.00,
+            jxBite: '',
+            jxMoney: '',
+            couponTxt: '无可用券',
+            useCoupon: false,
+            couponList: [{}],
+            coupon: {
+                assetId: 0,
+                amount: 0.00,
+                categoryType: '0'
+            }
         }
     },
     computed: mapGetters([
@@ -90,11 +108,6 @@ export default {
     beforeRouteEnter(to, from, next) {
         next(vm => {
             vm.getOrderDetail(vm.$route.params.order)
-            if (vm.user != null && vm.user.accessToken) {
-                vm.loginOut = false
-            } else {
-                vm.loginOut = true
-            }
             if (vm.userAccount != null && vm.userAccount.balance && vm.userAccount.balance.available) {
                 vm.balance = vm.userAccount.balance.available
             }
@@ -108,6 +121,7 @@ export default {
                 if (_this.order.status == 0 || _this.order.status == 2) {
                     _this.toEnabled()
                     _this.createOrderTrade(order)
+                    _this.balancePamount = _this.order.total
                 } else {
                     _this.toDisabled()
                 }
@@ -117,53 +131,99 @@ export default {
             let _this = this
             this.$http.post(`/biz/orders/${order}/trade`, {}, { headers: { 'Authorization': this.userAuth } }).then((res) => {
                 _this.trade = res.data
+                _this.getProdutCouponList()
             }).catch((err) => Toast(err))
+        },
+        getProdutCouponList() {
+            let _this = this
+            this.$http.get(`/account/coupons`, { params: { prodCodeId: this.order.productId, categoryId: 2, amount: this.order.total }, headers: { 'Authorization': this.userAuth } })
+                .then((res) => {
+                    if (res.data.length > 0) {
+                        _this.couponList = res.data
+                        _this.useCoupon = true
+                        _this.selectCoupon()
+                    }
+                }).catch((err) => Toast(err))
+        },
+        selectCoupon() {
+            if (0 == this.couponList.length) {
+                return
+            } else if (false === this.useCoupon) {
+                return
+            } else {
+                for (let [key, value] of this.couponList) {
+                    if (key == 0 && this.coupon.assetId == 0) {
+                        this.coupon = value
+                        break
+                    } else if (key == this.coupon.assetId) {
+                        this.coupon = value
+                        break
+                    }
+                }
+                this.couponCalu()
+            }
+        },
+        couponCalu() {
+            switch (this.coupon.categoryType) {
+                case '2':
+                    this.couponTxt = this.coupon.amount + '元返现券'
+                    break
+                case '3':
+                    this.couponTxt = this.coupon.amount + '元满减券'
+                    this.balancePamount = this.order.total - this.coupon.amount
+                    break
+                case '4':
+                    this.couponTxt = this.coupon.amount + '元加息券'
+                    this.jxBite = '+' + this.coupon.amount + '%'
+                    this.jxMoney = '+' + Math.floor(this.order.expectedProfit / this.order.productRate * this.coupon.amount * 100) / 100
+                    break
+            }
         },
         payOrderTrade() {
             let _this = this
-            MessageBox({
-                title: '',
-                message: '请输入交易密码',
-                showCancelButton: true,
-                cancelButtonText: '取消',
-                confirmButtonText: '确认',
-                showInput: true,
-                inputPlaceholder: '请输入交易密码'
-            }).then(({ value, action }) => {
-                if ('confirm' === action) {
-                    // this.needPay
-                    let param = {
-                        acceptTos: true,
-                        tradeSerialNo: _this.trade.tradeSerialNo,
-                        tradePassword: value,
-                        items: []
+            MessageBox.prompt(' ', '请输入交易密码', { inputPlaceholder: '请输入交易密码' })
+                .then(({ value, action }) => {
+                    console.log(value, action)
+                    if ('confirm' == action) {
+                        // this.needPay
+                        let param = {
+                            acceptTos: true,
+                            tradeSerialNo: _this.trade.tradeSerialNo,
+                            password: value,
+                            items: []
+                        }
+                        //balance
+                        if (Number.parseFloat(_this.balancePamount) > 0) {
+                            param.items.push({
+                                assetType: '1',
+                                amount: Number.parseFloat(_this.balancePamount)
+                            })
+                        }
+                        //coupon
+                        if (_this.useCoupon) {
+                            param.items.push({
+                                assetType: '3',
+                                assetId: _this.coupon.couponId,
+                                amount: Number.parseFloat(_this.coupon.amount)
+                            })
+                        }
+                        _this.$http.get(`/user/signin/salt/${_this.user.userName}`)
+                            .then((saltRes) => {
+                                param.password = bcrypt.hashSync(value, saltRes['data']['salt'])
+                                console.log(value, saltRes['data']['salt'], bcrypt.hashSync(value, saltRes['data']['salt']))
+                                _this.$http.post(`/trades/pay`, param, { headers: { 'Authorization': _this.userAuth } })
+                                    .then((payRes) => {
+                                        if (0 == payRes.error) {
+                                            //paySuccess
+                                            Toast("paySuccess")
+                                        } else {
+                                            //payFailed
+                                            Toast("payFailed")
+                                        }
+                                    }).catch((payErr) => Toast(payErr))
+                            }).catch((saltErr) => Toast(saltErr))
                     }
-                    //balance
-                    if (Number.parseFloat(_this.balancePamount) > 0) {
-                        param.items.push({
-                            assetType: '1',
-                            amount: Number.parseFloat(_this.balancePamount)
-                        })
-                    }
-                    //coupon
-                    if (Number.parseFloat(_this.redBagPamount) > 0) {
-                        param.items.push({
-                            assetType: '3',
-                            assetId: _this.coupon.couponId,
-                            amount: Number.parseFloat(_this.redBagPamount)
-                        })
-                    }
-
-                    _this.$http.get(`/user/signin/salt/${_this.userName}`)
-                    .then((saltRes) => {
-                        let salt = saltRes.data.salt
-                        _this.$http.post(`/user/password/validate`, { productId: this.$route.params.id, amount: this.buyAmount }, { headers: { 'Authorization': this.userAuth } })
-                        .then((pwdRes) => {
-                            let orderNo = pwdRes.data.orderNo
-                        }).catch((pwdErr) => Toast(pwdErr))
-                    }).catch((saltErr) => Toast(saltErr))
-                }
-            })
+                })
         },
         toEnabled() {
             this.btnDisabled = false

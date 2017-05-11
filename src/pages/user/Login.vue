@@ -54,7 +54,7 @@ export default {
                 let _this = this
                 this.$http.get(`/user/signin/salt/${_this.userName}`)
                     .then((res) => {
-                        _this.$http.post(`/user/signin`, { userName: _this.userName, password: md5(bcrypt.hashSync(this.loginPassword, res['data']['data']['salt'])) })
+                        _this.$http.post(`/user/signin`, { userName: _this.userName, password: md5(bcrypt.hashSync(this.loginPassword, res['data']['salt'])) })
                             .then((response) => {
                                 _this.$store.dispatch('USER_LOGIN_IN', response.data)
                                 let userAuth = 'Bearer ' + response.data.accessToken
