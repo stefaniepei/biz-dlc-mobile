@@ -120,7 +120,10 @@
                             <div class="clear"></div>
                         </div>
                         <div class="progress-div">
-                            <router-link :to="'/productDetail/WeChat/'+product.prodCodeId" tag="div" class="progressBut">
+                            <router-link :to="'/productDetail/WeChat/'+product.prodCodeId" tag="div" class="progressBut" v-if="'1' == product.prodStatus">
+                                {{product.prodStatus|productDict('prodStatus')}}
+                            </router-link>
+                            <router-link :to="'/productDetail/WeChat/'+product.prodCodeId" tag="div" class="progressBut disabled" v-else>
                                 {{product.prodStatus|productDict('prodStatus')}}
                             </router-link>
                             <div class="progress-bar-bg">
@@ -196,6 +199,10 @@ export default {
 <style scoped>
 .home {
     background: #f7f7f7;
+}
+
+.home .product-list {
+    margin-bottom: 0px;
 }
 
 .home-icon {

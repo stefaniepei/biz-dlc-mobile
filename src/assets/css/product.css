@@ -1,6 +1,7 @@
 .product-list {
     width: 100%;
     background: #f7f7f7;
+    margin-bottom: 43px;
 }
 
 .product-list .item {
@@ -100,6 +101,11 @@
     border-radius: 3px;
     font-size: 1.2rem;
     cursor: pointer;
+}
+
+.product-list .item .b1 .progressBut.disabled {
+    background-color: #d8d8d8;
+    color: #fff;
 }
 
 .product-list .item .b1 .progressNo {

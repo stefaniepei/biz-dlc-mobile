@@ -12,7 +12,7 @@ export const accountDict = (val, dictType) => {
 const productDictData = {
     prodType: {
         '0': '体验金',
-        '1': '优信贷',
+        '1': '鑫盈精选',
         '2': '节节升息'
     },
     prodStatus: {
