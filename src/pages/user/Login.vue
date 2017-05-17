@@ -1,36 +1,24 @@
 <template>
-    <div class="container reg-log">
+    <div class="page reg-log">
         <div class="company-logo">
             <img src="../../assets/images/login/dlc_logo.png" />
         </div>
     
         <div class="marReg">
-            <input type="text"
-                   maxlength="11"
-                   placeholder="请输入手机号码"
-                   v-model="userName">
+            <input type="text" maxlength="11" placeholder="请输入手机号码" v-model="userName">
         </div>
     
         <div class="marReg">
-            <input type="password"
-                   maxlength="16"
-                   placeholder="请输入密码"
-                   v-model="loginPassword">
+            <input type="password" maxlength="16" placeholder="请输入密码" v-model="loginPassword">
         </div>
     
         <div class="marReg no-boder">
-            <button type="button"
-                    class="btn btn-normal btn-login"
-                    @click="submitLogin">登录</button>
+            <button type="button" class="btn btn-normal btn-login" @click="submitLogin">登录</button>
         </div>
     
         <div class="login-link">
-            <router-link to="/signup"
-                         class="fz-normal"
-                         tag="a">立即注册</router-link>
-            <router-link to="/forgetPwd/back"
-                         class="fz-normal float-right"
-                         tag="a">忘记密码？</router-link>
+            <router-link to="/signup" class="fz-normal" tag="a">立即注册</router-link>
+            <router-link to="/forgetPwd/back" class="fz-normal float-right" tag="a">忘记密码？</router-link>
         </div>
     </div>
 </template>
@@ -140,5 +128,9 @@ export default {
 
 .login-link span a {
     color: #346faf;
+}
+
+.no-boder {
+    border: none;
 }
 </style>
