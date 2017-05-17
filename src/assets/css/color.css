@@ -11,3 +11,8 @@
 .dlc-gray {
     color: #eee;
 }
+
+.fff,
+.bgc-fff {
+    background-color: #fff;
+}

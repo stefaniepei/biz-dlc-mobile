@@ -26,6 +26,7 @@
 </template>
 <script>
 import MugenScroll from 'vue-mugen-scroll'
+import { Toast } from 'mint-ui'
 
 export default {
     data() {
@@ -52,22 +53,20 @@ export default {
             let _this = this;
             let pageSize = 20
             _this.loading = false
-            this.$http.get(`/trades/invest/list`, { params: { prodCodeId: id, page: this.page, pageSize: pageSize } }).then(function (res) {
-                if (_this.page === 1) {
-                    _this.records = res.data.data
-                } else {
-                    _this.records.push(...res.data.data)
-                }
-                if (res.data.data.length == pageSize) {
-                    _this.loading = true
-                    _this.page++
-                } else {
-                    _this.loadingTitle = '暂无更多数据'
-                }
-
-            }).catch(function (err) {
-                console.log(err)
-            });
+            this.$http.get(`/trades/invest/list`, { params: { prodCodeId: id, page: this.page, pageSize: pageSize } })
+                .then((res) => {
+                    if (_this.page === 1) {
+                        _this.records = res.data
+                    } else {
+                        _this.records.push(...res.data)
+                    }
+                    if (res.data.length == pageSize) {
+                        _this.loading = true
+                        _this.page++
+                    } else {
+                        _this.loadingTitle = '暂无更多数据'
+                    }
+                }).catch((err) => Toast(err))
         },
     },
     components: {

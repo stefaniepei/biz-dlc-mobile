@@ -79,3 +79,23 @@
     background-color: #fff;
     border: 1px solid #eee;
 }
+
+
+/*checkbox*/
+
+.checkboxIcon {
+    display: inline-block;
+    position: relative;
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-right: 0.3rem;
+    line-height: 5rem;
+    vertical-align: middle;
+    background: url(../images/dlc/checkbox_mini.png) no-repeat;
+    background-size: cover;
+}
+
+.checkboxIcon.checked {
+    background: url(../images/dlc/checkbox_checked_mini.png) no-repeat;
+    background-size: cover;
+}

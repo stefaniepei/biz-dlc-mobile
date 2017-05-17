@@ -43,7 +43,7 @@ export default {
     ]),
     beforeRouteEnter(to, from, next) {
         next(vm => {
-            this.fetchData()
+            vm.fetchData()
         })
     },
     mounted() {
@@ -57,22 +57,21 @@ export default {
             let _this = this
             let pageSize = 10
             _this.loading = false
-            this.$http.get(`/trades/jour`, { params: { sort: 'created_at', asc: false, page: this.page, pageSize: pageSize }, headers: { 'Authorization': this.userAuth } }).then(function (res) {
-                if (_this.page === 1) {
-                    _this.records = res.data.data
-                } else {
-                    _this.records.push(...res.data.data)
-                }
-                if (res.data.data.length == pageSize) {
-                    _this.loading = true
-                    _this.page++
-                } else {
-                    _this.loadingTitle = '暂无更多数据'
-                }
-                console.log(_this.loading)
-            }).catch(function (err) {
-                Toast(err)
-            })
+            this.$http.get(`/trades/jour`, { params: { sort: 'created_at', asc: false, page: this.page, pageSize: pageSize }, headers: { 'Authorization': this.userAuth } })
+                .then((res) => {
+                    if (_this.page === 1) {
+                        _this.records = res.data
+                    } else {
+                        _this.records.push(...res.data)
+                    }
+                    if (res.data.length == pageSize) {
+                        _this.loading = true
+                        _this.page++
+                    } else {
+                        _this.loadingTitle = '暂无更多数据'
+                    }
+                    console.log(_this.loading)
+                }).catch((err) => Toast(err))
         },
     },
     components: {

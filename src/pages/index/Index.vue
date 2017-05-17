@@ -155,19 +155,19 @@ export default {
         getSwiperData() {
             let _this = this
             this.$http.get('/utils/bulletin', { params: { createdFrom: '2016-12-01', type: 3, page: 1, pageSize: 5 } })
-                .then((res) => _this.imgData = res.data.data)
+                .then((res) => _this.imgData = res.data)
                 .catch((err) => Toast(err))
         },
         getNewHand() {
             let _this = this
             this.$http.get('/products', { params: { tag: 'newbie', page: 1, pageSize: 1 } })
-                .then((res) => _this.newHand = res.data.data[0])
+                .then((res) => _this.newHand = res['data'][0])
                 .catch((err) => Toast(err))
         },
         getProductList() {
             let _this = this
             this.$http.get('/products', { params: { page: 1, pageSize: 2 } })
-                .then((res) => _this.productList = res.data.data)
+                .then((res) => _this.productList = res.data)
                 .catch((err) => Toast(err))
         }
     }

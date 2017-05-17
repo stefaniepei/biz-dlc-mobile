@@ -52,39 +52,37 @@
                 <span class="risk-icon"></span><span class="words">风险告知</span>
             </div>
             <div class="introduce-content" id="prodRisk">
-            投资有风险，理财需谨慎！<span style="color:#40AEE7">【查看点理财安全保障计划】</span>
+                投资有风险，理财需谨慎！<span style="color:#40AEE7">【查看点理财安全保障计划】</span>
             </div>
         </div>
     </div>
 </template>
 <script>
-    export default{
-        data() {
-            return {
-                productInfo:{}
-            }
-        },
-        beforeRouteEnter (to, from, next) {
-            next(vm=>{
-                vm.getProductInfo(vm.$route.params.id)
-            })
-        },
-        mounted(){
-
-		},
-        computed: {
-        },
-        methods: {
-            getProductInfo(id){
-                let _this = this
-                this.$http.get(`/products/${id}`).then(function(res){
-                    _this.productInfo = res.data.data.details
-                }).catch(function(err){
-                    console.log(err)
-                });
-            },
+export default {
+    data() {
+        return {
+            productInfo: {}
         }
+    },
+    beforeRouteEnter(to, from, next) {
+        next(vm => {
+            vm.getProductInfo(vm.$route.params.id)
+        })
+    },
+    mounted() {
+
+    },
+    computed: {
+    },
+    methods: {
+        getProductInfo(id) {
+            let _this = this
+            this.$http.get(`/products/${id}`).then((res) => {
+                _this.productInfo = res.data.details
+            }).catch((err) => Toast(err))
+        },
     }
+}
 </script>
 <style scoped>
 .product-info {
@@ -293,5 +291,4 @@
     padding-left: 5%;
     padding-right: 5%;
 }
-
 </style>

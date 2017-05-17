@@ -78,12 +78,14 @@
             <span>投资记录</span>
             <span class="arrow-right"></span>
         </router-link>
-        <section class="prod-tips">
-            温馨提示：市场有风险，投资需谨慎
+        <section style="height:85px;">
         </section>
-        <section class="prod-to-pay">
+        <section class="prod-to-pay fixed bottom" v-show="showBuy">
+            <section class="prod-tips">
+                温馨提示：市场有风险，投资需谨慎
+            </section>
             <span class="buy-amount show-amount" @click="showAmountView">{{buyAmount}}</span>
-            <button class="btn btn-detail pay-timer" :disabled="btnDisabled" v-on:btnState="toDisabled">{{btnVal}}</button>
+            <button class="btn btn-detail pay-timer" @click="buy" :disabled="btnDisabled" v-on:btnState="toDisabled">{{btnVal}}</button>
         </section>
         <div class="keyboard" v-show="amountView" :style="bottomView" @touchmove.prevent @scroll.prevent>
             <div class="overlay" :style="fillOverlay" @click="hideAmountView"></div>
@@ -107,7 +109,7 @@
             </div>
             <section class="prod-to-pay">
                 <span class="buy-amount show-amount">{{buyAmount}}</span>
-                <button class="btn btn-detail pay-timer" :disabled="btnDisabled" v-on:btnState="toDisabled">{{btnVal}}</button>
+                <button class="btn btn-detail pay-timer" @click="buy" :disabled="btnDisabled" v-on:btnState="toDisabled">{{btnVal}}</button>
             </section>
             <section class="contarct-agree">
                 <input type="checkbox" style="display:none" id="chkContract" checked="checked" />
@@ -162,12 +164,11 @@
                 </ul>
             </div>
         </div>
-    
     </div>
 </template>
 <script>
 import { mapGetters, mapState } from 'vuex'
-import { Toast } from 'mint-ui'
+import { Toast, MessageBox } from 'mint-ui'
 import countDown from 'components/count-down.vue'
 
 export default {
@@ -180,13 +181,15 @@ export default {
             buyAmount: '投资金额',
             btnDisabled: 'disabled',
             btnVal: '立即购买',
+            showBuy: true,
             bottomView: {
                 position: 'absolute',
                 bottom: 0,
+                zIndex: 3
             },
             fillOverlay: {
                 position: 'absolute',
-                height: window.innerHeight - 401 + 'px',
+                height: window.innerHeight - 401 + 85 + 'px',
                 width: '100%',
                 bottom: 401 + 'px',
                 zIndex: 2
@@ -195,6 +198,7 @@ export default {
             mj: false,
             jx: false,
             amountView: false,
+            rechargeView: false
         }
     },
     computed: mapGetters([
@@ -230,13 +234,11 @@ export default {
         getProductDetail(id) {
             let _this = this
             this.$http.get(`/products/${id}`).then((res) => {
-                _this.productDetail = res.data.data
+                _this.productDetail = res.data
                 _this.setProductCoupons(_this.productDetail)
                 _this.setBuyButton(_this.productDetail)
                 _this.$store.dispatch('START_TIMER', Number.parseInt(_this.productDetail.ttl / 1000))
-            }).catch(function (err) {
-                Toast(err)
-            })
+            }).catch((err) => Toast(err))
         },
         setProductCoupons(productDetail) {
             if (productDetail.coupons) {
@@ -263,9 +265,11 @@ export default {
                 bottom: bottomVal
             }
             this.amountView = true
+            this.showBuy = false
         },
         hideAmountView() {
             this.amountView = false
+            this.showBuy = true
         },
         setBuyButton(productDetail) {
             if (productDetail.prodStatus) {
@@ -292,6 +296,39 @@ export default {
                             break
                     }
                 }
+            }
+        },
+        buy() {
+            if (this.buyAmount === '投资金额') this.buyAmount = 0
+            if (this.buyAmount > 0) {
+                let _this = this
+                console.log(this.userAuth)
+                if (this.buyAmount > this.productDetail.availableAmount) {
+                    Toast('对不起，您输入的投资金额大于该项目剩余可投资金额')
+                    return
+                } else if (this.buyAmount > this.balance) {
+                    //no enough to show recharge dialog
+                    MessageBox({
+                        title: '',
+                        message: '余额不足，请先充值',
+                        showCancelButton: true,
+                        cancelButtonText: '取消',
+                        confirmButtonText: '立即充值'
+                    }).then(action => {
+                        if ('confirm' === action) {
+                            _this.$router.push({ path: '/recharge' })
+                        }
+                    })
+                } else {
+                    //create order no
+                    this.$http.post(`/biz/orders`, { productId: this.$route.params.id, amount: this.buyAmount }, { headers: { 'Authorization': this.userAuth } }).then((res) => {
+                        let orderNo = res.data.orderNo
+                        console.log(res.data, orderNo)
+                        _this.$router.push({ path: '/pay/' + orderNo })
+                    }).catch((err) => Toast(err))
+                }
+            } else {
+                Toast('请输入投资金额')
             }
         },
         inputNum(num) {
@@ -344,75 +381,6 @@ export default {
 <style scoped>
 .product-detail {
     background: #fff;
-}
-
-.product-detail .vertical-line {
-    border: 1px solid #fff;
-    height: 2rem;
-}
-
-.product-detail .line-btn-left {
-    width: 20%;
-    height: 3rem;
-    color: #398be1;
-    font-size: 1rem;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    background-color: #fff;
-    border: 1px solid #eee;
-    box-sizing: border-box;
-    /*border-right: 0;*/
-    margin-right: -.32rem;
-}
-
-.product-detail .line-btn-right {
-    width: 20%;
-    height: 3rem;
-    color: #398be1;
-    font-size: 1rem;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    background-color: #fff;
-    border: 1px solid #eee;
-    box-sizing: border-box;
-    /*border-left: 0;*/
-    margin-left: -.32rem;
-}
-
-.product-detail .line-input {
-    font-size: 0.8rem;
-    width: 60%;
-    height: 3rem;
-    border: 0;
-    border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee;
-    box-sizing: border-box;
-    vertical-align: top;
-    border-radius: 0;
-}
-
-.product-detail .line input::-webkit-input-placeholder {
-    color: #8d8d8d;
-    text-align: center;
-    /* WebKit browsers */
-}
-
-.product-detail .line input:-moz-placeholder {
-    color: #8d8d8d;
-    text-align: center;
-    /* Mozilla Firefox 4 to 18 */
-}
-
-.product-detail .line input::-moz-placeholder {
-    color: #8d8d8d;
-    text-align: center;
-    /* Mozilla Firefox 19+ */
-}
-
-.product-detail .line input:-ms-input-placeholder {
-    color: #8d8d8d;
-    text-align: center;
-    /* Internet Explorer 10+ */
 }
 
 .product-detail .prod-info {
@@ -538,6 +506,7 @@ export default {
 .product-detail .prod-to-pay {
     border-top: 1px solid #F1F1F1;
     width: 100%;
+    background-color: #fff;
 }
 
 .product-detail .prod-to-pay .buy-amount {

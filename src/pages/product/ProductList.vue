@@ -1,6 +1,6 @@
 <template>
     <div class="page product-list">
-        <mt-header title="产品列表" class="header-bg-color2" fixed>
+        <mt-header title="产品列表" class="header-bg-color" fixed>
             <router-link to="/productAllList" slot="left">
                 <mt-button icon="back"></mt-button>
             </router-link>
@@ -73,7 +73,7 @@ export default {
     },
     beforeRouteEnter(to, from, next) {
         next(vm => {
-            this.fetchData()
+            vm.fetchData()
         })
     },
     mounted() {
@@ -89,11 +89,11 @@ export default {
             _this.loading = false
             this.$http.get('/products', { params: { page: _this.page, pageSize: pageSize } }).then((res) => {
                 if (_this.page === 1) {
-                    _this.productList = res.data.data
+                    _this.productList = res.data
                 } else {
-                    _this.productList.push(...res.data.data)
+                    _this.productList.push(...res.data)
                 }
-                if (res.data.data.length == pageSize) {
+                if (res.data.length == pageSize) {
                     _this.loading = true
                     _this.page++
                 } else {

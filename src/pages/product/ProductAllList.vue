@@ -1,6 +1,6 @@
 <template>
     <div class="page product-list">
-        <mt-header title="产品列表" class="header-bg-color2" fixed>
+        <mt-header title="产品列表" class="header-bg-color" fixed>
             <router-link to="/" slot="left">
                 <mt-button icon="back"></mt-button>
             </router-link>
@@ -74,7 +74,7 @@ export default {
         getProductList() {
             let _this = this
             this.$http.get('/products', { params: { page: 1, pageSize: 4 } })
-                .then((res) => _this.productList = res.data.data)
+                .then((res) => _this.productList = res.data)
                 .catch((err) => Toast(err))
         }
     }
