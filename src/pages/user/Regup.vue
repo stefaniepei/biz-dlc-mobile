@@ -1,5 +1,5 @@
 <template>
-    <div class="container reg-log">
+    <div class="page reg-log">
         <div class="company-logo">
             <img src="../../assets/images/login/dlc_logo.png" />
         </div>
@@ -31,7 +31,7 @@
         </div>
     
         <div class="reg-agree">
-            <input type="checkbox" style="display:none" id="chkContract" checked="checked" />
+            <input type="checkbox" v-show="false" id="chkContract" checked="checked" />
             <span class="checkboxIcon checked" id="chkContractIcon"></span>
             <span>我同意
                 <a href="/regAgreement">《点理财金融服务协议》</a>
