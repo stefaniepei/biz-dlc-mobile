@@ -1,5 +1,6 @@
 # yes
-
+var attachFastClick = require('fastclick');  
+attachFastClick(document.body);  
 > yes
 
 ## Build Setup

@@ -16,10 +16,14 @@
                     <div>
                         <span class="earnings">{{productDetail.expectYearReturn}}</span>
                         <span style="color:#ff7742">%</span>
-                        <span v-if="productDetail.invest2YearReturn > 0" class="earnings">~{{productDetail.invest2YearReturn}}<span style="color:#ff7742">%</span></span>
+                        <span v-if="productDetail.invest2YearReturn > 0" class="earnings">~{{productDetail.invest2YearReturn}}
+                            <span style="color:#ff7742">%</span>
+                        </span>
                     </div>
                     <div class="margin-top-05">
-                        <p>平均历史年化收益<span id="prodIconInfo"></span></p>
+                        <p>平均历史年化收益
+                            <span id="prodIconInfo"></span>
+                        </p>
                     </div>
                 </section>
                 <div id="prodStatus" class="prod-earnings-right"></div>
@@ -50,16 +54,21 @@
         </div>
         <section class="prod-explain">
             <section class="w100">
-                <span class="prod-explain-left"><img src="../../assets/images/product/repayment.png">还款方式</span>
+                <span class="prod-explain-left">
+                    <img src="../../assets/images/product/repayment.png">还款方式</span>
                 <span class="invest-type prod-explain-right">{{productDetail.interestType|productDict('interestTypeList')}}</span>
             </section>
             <section class="w100">
-                <span class="prod-explain-left"><img src="../../assets/images/product/start.png">起息时间</span>
+                <span class="prod-explain-left">
+                    <img src="../../assets/images/product/start.png">起息时间</span>
                 <span class="prod-explain-right">T（满标日）+1天</span>
             </section>
             <section class="w100">
-                <span class="prod-explain-left"><img src="../../assets/images/product/last.png">剩余时间</span>
-                <span class="prod-explain-right"><count-down></count-down></span>
+                <span class="prod-explain-left">
+                    <img src="../../assets/images/product/last.png">剩余时间</span>
+                <span class="prod-explain-right">
+                    <count-down></count-down>
+                </span>
             </section>
         </section>
     
@@ -114,7 +123,9 @@
             <section class="contarct-agree">
                 <input type="checkbox" style="display:none" id="chkContract" checked="checked" />
                 <span class="checkboxIcon checked" id="zfxy"></span>
-                <span>已阅读并同意<a href="javascript:;" id="dqsqs">《定向委托投资管理协议》</a></span>
+                <span>已阅读并同意
+                    <a href="javascript:;" id="dqsqs">《定向委托投资管理协议》</a>
+                </span>
             </section>
             <div class="numkey">
                 <ul>
@@ -487,7 +498,7 @@ export default {
 }
 
 .product-detail .prod-info .progress-div .progress-bar-bg .progress-bar {
-    background: #398be1;
+    background: #346FCA;
     height: 0.1rem;
 }
 

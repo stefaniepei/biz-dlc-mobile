@@ -90,7 +90,7 @@ axios.interceptors.response.use((response) => {
             case 401:
                 store.dispatch('USER_LOGIN_OUT')
                 router.replace({
-                    path: '/login'
+                    path: '/signin'
                 })
         }
     }
