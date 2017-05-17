@@ -80,10 +80,15 @@ const ErrorMessageList = {
 //response to hide loading
 axios.interceptors.response.use((response) => {
     Indicator.close()
-    return response.data
+    console.log(response.data, 'response')
+    if (response.data.error == 0) {
+        return response.data
+    }
+    return Promise.reject(response.data.message)
+
 }, (error) => {
     Indicator.close()
-    // console.log(error.response, 'response-error')
+    console.log(error.response, 'response-error')
     let errorCode = error.response.status
     if (error.response) {
         switch (errorCode) {

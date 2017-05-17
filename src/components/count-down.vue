@@ -1,9 +1,13 @@
 <template>
     <div class="inline-block">
-        <span class="time">{{days}}</span><span>天</span>
-        <span class="time">{{hours}}</span><span>小时</span>
-        <span class="time">{{minutes}}</span><span>分</span>
-        <span class="time">{{seconds}}</span><span>秒</span>
+        <span class="time">{{days}}</span>
+        <span>天</span>
+        <span class="time">{{hours}}</span>
+        <span>小时</span>
+        <span class="time">{{minutes}}</span>
+        <span>分</span>
+        <span class="time">{{seconds}}</span>
+        <span>秒</span>
     </div>
 </template>
 <script>
@@ -62,7 +66,5 @@ export default {
 }
 </script>
 <style scoped>
-.time {
-    color: #a1a1a1
-}
+
 </style>

@@ -20,11 +20,6 @@
                             <span style="color:#ff7742">%</span>
                         </span>
                     </div>
-                    <div class="margin-top-05">
-                        <p>平均历史年化收益
-                            <span id="prodIconInfo"></span>
-                        </p>
-                    </div>
                 </section>
                 <div id="prodStatus" class="prod-earnings-right"></div>
             </div>
@@ -101,19 +96,11 @@
             <div class="adjust-buy-info">
                 <p>
                     <span class="sps1">起投金额</span>
-                    <span class="sps2">账户余额</span>
-                </p>
-                <p>
-                    <span class="sps1" id="min">{{Number.parseInt(productDetail.minApplyAmount)}}</span>
-                    <span class="sps2" id="login-info">{{balance|formatCurrency(2,true)}}元</span>
-                </p>
-                <p>
                     <span class="sps1">递增金额</span>
-                    <span class="sps2">预计收益</span>
                 </p>
                 <p>
-                    <span class="sps1" id="minAdd">{{Number.parseInt(productDetail.minAddAmount)}}</span>
-                    <span class="sps2" id="exprctYearInterest">{{exprctYearInterest}}元</span>
+                    <span class="sps2" id="min">{{Number.parseInt(productDetail.minApplyAmount)}}</span>
+                    <span class="sps2" id="minAdd">{{Number.parseInt(productDetail.minAddAmount)}}</span>
                 </p>
             </div>
             <section class="prod-to-pay">
@@ -200,9 +187,9 @@ export default {
             },
             fillOverlay: {
                 position: 'absolute',
-                height: window.innerHeight - 401 + 85 + 'px',
+                height: window.innerHeight - 366 + 85 + 'px',
                 width: '100%',
-                bottom: 401 + 'px',
+                bottom: 366 + 'px',
                 zIndex: 2
             },
             fx: false,
@@ -313,9 +300,17 @@ export default {
             if (this.buyAmount === '投资金额') this.buyAmount = 0
             if (this.buyAmount > 0) {
                 let _this = this
-                console.log(this.userAuth)
-                if (this.buyAmount > this.productDetail.availableAmount) {
-                    Toast('对不起，您输入的投资金额大于该项目剩余可投资金额')
+                if (this.buyAmount < this.productDetail.minApplyAmount) {
+                    Toast('最低购买金额为' + this.productDetail.minApplyAmount + '元')
+                    return
+                } else if (this.buyAmount > this.productDetail.availableAmount) {
+                    Toast('超过最大剩余可投金额')
+                    return
+                } else if (this.buyAmount > this.productDetail.maxTotalAmount) {
+                    Toast('超过最大可投金额')
+                    return
+                } else if ((parseFloat(this.buyAmount) - parseFloat(this.productDetail.minApplyAmount)) % parseFloat(this.productDetail.minAddAmount) != 0) {
+                    Toast('起购金额为' + this.productDetail.minApplyAmount + '元,追加金额必须是' + this.productDetail.minAddAmount + '元的倍数')
                     return
                 } else if (this.buyAmount > this.balance) {
                     //no enough to show recharge dialog
@@ -339,7 +334,7 @@ export default {
                     }).catch((err) => Toast(err))
                 }
             } else {
-                Toast('请输入投资金额')
+                Toast('请输入正确的金额')
             }
         },
         inputNum(num) {
@@ -359,18 +354,19 @@ export default {
         calu(res) {
             if (res == '' || isNaN(res)) {
                 this.buyAmount = '投资金额'
-            } else if (res > Number.parseInt(this.productDetail.availableAmount)) {
+            }
+            this.buyAmount = res
+            if (res > Number.parseInt(this.productDetail.availableAmount)) {
                 this.buyAmount = Number.parseInt(this.productDetail.availableAmount)
-            } else if (res < Number.parseInt(this.productDetail.minApplyAmount)) {
-                this.buyAmount = Number.parseInt(this.productDetail.minApplyAmount)
-            } else {
-                this.buyAmount = res
             }
-            if (this.buyAmount !== '投资金额') {
-                this.exprctYearInterest = (Number.parseInt(this.buyAmount) * Number.parseInt(this.productDetail.expectYearReturn) / 100 / Number.parseInt(this.productDetail.yearDays) * Number.parseInt(this.productDetail.prodPeriod)).toFixed(2)
-            } else {
-                this.exprctYearInterest = '0.00'
+            if (res > Number.parseInt(this.productDetail.maxTotalAmount)) {
+                this.buyAmount = Number.parseInt(this.productDetail.maxTotalAmount)
             }
+            // if (this.buyAmount !== '投资金额') {
+            //     this.exprctYearInterest = (Number.parseInt(this.buyAmount) * Number.parseInt(this.productDetail.expectYearReturn) / 100 / Number.parseInt(this.productDetail.yearDays) * Number.parseInt(this.productDetail.prodPeriod)).toFixed(2)
+            // } else {
+            //     this.exprctYearInterest = '0.00'
+            // }
         },
         boolAmount() {
             this.calu(Number.parseInt(this.buyAmount))
@@ -433,6 +429,7 @@ export default {
     width: 1.5rem;
     height: 1.5rem;
     vertical-align: middle;
+    margin-right: 0.2rem;
 }
 
 .product-detail .prod-fill {
@@ -498,7 +495,7 @@ export default {
 }
 
 .product-detail .prod-info .progress-div .progress-bar-bg .progress-bar {
-    background: #346FCA;
+    background-color: #3689CE;
     height: 0.1rem;
 }
 
@@ -564,6 +561,7 @@ export default {
 
 .product-detail .adjust-buy-info .sps2 {
     width: 49%;
+    font-size: 1.4rem;
     display: inline-block;
 }
 
