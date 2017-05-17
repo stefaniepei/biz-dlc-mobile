@@ -17,7 +17,7 @@
         </div>
     
         <div class="login-link">
-            <router-link to="/signup" class="fz-normal" tag="a">立即注册</router-link>
+            <router-link to="/regup" class="fz-normal" tag="a">立即注册</router-link>
             <router-link to="/forgetPwd/back" class="fz-normal float-right" tag="a">忘记密码？</router-link>
         </div>
     </div>

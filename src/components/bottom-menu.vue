@@ -4,22 +4,26 @@
             <router-link to="/" tag="li">
                 <img src="../assets/images/account/home-on.png" v-if="'/' == this.$route.path" />
                 <img src="../assets/images/account/home-off.png" v-else />
-                <p>首页</p>
+                <p class="dlc-blue" v-if="'/' == this.$route.path">首页</p>
+                <p v-else>首页</p>
             </router-link>
             <router-link to="/productAllList" tag="li">
                 <img src="../assets/images/account/financing-on.png" v-if="'/productAllList' == this.$route.path" />
                 <img src="../assets/images/account/financing-off.png" v-else />
-                <p>理财</p>
-            </router-link>
-            <router-link to="/info" tag="li">
-                <img src="../assets/images/account/my-on.png" v-if="'/info' == this.$route.path" />
-                <img src="../assets/images/account/my-off.png" v-else />
-                <p>我</p>
+                <p class="dlc-blue" v-if="'/productAllList' == this.$route.path">理财</p>
+                <p v-else>理财</p>
             </router-link>
             <router-link to="/more/WeChat" tag="li">
                 <img src="../assets/images/account/more-on.png" v-if="'/more/WeChat' == this.$route.path" />
                 <img src="../assets/images/account/more-off.png" v-else />
-                <p>更多</p>
+                <p class="dlc-blue" v-if="'/more/WeChat' == this.$route.path">服务</p>
+                <p v-else>服务</p>
+            </router-link>
+            <router-link to="/info" tag="li">
+                <img src="../assets/images/account/my-on.png" v-if="'/info' == this.$route.path" />
+                <img src="../assets/images/account/my-off.png" v-else />
+                <p class="dlc-blue" v-if="'/info' == this.$route.path">我的</p>
+                <p v-else>我的</p>
             </router-link>
     
             <div class="clear"></div>
@@ -51,7 +55,7 @@ export default {
     float: left;
     width: 25%;
     text-align: center;
-    padding: 0.5rem 0;
+    padding-top: 2%;
 }
 
 .WeChat-footer li img {
@@ -63,5 +67,9 @@ export default {
     width: 100%;
     font-size: 1.2rem;
     color: #666;
+}
+
+.WeChat-footer li p.dlc-blue {
+    color: #346FCA;
 }
 </style>

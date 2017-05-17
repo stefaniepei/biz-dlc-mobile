@@ -10,7 +10,8 @@
                 <span class="header-bar"></span>
             </div>
             <div class="header-reg-log" id="logout" v-show="loginOut">
-                <router-link to="/login">登录</router-link> | <router-link to="/signup">注册</router-link>
+                <router-link to="/signin">登录</router-link> |
+                <router-link to="/regup">注册</router-link>
             </div>
         </div>
         <div class="wa-mask" id="waMask"></div>
@@ -70,31 +71,31 @@
     </div>
 </template>
 <script>
-    import {mapGetters} from 'vuex'
-    export default{
-        data(){
-            return {
-                loginIn:false,
-                loginOut:true
-            }
-        },
-        computed:mapGetters([
-            'headerTitle'
-        ]),
-        mounted () {
-            
-        },
-        watch: {
-            $route(to){
-                this.$store.dispatch('EDIT_TITLE')
-		    }
-        },
-        methods: {
-            back(){
-                this.$router.back()
-            }
+import { mapGetters } from 'vuex'
+export default {
+    data() {
+        return {
+            loginIn: false,
+            loginOut: true
+        }
+    },
+    computed: mapGetters([
+        'headerTitle'
+    ]),
+    mounted() {
+
+    },
+    watch: {
+        $route(to) {
+            this.$store.dispatch('EDIT_TITLE')
+        }
+    },
+    methods: {
+        back() {
+            this.$router.back()
         }
     }
+}
 </script>
 <style scoped>
 .WeChat-header {

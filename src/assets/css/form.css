@@ -27,9 +27,9 @@
 }
 
 .btn:disabled {
-    background-color: #e5e5e5;
+    background-color: #d8d8d8 !important;
+    color: #fff !important;
     border: none;
-    color: #bababa;
 }
 
 .btn-big {
@@ -58,7 +58,7 @@
     width: 50%;
     height: 1.2rem;
     line-height: 1.2rem;
-    color: #398be1;
+    color: #346FCA;
     font-size: 0.5rem;
     padding: 0;
     margin: 0;
@@ -71,7 +71,7 @@
     width: 30%;
     height: 1.2rem;
     line-height: 1.2rem;
-    color: #398be1;
+    color: #346FCA;
     font-size: 0.5rem;
     padding: 0;
     margin: 0;

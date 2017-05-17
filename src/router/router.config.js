@@ -30,20 +30,20 @@ const routes = [
 
     // login-register
     {
-        path: '/login', //登录
-        component: resolve => require(['../pages/user/Login.vue'], resolve)
+        path: '/signin', //登录
+        component: resolve => require(['../pages/user/Signin.vue'], resolve)
     },
     {
-        path: '/login/:source', //登录
-        component: resolve => require(['../pages/user/Login.vue'], resolve)
+        path: '/signin/:source', //登录
+        component: resolve => require(['../pages/user/Signin.vue'], resolve)
     },
     {
         path: '/logout', //登录
         component: resolve => require(['../pages/user/LoginOut.vue'], resolve)
     },
     {
-        path: '/signup', //注册
-        component: resolve => require(['../pages/user/Signup.vue'], resolve)
+        path: '/regup', //注册
+        component: resolve => require(['../pages/user/Regup.vue'], resolve)
     },
     {
         path: '/register', //注册
@@ -414,7 +414,7 @@ router.beforeEach(({
     if (auth && !isLogin) {
         store.dispatch('USER_LOGIN_OUT')
         next({
-            path: '/login'
+            path: '/signin'
         })
     }
     next()

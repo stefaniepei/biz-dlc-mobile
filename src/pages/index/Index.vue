@@ -17,42 +17,54 @@
                     <img src="../../assets/images/dlc/invite.png" />
                     <p>邀请有礼</p>
                 </router-link>
-                <router-link to="/login" tag="li" v-else>
+                <router-link to="/signin" tag="li" v-else>
                     <img src="../../assets/images/dlc/regLogin.png" />
                     <p>注册登录</p>
                 </router-link>
-                <router-link to="/insurance/WeChat" tag="li">
-                    <img src="../../assets/images/dlc/safe.png" />
-                    <p>安全保障</p>
-                </router-link>
-                <router-link to="/invitePolite/WeChat" tag="li">
-                    <img src="../../assets/images/dlc/bank.png" />
-                    <p>银行存管</p>
-                </router-link>
+                <li>
+                    <a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzIwNzQ0ODQ1Mw==&scene=124#wechat_redirect">
+                        <img src="../../assets/images/dlc/wechat.png" />
+                        <p>关注微信</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.finnovate.dianlc">
+                        <img src="../../assets/images/dlc/download.png" />
+                        <p>下载App</p>
+                    </a>
+                </li>
             </ul>
             <div class="clear"></div>
         </div>
         <div class="novice-mark product-list">
             <div class="item" style="margin-bottom: 0rem;">
                 <p class="item-title">
-                    <span class="name cursor_pointer">新手福利标</span><span class="limit-invest">限量发布</span></p>
+                    <span class="name cursor_pointer">新手福利标</span>
+                    <span class="limit-invest">限量发布</span>
+                </p>
                 <div class="context">
                     <div class="b1">
                         <div class="w">
                             <div class="num-item mun-one">
-                                <p class="word word-one">预期年化收益</p>
+                                <p class="word word-one"></p>
                                 <p class="num word-one">
-                                    <span style="font-size: 2.2rem;">{{this.newHand.expectYearReturn}}</span><span class="s">%</span>
-                                    <span class="addX">+{{this.newHand.invest1IncReturn}}</span><span class="s">%</span>
+                                    <span class="rem-22">{{this.newHand.expectYearReturn}}</span>
+                                    <span class="s">%</span>
+                                    <span class="addX">+{{this.newHand.invest1IncReturn}}</span>
+                                    <span class="s">%</span>
                                 </p>
                             </div>
                             <div class="num-item mun-two color6c">
                                 <p class="word">投资期限</p>
-                                <p class="num"><span>{{this.newHand.prodPeriod}}天</span></p>
+                                <p class="num">
+                                    <span>{{this.newHand.prodPeriod}}天</span>
+                                </p>
                             </div>
                             <div class="num-item last">
                                 <p class="word">项目金额</p>
-                                <p class="num"><span id="people">{{this.newHand.maxRaisedAmount|toMillion}}万</span></p>
+                                <p class="num">
+                                    <span id="people">{{this.newHand.maxRaisedAmount|toMillion}}万</span>
+                                </p>
                             </div>
                             <div class="clear"></div>
                         </div>
@@ -70,14 +82,14 @@
         </div>
         <router-link to="/productAllList" tag="div" class="product-title">
             <em>推荐</em>
-            <span><img src="../../assets/images/dlc/safe-blue.png" /> 资金交易过程由太平洋保险提供安全保障</span>
+            <span>
+                <img src="../../assets/images/dlc/safe-blue.png" /> 资金交易过程由太平洋保险提供安全保障</span>
         </router-link>
     
         <div class="product-list">
             <div class="item detailSrc" v-for="(product,index) in this.productList">
                 <p class="item-title">
                     <span class="name cursor_pointer">{{product.prodName}}</span>
-                    <span class="icon-you">优</span>
                     <span class="icon-fx" v-show="new Set(product.coupons).has('2')">返现券</span>
                     <span class="icon-mj" v-show="new Set(product.coupons).has('3')">满减券</span>
                     <span class="icon-jx" v-show="new Set(product.coupons).has('4')">加息券</span>
@@ -86,16 +98,24 @@
                     <div class="b1">
                         <div class="w">
                             <div class="num-item mun-one">
-                                <p class="word word-one">预期年化收益</p>
-                                <p class="num word-one"><span>{{product.expectYearReturn}}</span><span class="s">%</span><span v-show="product.invest2YearReturn >0">+{{product.invest2YearReturn}}%</span></p>
+                                <p class="word word-one"></p>
+                                <p class="num word-one">
+                                    <span class="rem-22">{{product.expectYearReturn}}</span>
+                                    <span class="s">%</span>
+                                    <span v-show="product.invest2YearReturn >0">+{{product.invest2YearReturn}}%</span>
+                                </p>
                             </div>
                             <div class="num-item mun-two color6c">
                                 <p class="word">投资期限</p>
-                                <p class="num"><span class="s">{{product.prodPeriod}}天</span></p>
+                                <p class="num">
+                                    <span class="s">{{product.prodPeriod}}天</span>
+                                </p>
                             </div>
                             <div class="num-item last">
                                 <p class="word">项目金额</p>
-                                <p class="num"><span class="s">{{product.maxRaisedAmount|toMillion}}万</span></p>
+                                <p class="num">
+                                    <span class="s">{{product.maxRaisedAmount|toMillion}}万</span>
+                                </p>
                             </div>
                             <div class="clear"></div>
                         </div>
@@ -166,7 +186,7 @@ export default {
         },
         getProductList() {
             let _this = this
-            this.$http.get('/products', { params: { page: 1, pageSize: 2 } })
+            this.$http.get('/products', { params: { page: 1, pageSize: 4 } })
                 .then((res) => _this.productList = res.data)
                 .catch((err) => Toast(err))
         }
