@@ -198,13 +198,10 @@ export default {
         },
         payOrderTrade() {
             let _this = this
-            this.orderShow = false
             if (!this.chkContarct) {
                 Toast('请先阅读《定向委托投资管理协议》')
                 return
             }
-
-            return
             MessageBox.prompt(' ', '请输入交易密码', { inputPlaceholder: '请输入交易密码' })
                 .then(({ value, action }) => {
                     console.log(value, action)
@@ -244,6 +241,7 @@ export default {
                                         } else {
                                             _this.paySuccess = false
                                         }
+                                        _this.orderShow = false
                                     }).catch((payErr) => Toast(payErr))
                             }).catch((saltErr) => Toast(saltErr))
                     }
