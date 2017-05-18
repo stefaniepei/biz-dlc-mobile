@@ -1,7 +1,7 @@
 <template>
     <div class="success-page page" :style="fullHeight">
     
-        <mt-header title="支付失败" class="header-bg-color" ref="header" fixed>
+        <mt-header title="支付失败" class="header-bg-color" fixed>
             <router-link to="/productAllList" slot="left">
                 <mt-button icon="back"></mt-button>
             </router-link>

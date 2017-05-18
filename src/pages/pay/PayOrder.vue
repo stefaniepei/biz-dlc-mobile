@@ -112,6 +112,7 @@ export default {
     ]),
     beforeRouteEnter(to, from, next) {
         next(vm => {
+            vm.orderShow = true
             vm.getOrderDetail(vm.$route.params.order)
             if (vm.userAccount != null && vm.userAccount.balance && vm.userAccount.balance.available) {
                 vm.balance = vm.userAccount.balance.available
@@ -204,7 +205,6 @@ export default {
             }
             MessageBox.prompt(' ', '请输入交易密码', { inputPlaceholder: '请输入交易密码' })
                 .then(({ value, action }) => {
-                    console.log(value, action)
                     if ('confirm' == action) {
                         // this.needPay
                         let param = {
@@ -231,13 +231,13 @@ export default {
                         _this.$http.get(`/user/signin/salt/${_this.user.userName}`)
                             .then((saltRes) => {
                                 param.password = bcrypt.hashSync(value, saltRes['data']['salt'])
-                                console.log(value, saltRes['data']['salt'], bcrypt.hashSync(value, saltRes['data']['salt']))
                                 _this.$http.post(`/trades/pay`, param, { headers: { 'Authorization': _this.userAuth } })
                                     .then((payRes) => {
                                         _this.payTradeData = payRes['data']
-                                        if (0 == payRes.error) {
+                                        if (0 == payRes['error']) {
                                             //paySuccess
                                             // Toast("paySuccess")
+                                            _this.paySuccess = true
                                         } else {
                                             _this.paySuccess = false
                                         }
