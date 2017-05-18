@@ -75,7 +75,7 @@ export default {
     data() {
         return {
             orderShow: true,
-            paySuccess: true,
+            paySuccess: false,
             order: [{}],
             btnDisabled: 'disabled',
             buyBtnVal: '立即支付',
