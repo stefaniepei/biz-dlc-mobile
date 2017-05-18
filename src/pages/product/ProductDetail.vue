@@ -75,7 +75,7 @@
             <span class="arrow-right"></span>
         </router-link>
         <router-link :to="{name:'productIntroduce',params:{id:productDetail.prodCodeId,source:this.$route.params.source}}" class="arrow-line" tag="section">
-            <span>产品介绍</span>
+            <span>安全保障</span>
             <span class="arrow-right"></span>
         </router-link>
         <router-link :to="{name:'productRecords',params:{id:productDetail.prodCodeId,source:this.$route.params.source}}" class="arrow-line" tag="section">
@@ -99,8 +99,8 @@
                     <span class="sps1">递增金额</span>
                 </p>
                 <p>
-                    <span class="sps2" id="min">{{Number.parseInt(productDetail.minApplyAmount)}}</span>
-                    <span class="sps2" id="minAdd">{{Number.parseInt(productDetail.minAddAmount)}}</span>
+                    <span class="sps2">{{Number.parseInt(productDetail.minApplyAmount)}}元</span>
+                    <span class="sps2">{{Number.parseInt(productDetail.minAddAmount)}}元</span>
                 </p>
             </div>
             <section class="prod-to-pay">
@@ -108,10 +108,9 @@
                 <button class="btn btn-detail pay-timer" @click="buy" :disabled="btnDisabled" v-on:btnState="toDisabled">{{btnVal}}</button>
             </section>
             <section class="contarct-agree">
-                <input type="checkbox" style="display:none" id="chkContract" checked="checked" />
-                <span class="checkboxIcon checked" id="zfxy"></span>
+                <span class="checkboxIcon checked" @click="chkAgree" ref="agree"></span>
                 <span>已阅读并同意
-                    <a href="javascript:;" id="dqsqs">《定向委托投资管理协议》</a>
+                    <a href="javascript:;">《定向委托投资管理协议》</a>
                 </span>
             </section>
             <div class="numkey">
@@ -179,17 +178,20 @@ export default {
             buyAmount: '投资金额',
             btnDisabled: 'disabled',
             btnVal: '立即购买',
+            chkContarct: true,
             showBuy: true,
             bottomView: {
-                position: 'absolute',
+                position: 'fixed',
                 bottom: 0,
+                left: 0,
                 zIndex: 3
             },
             fillOverlay: {
-                position: 'absolute',
-                height: window.innerHeight - 366 + 85 + 'px',
+                position: 'fixed',
+                height: window.innerHeight - 366 + 'px',
                 width: '100%',
-                bottom: 366 + 'px',
+                top: 0,
+                left: 0,
                 zIndex: 2
             },
             fx: false,
@@ -229,6 +231,7 @@ export default {
         console.log(this)
     },
     methods: {
+        //get product detail by id
         getProductDetail(id) {
             let _this = this
             this.$http.get(`/products/${id}`).then((res) => {
@@ -238,6 +241,7 @@ export default {
                 _this.$store.dispatch('START_TIMER', Number.parseInt(_this.productDetail.ttl / 1000))
             }).catch((err) => Toast(err))
         },
+        //product coupons to show
         setProductCoupons(productDetail) {
             if (productDetail.coupons) {
                 let _this = this
@@ -256,19 +260,17 @@ export default {
                 }
             }
         },
+        //show input amount view
         showAmountView() {
-            var bottomVal = '-' + window.scrollY + 'px'
-            this.bottomView = {
-                position: 'absolute',
-                bottom: bottomVal
-            }
             this.amountView = true
             this.showBuy = false
         },
+        //hide input amout view
         hideAmountView() {
             this.amountView = false
             this.showBuy = true
         },
+        //to set button value
         setBuyButton(productDetail) {
             if (productDetail.prodStatus) {
                 let _this = this
@@ -296,6 +298,7 @@ export default {
                 }
             }
         },
+        //to buy
         buy() {
             if (this.buyAmount === '投资金额') this.buyAmount = 0
             if (this.buyAmount > 0) {
@@ -337,6 +340,7 @@ export default {
                 Toast('请输入正确的金额')
             }
         },
+        //input nums
         inputNum(num) {
             if (this.buyAmount === '投资金额') this.buyAmount = 0
             let val = 0
@@ -351,6 +355,7 @@ export default {
             this.buyAmount = val
             this.calu(val)
         },
+        //calu input nums
         calu(res) {
             if (res == '' || isNaN(res)) {
                 this.buyAmount = '投资金额'
@@ -368,13 +373,21 @@ export default {
             //     this.exprctYearInterest = '0.00'
             // }
         },
-        boolAmount() {
-            this.calu(Number.parseInt(this.buyAmount))
+        //checkbox of contarct
+        chkAgree() {
+            this.chkContarct = !this.chkContarct
+            if (this.chkContarct) {
+                this.$refs.agree.className = 'checkboxIcon checked'
+            } else {
+                this.$refs.agree.className = 'checkboxIcon'
+            }
         },
+        //can buy for count-down
         toEnabled() {
             this.btnDisabled = false
             this.btnVal = '立即购买'
         },
+        //times up no to buy for count-down
         toDisabled() {
             this.btnDisabled = 'disabled'
             this.btnVal = '已过期'
@@ -400,6 +413,10 @@ export default {
     margin: 0 auto;
     margin-top: 1rem;
     white-space: nowrap;
+}
+
+.product-detail .arrow-line {
+    margin-top: 0rem;
 }
 
 .product-detail .prod-info .prod-earnings {

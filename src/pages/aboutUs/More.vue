@@ -76,7 +76,6 @@ export default {
         bottomMenu
     },
     mounted() {
-        console.log(this.$refs.more)
         this.fillH = window.innerHeight - this.$refs.more.offsetHeight - 44 + 'px'
     },
     methods: {
