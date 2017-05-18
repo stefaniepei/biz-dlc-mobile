@@ -2,7 +2,7 @@
     <div class="page pay-order">
         <div v-show="orderShow">
             <mt-header title="订单支付" class="header-bg-color" fixed>
-                <a @click="this.$router.go(-1)" slot="left">
+                <a @click="routerBack" slot="left">
                     <mt-button icon="back"></mt-button>
                 </a>
             </mt-header>
@@ -118,6 +118,9 @@ export default {
                 vm.balance = vm.userAccount.balance.available
             }
         })
+    },
+    mounted() {
+        console.log(this)
     },
     components: {
         paySuccess, payFailed
@@ -254,6 +257,9 @@ export default {
         toDisabled() {
             this.btnDisabled = 'disabled'
             this.buyBtnVal = '已过期'
+        },
+        routerBack() {
+            this.$router.go(-1);
         }
     }
 }
