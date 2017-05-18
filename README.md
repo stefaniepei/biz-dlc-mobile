@@ -42,4 +42,7 @@ this.$http.post(`/biz/orders`, { productId: this.$route.params.id, amount: this.
     let orderNo = res.data.orderNo
 }).catch((err) => Toast(err))
 
+
+#子组件调用父组件方法 详见components/count-down.vue
+_this.$parent.toDisabled()  
 ```

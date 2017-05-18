@@ -7,40 +7,21 @@
                 </a>
             </mt-header>
             <section class="order-info header-margin">
-                <div class="w50 inline-block float-left height-4 line-height-4">
-                    <span class="margin-left10">产品名称：</span>
+                <div class="w30 inline-block float-left height-4 line-height-4 margin-left5">
+                    <span>产品名称：</span>
                 </div>
-                <div class="w50 inline-block float-left text-right height-4 line-height-4">
-                    <span class="margin-right10">{{order.productName}}</span>
-                </div>
-    
-                <div class="w50 inline-block float-left height-4 line-height-4 v-line">
-                    <p class="margin-left10 height-2 line-height-2">
-                        <span class="expected" id="annualYield">{{order.productRate}}</span>
-                        <span class="expected" id="annualYieldJX">{{jxBite}}</span>
-                    </p>
-                    <p class="margin-left10 height-2 line-height-2">
-                        <span class="expected-desc">预期年化收益</span>
-                    </p>
-                </div>
-                <div class="w50 inline-block float-left text-right height-4 line-height-4">
-                    <p class="margin-right10 height-2 line-height-2">
-                        <span class="expected" id="anticipatedIncome">{{order.expectedProfit}}</span>
-                        <span class="expected" id="anticipatedIncomeJX">{{jxMoney}}</span>
-                    </p>
-                    <p class="margin-right10 height-2 line-height-2">
-                        <span class="expected-desc">预计收益(元)</span>
-                    </p>
+                <div class="w60 inline-block float-left text-right height-4 line-height-4 margin-right5 nowrap">
+                    <span>{{order.productName}}</span>
                 </div>
             </section>
             <section class="fill-div-05"></section>
     
             <section class="bgc-fff height-4 line-height-4">
-                <div class="w50 inline-block float-left height-4 line-height-4">
-                    <span class="margin-left10">优惠券</span>
-                    <span class="red-bag-wenhao" id="showCouponRule"></span>
+                <div class="w30 inline-block float-left height-4 line-height-4 margin-left5">
+                    <span>优惠券</span>
+                    <span class="red-bag-wenhao"></span>
                 </div>
-                <div class="w50 inline-block float-left text-right height-4 line-height-4">
+                <div class="w60 inline-block float-left text-right height-4 line-height-4">
                     <span>{{couponTxt}}</span>
                     <span class="arrow-right"></span>
                 </div>
@@ -48,11 +29,11 @@
             <section class="fill-div-05"></section>
     
             <section class="bgc-fff height-4 line-height-4">
-                <div class="w50 inline-block float-left height-4 line-height-4">
-                    <span class="margin-left10">订单金额</span>
+                <div class="w30 inline-block float-left height-4 line-height-4 margin-left5">
+                    <span class="">订单金额</span>
                 </div>
-                <div class="w50 inline-block float-left text-right height-4 line-height-4">
-                    <span class="margin-right10" style="color:#346faf">{{order.total}}</span>
+                <div class="w60 inline-block float-left text-right height-4 line-height-4 margin-right5">
+                    <span class="" style="color:#346faf">{{order.total}}</span>
                 </div>
             </section>
             <section class="fill-div-05"></section>
@@ -60,8 +41,7 @@
             <section class="fixed bottom w100 bgc-fff">
                 <section class="pay-xys-2">
                     <section class="reg-agree">
-                        <input type="checkbox" style="display:none" id="chkContract" checked="checked" />
-                        <span class="checkboxIcon checked" id="zfxy"></span>
+                        <span class="checkboxIcon checked" @click="chkAgree" ref="agree"></span>
                         <span>已阅读并同意
                             <a href="javascript:;" id="dqsqs">《点理财平台委托代扣授权书》</a>
                         </span>
@@ -76,7 +56,8 @@
                 </section>
             </section>
         </div>
-        <pay-success v-show="!orderShow"></pay-success>
+        <pay-success v-show="!orderShow && paySuccess" :child-data="payTradeData"></pay-success>
+        <pay-failed v-show="!orderShow && !paySuccess" :child-data="payTradeData"></pay-failed>
     </div>
 </template>
 <script>
@@ -86,6 +67,7 @@ import bcrypt from 'bcryptjs'
 import md5 from 'md5'
 import { Toast, MessageBox, Popup } from 'mint-ui'
 import paySuccess from 'components/pay-success.vue'
+import payFailed from 'components/pay-failed.vue'
 
 Vue.component(Popup.name, Popup)
 
@@ -93,9 +75,11 @@ export default {
     data() {
         return {
             orderShow: true,
+            paySuccess: true,
             order: [{}],
             btnDisabled: 'disabled',
             buyBtnVal: '立即支付',
+            chkContarct: true,
             balancePamount: 0.00,
             jxBite: '',
             jxMoney: '',
@@ -106,7 +90,19 @@ export default {
                 assetId: 0,
                 amount: 0.00,
                 categoryType: '0'
-            }
+            },
+            payTradeData: {
+                fee: "0.00",
+                orderSerialNo: "1705110001508628",
+                paidAt: "2017-05-11T15:15:00",
+                payAmount: "1.00",
+                prizes: [],
+                prodCodeId: 100058097,
+                prodName: "30天产品测试",
+                totalAmount: "1.00",
+                tradeSerialNo: "1017051100000021",
+                tradeStatus: 2
+            },
         }
     },
     computed: mapGetters([
@@ -123,7 +119,7 @@ export default {
         })
     },
     components: {
-        paySuccess
+        paySuccess, payFailed
     },
     methods: {
         getOrderDetail(order) {
@@ -191,10 +187,22 @@ export default {
                     break
             }
         },
+        //checkbox of contarct
+        chkAgree() {
+            this.chkContarct = !this.chkContarct
+            if (this.chkContarct) {
+                this.$refs.agree.className = 'checkboxIcon checked'
+            } else {
+                this.$refs.agree.className = 'checkboxIcon'
+            }
+        },
         payOrderTrade() {
             let _this = this
             this.orderShow = false
-
+            if (!this.chkContarct) {
+                Toast('请先阅读《定向委托投资管理协议》')
+                return
+            }
 
             return
             MessageBox.prompt(' ', '请输入交易密码', { inputPlaceholder: '请输入交易密码' })
@@ -229,12 +237,12 @@ export default {
                                 console.log(value, saltRes['data']['salt'], bcrypt.hashSync(value, saltRes['data']['salt']))
                                 _this.$http.post(`/trades/pay`, param, { headers: { 'Authorization': _this.userAuth } })
                                     .then((payRes) => {
+                                        _this.payTradeData = payRes['data']
                                         if (0 == payRes.error) {
                                             //paySuccess
-                                            Toast("paySuccess")
+                                            // Toast("paySuccess")
                                         } else {
-                                            //payFailed
-                                            Toast("payFailed")
+                                            _this.paySuccess = false
                                         }
                                     }).catch((payErr) => Toast(payErr))
                             }).catch((saltErr) => Toast(saltErr))
@@ -260,8 +268,8 @@ export default {
 
 .order-info {
     background-color: #fff;
-    line-height: 9rem;
-    height: 9rem;
+    line-height: 4rem;
+    height: 4rem;
 }
 
 .pay-xys-2 {
@@ -299,6 +307,10 @@ export default {
     border-radius: 0px;
     background-color: #346faf;
     margin-top: -2px;
+}
+
+.arrow-right {
+    margin-right: 0;
 }
 
 .red-bag-wenhao {

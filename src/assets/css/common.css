@@ -50,7 +50,11 @@ a:visited {
 /*words*/
 
 .nowrap {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /*文字隐藏后添加省略号*/
     white-space: nowrap;
+    /*强制不换行*/
 }
 
 

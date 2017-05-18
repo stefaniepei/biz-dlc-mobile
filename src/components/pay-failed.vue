@@ -1,15 +1,15 @@
 <template>
     <div class="success-page page" :style="fullHeight">
     
-        <mt-header title="支付成功" class="header-bg-color" fixed>
+        <mt-header title="支付失败" class="header-bg-color" ref="header" fixed>
             <router-link to="/productAllList" slot="left">
                 <mt-button icon="back"></mt-button>
             </router-link>
         </mt-header>
         <div class="header-margin">
             <div class="success-top">
-                <img src="../assets/images/pay/pay-success.png">
-                <p>支付成功</p>
+                <img src="../assets/images/pay/pay-failed.png">
+                <p>支付失败</p>
             </div>
             <div class="success-middle">
                 <p>
@@ -55,7 +55,7 @@ export default {
     data() {
         return {
             fullHeight: {
-                height: window.innerHeight + 'px',
+                height: window.innerHeight //- this.$refs.header.offsetHeight + 'px',
             },
         }
     }
