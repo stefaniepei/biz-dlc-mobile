@@ -300,6 +300,10 @@ export default {
         },
         //to buy
         buy() {
+            if (!this.chkContarct) {
+                Toast('请先阅读《定向委托投资管理协议》')
+                return
+            }
             if (this.buyAmount === '投资金额') this.buyAmount = 0
             if (this.buyAmount > 0) {
                 let _this = this
