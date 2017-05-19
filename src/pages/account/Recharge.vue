@@ -16,9 +16,9 @@
                 </p>
                 <p>
                     <span>单笔限额</span>
-                    <span id="bankMax"></span>
+                    <span>{{this.perLimit}}</span>
                     <span>每日限额</span>
-                    <span id="bankMaxDay"></span>
+                    <span>{{this.dayLimit}}</span>
                 </p>
             </div>
         </div>
@@ -28,19 +28,19 @@
             <div class="tradeamount">
                 <span>金额</span>
                 <span>￥</span>
-                <input type="text" id="rechargeAmount" placeholder="请输入充值金额" />
+                <input type="text" v-model="rechargeAmount" placeholder="请输入充值金额" />
             </div>
     
             <div class="fast-input text-center">
-                <span tag="5000" class="fast-input-amount">￥5,000</span>
-                <span tag="10000" class="fast-input-amount">￥10,000</span>
-                <span tag="20000" class="fast-input-amount">￥20,000</span>
-                <span tag="30000" class="fast-input-amount">￥30,000</span>
-                <span tag="40000" class="fast-input-amount">￥40,000</span>
-                <span tag="50000" class="fast-input-amount">￥50,000</span>
+                <span @click="fastInput(5000)" v-if="this.perLimit >= 5000" :class="this.rechargeAmount == 5000 ? 'active' : ''">￥5,000</span>
+                <span @click="fastInput(10000)" v-if="this.perLimit >= 10000" :class="this.rechargeAmount == 10000 ? 'active' : ''">￥10,000</span>
+                <span @click="fastInput(20000)" v-if="this.perLimit >= 20000" :class="this.rechargeAmount == 20000 ? 'active' : ''">￥20,000</span>
+                <span @click="fastInput(30000)" v-if="this.perLimit >= 30000" :class="this.rechargeAmount == 30000 ? 'active' : ''">￥30,000</span>
+                <span @click="fastInput(40000)" v-if="this.perLimit >= 40000" :class="this.rechargeAmount == 40000 ? 'active' : ''">￥40,000</span>
+                <span @click="fastInput(50000)" v-if="this.perLimit >= 50000" :class="this.rechargeAmount == 50000 ? 'active' : ''">￥50,000</span>
             </div>
             <div class="wxips">提示：该卡本次最多充值
-                <font>10,000</font>元
+                <font>{{this.perLimit}}</font>元
             </div>
             <div class="withopt">
                 <input type="text" class="opt" maxlength="6" placeholder="请输入验证码" />
@@ -56,42 +56,59 @@
         </div>
     </div>
     <!--<div class="success-page" style="display:none;">
-                                                            <div class="success-top">
-                                                                <img src="../images/account/recharge-success.png">
-                                                                <p>充值成功</p>
-                                                            </div>
-                                                            <div class="success-middle">
-                                                                <p>
-                                                                    <span class="left">银行卡</span>
-                                                                    <span class="right" id="cardInfo">中国民生银行 尾号8928</span>
-                                                                </p>
-                                                                <p>
-                                                                    <span class="left">充值金额</span>
-                                                                    <span class="right" id="tradeAmount">￥10</span>
-                                                                </p>
-                                                            </div>
-                                                            <div class="success-bottom">
-                                                                <button class="re-recharge">继续充值</button>
-                                                                <button class="buy">立即购买</button>
-                                                            </div>
-                                                        </div>-->
+                                                                                                                            <div class="success-top">
+                                                                                                                                <img src="../images/account/recharge-success.png">
+                                                                                                                                <p>充值成功</p>
+                                                                                                                            </div>
+                                                                                                                            <div class="success-middle">
+                                                                                                                                <p>
+                                                                                                                                    <span class="left">银行卡</span>
+                                                                                                                                    <span class="right" id="cardInfo">中国民生银行 尾号8928</span>
+                                                                                                                                </p>
+                                                                                                                                <p>
+                                                                                                                                    <span class="left">充值金额</span>
+                                                                                                                                    <span class="right" id="tradeAmount">￥10</span>
+                                                                                                                                </p>
+                                                                                                                            </div>
+                                                                                                                            <div class="success-bottom">
+                                                                                                                                <button class="re-recharge">继续充值</button>
+                                                                                                                                <button class="buy">立即购买</button>
+                                                                                                                            </div>
+                                                                                                                            </div>-->
 </template>
 <script>
 import { mapGetters } from 'vuex'
 import { Toast } from 'mint-ui'
 
 export default {
+    data() {
+        return {
+            perLimit: 20000,
+            dayLimit: 50000,
+            rechargeAmount: '',
+        }
+    },
     computed: mapGetters([
         'user',
         'userAccount',
         'userAuth'
     ]),
     methods: {
-
+        fastInput(num) {
+            this.rechargeAmount = num
+            if (num >= this.perLimit) {
+                this.rechargeAmount = this.perLimit;
+            }
+        }
     }
 }
 </script>
 <style scoped>
+.fast-input .active {
+    color: #fff;
+    background-color: #346FCA;
+}
+
 .recharge {
     width: 100%;
     height: 100%;
@@ -149,9 +166,10 @@ export default {
     line-height: 3rem;
 }
 
-.recharge-page .wxips {
-    width: 90%;
-    margin: .5rem auto;
+.wxips {
+    font-size: 1.2rem;
+    color: #999;
+    margin: .5rem 5%;
 }
 
 .withopt {
@@ -162,20 +180,21 @@ export default {
     height: 40px;
     line-height: 40px;
     width: 60%;
-    padding-left: 15px;
+    text-indent: 15px;
     border-bottom: 1px solid #f1f1f1;
     border-radius: 0;
 }
 
 .withopt button {
     width: 40%;
+    float: right;
     background: #fff;
     border: 0;
     height: 40px;
     line-height: 40px;
     border-bottom: 1px solid #f1f1f1;
     font-size: 1.2rem;
-    color: #A3A3A3;
+    color: #346faf;
 }
 
 .rechbutton {
@@ -195,6 +214,8 @@ export default {
 
 .rechbutton p {
     width: 90%;
-    margin: 0 auto;
+    margin: 0.3rem auto;
+    font-size: 1.2rem;
+    color: #999;
 }
 </style>
