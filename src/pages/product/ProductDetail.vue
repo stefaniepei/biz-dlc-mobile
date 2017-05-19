@@ -476,7 +476,7 @@ export default {
     font-size: 0.5rem;
     color: #B3C9E1;
     border: 1px solid #A3BEDB;
-    border-radius: 5px;
+    border-radius: 3px;
     display: inline-block;
     margin-right: 5px;
     width: 50px;
@@ -539,7 +539,7 @@ export default {
     text-align: center;
     display: inline-block;
     border: 1px solid #DFDFDF;
-    border-radius: 5px;
+    border-radius: 3px;
     box-sizing: border-box;
     width: 60%;
     height: 3rem;

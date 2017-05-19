@@ -31,8 +31,7 @@
         </div>
     
         <div class="reg-agree">
-            <input type="checkbox" v-show="false" id="chkContract" checked="checked" />
-            <span class="checkboxIcon checked" id="chkContractIcon"></span>
+            <span class="checkboxIcon checked" @click="chkAgree" ref="agree"></span>
             <span>我同意
                 <a href="/regAgreement">《点理财金融服务协议》</a>
             </span>
@@ -73,7 +72,16 @@ export default {
                 _this.captchaToken = res['data']['data']['token']
                 _this.captchaUrl = res['data']['data']['url']
             }).catch(function () { })
-        }
+        },
+        //checkbox of contarct
+        chkAgree() {
+            this.chkContarct = !this.chkContarct
+            if (this.chkContarct) {
+                this.$refs.agree.className = 'checkboxIcon checked'
+            } else {
+                this.$refs.agree.className = 'checkboxIcon'
+            }
+        },
     }
 }
 </script>
@@ -141,7 +149,7 @@ button.sendCode {
     color: #fff;
     border: 0;
     font-size: 1.2rem;
-    border-radius: 5px;
+    border-radius: 3px;
 }
 
 .reg-agree {
@@ -166,7 +174,7 @@ button.sendCode {
     padding: 0;
     top: 2px;
     height: 1.5rem;
-    border-radius: 1rem;
+    border-radius: 3px;
     border: 1px solid #666;
 }
 

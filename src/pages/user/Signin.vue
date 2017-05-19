@@ -110,7 +110,7 @@ export default {
     color: #fff;
     border: 0;
     font-size: 1.2rem;
-    border-radius: 5px;
+    border-radius: 3px;
 }
 
 .login-link {

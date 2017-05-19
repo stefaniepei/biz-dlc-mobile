@@ -243,7 +243,7 @@ export default {
     color: #ff7742;
     width: 50%;
     padding: 1% 2%;
-    border-radius: 6px;
+    border-radius: 3px;
 }
 
 .novice-mark .new-hand {
