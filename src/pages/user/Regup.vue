@@ -40,6 +40,8 @@
     </div>
 </template>
 <script>
+import { Toast } from 'mint-ui'
+
 export default {
     data() {
         return {
@@ -49,6 +51,7 @@ export default {
             verifyCode: '',
             captchaUrl: '',
             captchaToken: '',
+            chkContarct: true,
         }
     },
     mounted() {
@@ -63,7 +66,10 @@ export default {
 
         },
         regBtn() {
-
+            if (!this.chkContarct) {
+                Toast('请先阅读《点理财金融服务协议》')
+                return
+            }
         },
         //获取图片验证码
         getCaptchaImg() {
