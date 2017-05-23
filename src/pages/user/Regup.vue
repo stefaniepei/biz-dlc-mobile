@@ -27,7 +27,7 @@
         </div>
     
         <div class="marReg no-boder">
-            <button type="button" class="btn btn-normal btn-login" @click="regBtn" ref="regupDOM">注册</button>
+            <button type="button" class="btn btn-normal btn-login" @click="regBtn" :disabled="regupDisabled">注册</button>
         </div>
     
         <div class="reg-agree">
@@ -55,6 +55,7 @@ export default {
             captchaUrl: '',
             captchaToken: '',
             chkContarct: true,
+            regupDisabled: false
         }
     },
     mounted() {
@@ -130,7 +131,7 @@ export default {
                     Toast('请输入6位短信验证码')
                     return false
                 }
-                _this.$refs.regupDOM.disabled = 'disabled'
+                _this.regupDisabled = true
                 _this.$http.post(`/user/signup/quick`, {
                     cellphone: _this.phone, password: md5(bcrypt.hashSync(_this.password, undefined)),
                     smsCode: _this.verifyCode, acceptTos: true, captcha: _this.picVerifyCode, captchaToken: _this.captchaToken
@@ -138,7 +139,7 @@ export default {
                     Toast('注册成功');
                 }).catch(function (regupError) {
                     Toast(regupError)
-                    _this.$refs.regupDOM.disabled = false
+                    _this.regupDisabled = false
                 })
             }
 
