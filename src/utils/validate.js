@@ -28,6 +28,7 @@ export const testUserName = (userName) => {
     return result
 }
 
+//图片验证码
 export const testCaptcha = (captcha) => {
     let cap = captcha.toString()
     let reg = /^.{4}$/
@@ -35,6 +36,7 @@ export const testCaptcha = (captcha) => {
     return result
 }
 
+//短信验证码
 export const testOtpCode = (otpNo) => {
     let otp = otpNo.toString()
     let reg = /^[0-9]{6}$/
@@ -49,6 +51,7 @@ export const testTradePassword = (tradePw) => {
     return result
 }
 
+//银行卡预留手机号码验证
 export const testBankPhone = (phoneNo) => {
     let phone = phoneNo.toString()
     let reg = /^1[3|4|5|7|8][0-9]{9}$/
@@ -56,7 +59,8 @@ export const testBankPhone = (phoneNo) => {
     return result
 }
 
-export const testBankNO = (bankName, bankNum) => {
+//银行卡号验证
+export const testBankNO = (bankNum) => {
     //银行卡号验证规则
     let bankNumRule = /^\d{16}|\d{19}|\d{17}|\d{18}$/
     if ($.trim(bankNum) == "" || bankNum == null) {
@@ -67,6 +71,7 @@ export const testBankNO = (bankName, bankNum) => {
     return true
 }
 
+//身份证验证
 export const testIDCard = (idCard) => {
     //15位和18位身份证号码的正则表达式
     let regIdCard = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$/
@@ -142,4 +147,12 @@ export const testIDCard = (idCard) => {
     } else {
         return false
     }
+}
+
+//中文名字验证
+export const testChineseName = (chineseName) => {
+    let name = chineseName.toString()
+    let reg = /^([\u4e00-\u9fa5])*$/
+    let result = reg.test(name)
+    return result
 }

@@ -22,12 +22,12 @@
         <div class="marReg">
             <input type="text" class="short-input" v-model='verifyCode' maxlength="6" placeholder="请输入验证码">
             <div class="reg-border padding-10">
-                <button class="sendCode" @click="verifyCodeBtn">发送验证码</button>
+                <button class="sendCode" @click="verifyCodeBtn" id="verifyCodeBtn" ref="otpCode">发送验证码</button>
             </div>
         </div>
     
         <div class="marReg no-boder">
-            <button type="button" class="btn btn-normal btn-login" @click="regBtn">注册</button>
+            <button type="button" class="btn btn-normal btn-login" @click="regBtn" ref="regupDom">注册</button>
         </div>
     
         <div class="reg-agree">
@@ -41,12 +41,16 @@
     </div>
 </template>
 <script>
+import { Toast } from 'mint-ui'
+import bcrypt from 'bcryptjs'
+import md5 from 'md5'
+import { testAccountName, testPassword, testCaptcha, testOtpCode } from '../../utils/validate.js'
 export default {
     data() {
         return {
-            phone: '',
-            password: '',
-            picVerifyCode: '',
+            phone: '13543433333',
+            password: 'aaaa1111',
+            picVerifyCode: 'zwjr',
             verifyCode: '',
             captchaUrl: '',
             captchaToken: '',
@@ -57,22 +61,89 @@ export default {
         this.getCaptchaImg();
     },
     methods: {
+        //更换图片验证码
         changeImg() {
             this.getCaptchaImg();
         },
-        verifyCodeBtn() {
-
+        //验证输入内容
+        validateForm() {
+            if (!testAccountName(this.phone)) {
+                Toast('请输入11位正确的手机号码')
+                return false
+            } else if (!testPassword(this.password)) {
+                Toast('请输入8-16位数字和字母组合的密码')
+                return false
+            } else if (!testCaptcha(this.picVerifyCode)) {
+                Toast('请输入4位字母的图片密码')
+                return false
+            }
+            return true
         },
-        regBtn() {
+        //获取手机验证码
+        verifyCodeBtn() {
+            if (this.validateForm()) {
+                let _this = this
+                this.$http.post(`/user/captcha/validate`, { token: this.captchaToken, value: this.picVerifyCode }).then((response) => {
+                    _this.$http.get(`/user/signup/quick/otp`, { params: { cellphone: _this.phone, token: _this.captchaToken } }).then((otp) => {
+                        let times = 60
+                        let otpDom = _this.$refs.otpCode
+                        otpDom.innerHTML = times + " s"
+                        otpDom.disabled = 'disabled'
+                        times--
+                        var timeClear = setInterval(function () {
+                            if (otpDom.innerHTML == '发送验证码') {
+                                clearInterval(timeClear);
+                                return;
+                            }
+                            otpDom.innerHTML = times + " s";
+                            if (times == 0) {
+                                clearInterval(timeClear);
+                                otpDom.innerHTML = "发送验证码";
+                                otpDom.disabled = false
+                                times = 60;
+                            }
+                            times--
+                        }, 1000)
 
+                        _this.verifyCode = otp['data']['otp']
+
+                    }).catch(function (otpError) {
+                        Toast(otpError)
+                        this.getCaptchaImg()
+                    })
+                }).catch(function (signError) {
+                    Toast(signError)
+                    this.getCaptchaImg()
+                })
+            }
+        },
+        //提交注册
+        regBtn() {
+            if (this.validateForm()) {
+                let _this = this
+                if (!testOtpCode(this.verifyCode)) {
+                    Toast('请输入6位短信验证码')
+                    return false
+                }
+                _this.$refs.regupDom.disabled = 'disabled'
+                _this.$http.post(`/user/signup/quick`, {
+                    cellphone: _this.phone, password: md5(bcrypt.hashSync(_this.password, undefined)),
+                    smsCode: _this.verifyCode, acceptTos: true, captcha: _this.picVerifyCode, captchaToken: _this.captchaToken
+                }).then((response) => {
+                    alert('注册成功');
+                }).catch(function (regupError) {
+                    Toast(regupError)
+                    _this.$refs.regupDom.disabled = false
+                })
+            }
         },
         //获取图片验证码
         getCaptchaImg() {
             let _this = this
             this.$http.get(`/user/captcha`).then((res) => {
-                _this.captchaToken = res['data']['data']['token']
-                _this.captchaUrl = res['data']['data']['url']
-            }).catch(function () { })
+                _this.captchaToken = res['data']['token']
+                _this.captchaUrl = res['data']['url']
+            }).catch((saltError) => Toast(saltError))
         }
     }
 }
