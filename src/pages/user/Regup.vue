@@ -15,19 +15,19 @@
         <div class="marReg">
             <input type="text" class="short-input" v-model='picVerifyCode' maxlength="4" placeholder="请输入图片验证码">
             <div class="reg-border">
-                <img id="captchaImg" :src="captchaUrl" @click="changeImg" title="点击更换验证码">
+                <img :src="captchaUrl" @click="changeImg" title="点击更换验证码">
             </div>
         </div>
     
         <div class="marReg">
             <input type="text" class="short-input" v-model='verifyCode' maxlength="6" placeholder="请输入验证码">
             <div class="reg-border padding-10">
-                <button class="sendCode" @click="verifyCodeBtn" id="verifyCodeBtn" ref="otpCode">发送验证码</button>
+                <button class="sendCode" @click="sendOtp" ref="otpCodeDOM">发送验证码</button>
             </div>
         </div>
     
         <div class="marReg no-boder">
-            <button type="button" class="btn btn-normal btn-login" @click="regBtn" ref="regupDom">注册</button>
+            <button type="button" class="btn btn-normal btn-login" @click="regBtn" ref="regupDOM">注册</button>
         </div>
     
         <div class="reg-agree">
@@ -41,13 +41,10 @@
 </template>
 <script>
 import { Toast } from 'mint-ui'
-<<<<<<< HEAD
 import bcrypt from 'bcryptjs'
 import md5 from 'md5'
 import { testAccountName, testPassword, testCaptcha, testOtpCode } from '../../utils/validate.js'
-=======
 
->>>>>>> 80e9fff25ccb9683b1f87eba970713122b199d12
 export default {
     data() {
         return {
@@ -84,13 +81,13 @@ export default {
             return true
         },
         //获取手机验证码
-        verifyCodeBtn() {
+        sendOtp() {
             if (this.validateForm()) {
                 let _this = this
                 this.$http.post(`/user/captcha/validate`, { token: this.captchaToken, value: this.picVerifyCode }).then((response) => {
                     _this.$http.get(`/user/signup/quick/otp`, { params: { cellphone: _this.phone, token: _this.captchaToken } }).then((otp) => {
                         let times = 60
-                        let otpDom = _this.$refs.otpCode
+                        let otpDom = _this.$refs.otpCodeDOM
                         otpDom.innerHTML = times + " s"
                         otpDom.disabled = 'disabled'
                         times--
@@ -123,43 +120,36 @@ export default {
         },
         //提交注册
         regBtn() {
-<<<<<<< HEAD
+            if (!this.chkContarct) {
+                Toast('请先阅读《点理财金融服务协议》')
+                return
+            }
             if (this.validateForm()) {
                 let _this = this
                 if (!testOtpCode(this.verifyCode)) {
                     Toast('请输入6位短信验证码')
                     return false
                 }
-                _this.$refs.regupDom.disabled = 'disabled'
+                _this.$refs.regupDOM.disabled = 'disabled'
                 _this.$http.post(`/user/signup/quick`, {
                     cellphone: _this.phone, password: md5(bcrypt.hashSync(_this.password, undefined)),
                     smsCode: _this.verifyCode, acceptTos: true, captcha: _this.picVerifyCode, captchaToken: _this.captchaToken
                 }).then((response) => {
-                    alert('注册成功');
+                    Toast('注册成功');
                 }).catch(function (regupError) {
                     Toast(regupError)
-                    _this.$refs.regupDom.disabled = false
+                    _this.$refs.regupDOM.disabled = false
                 })
-=======
-            if (!this.chkContarct) {
-                Toast('请先阅读《点理财金融服务协议》')
-                return
->>>>>>> 80e9fff25ccb9683b1f87eba970713122b199d12
             }
+
         },
         //获取图片验证码
         getCaptchaImg() {
             let _this = this
             this.$http.get(`/user/captcha`).then((res) => {
-<<<<<<< HEAD
                 _this.captchaToken = res['data']['token']
                 _this.captchaUrl = res['data']['url']
             }).catch((saltError) => Toast(saltError))
-        }
-=======
-                _this.captchaToken = res['data']['data']['token']
-                _this.captchaUrl = res['data']['data']['url']
-            }).catch(function () { })
         },
         //checkbox of contarct
         chkAgree() {
@@ -170,7 +160,6 @@ export default {
                 this.$refs.agree.className = 'checkboxIcon'
             }
         },
->>>>>>> 80e9fff25ccb9683b1f87eba970713122b199d12
     }
 }
 </script>

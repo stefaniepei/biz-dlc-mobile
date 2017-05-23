@@ -44,7 +44,7 @@
             </div>
             <div class="withopt">
                 <input type="text" class="opt" maxlength="6" placeholder="请输入验证码" />
-                <button class="rechgetcapt">发送验证码</button>
+                <button class="sendCode" @click="sendOtp" ref="otpCodeDOM">发送验证码</button>
             </div>
     
         </div>
@@ -56,25 +56,25 @@
         </div>
     </div>
     <!--<div class="success-page" style="display:none;">
-                                                                                                                            <div class="success-top">
-                                                                                                                                <img src="../images/account/recharge-success.png">
-                                                                                                                                <p>充值成功</p>
-                                                                                                                            </div>
-                                                                                                                            <div class="success-middle">
-                                                                                                                                <p>
-                                                                                                                                    <span class="left">银行卡</span>
-                                                                                                                                    <span class="right" id="cardInfo">中国民生银行 尾号8928</span>
-                                                                                                                                </p>
-                                                                                                                                <p>
-                                                                                                                                    <span class="left">充值金额</span>
-                                                                                                                                    <span class="right" id="tradeAmount">￥10</span>
-                                                                                                                                </p>
-                                                                                                                            </div>
-                                                                                                                            <div class="success-bottom">
-                                                                                                                                <button class="re-recharge">继续充值</button>
-                                                                                                                                <button class="buy">立即购买</button>
-                                                                                                                            </div>
-                                                                                                                            </div>-->
+            <div class="success-top">
+            <img src="../images/account/recharge-success.png">
+            <p>充值成功</p>
+            </div>
+            <div class="success-middle">
+            <p>
+            <span class="left">银行卡</span>
+            <span class="right" id="cardInfo">中国民生银行 尾号8928</span>
+            </p>
+            <p>
+            <span class="left">充值金额</span>
+            <span class="right" id="tradeAmount">￥10</span>
+            </p>
+            </div>
+            <div class="success-bottom">
+            <button class="re-recharge">继续充值</button>
+            <button class="buy">立即购买</button>
+            </div>
+            </div>-->
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -99,7 +99,43 @@ export default {
             if (num >= this.perLimit) {
                 this.rechargeAmount = this.perLimit;
             }
-        }
+        },
+        sendOtp() {
+            if (this.validateForm()) {
+                let _this = this
+                this.$http.post(`/user/captcha/validate`, { token: this.captchaToken, value: this.picVerifyCode }).then((response) => {
+                    _this.$http.get(`/user/signup/quick/otp`, { params: { cellphone: _this.phone, token: _this.captchaToken } }).then((otp) => {
+                        let times = 60
+                        let otpDom = _this.$refs.otpCodeDOM
+                        otpDom.innerHTML = times + " s"
+                        otpDom.disabled = 'disabled'
+                        times--
+                        var timeClear = setInterval(function () {
+                            if (otpDom.innerHTML == '发送验证码') {
+                                clearInterval(timeClear);
+                                return;
+                            }
+                            otpDom.innerHTML = times + " s";
+                            if (times == 0) {
+                                clearInterval(timeClear);
+                                otpDom.innerHTML = "发送验证码";
+                                otpDom.disabled = false
+                                times = 60;
+                            }
+                            times--
+                        }, 1000)
+
+                        _this.verifyCode = otp['data']['otp']
+
+                    }).catch(function (otpError) {
+                        Toast(otpError)
+                        this.getCaptchaImg()
+                    })
+                }).catch(function (signError) {
+                    Toast(signError)
+                })
+            }
+        },
     }
 }
 </script>
