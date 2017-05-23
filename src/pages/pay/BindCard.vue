@@ -26,12 +26,12 @@
         <div class="marReg">
             <input type="text" class="short-input" v-model='verifyCode' maxlength="6" placeholder="请输入验证码">
             <div class="reg-border padding-10">
-                <button class="sendCode" @click="verifyCodeBtn" id="verifyCodeBtn" ref="otpCode">发送验证码</button>
+                <button class="sendCode" @click="verifyCodeBtn" ref="otpCode">发送验证码</button>
             </div>
         </div>
     
         <div class="marReg no-boder">
-            <button type="button" class="btn btn-normal btn-login" @click="confirmBtn" ref="regupDom">确认</button>
+            <button type="button" class="btn btn-normal btn-login" @click="confirmBtn" :disable="bindCardDisable">确认</button>
         </div>
     
         <div class="w100">
@@ -53,6 +53,7 @@ export default {
             cardNo: '',
             cellphone: '13636398500',
             verifyCode: '',
+            bindCardDisable: false,
             bankList: {},
         }
     },
@@ -120,12 +121,16 @@ export default {
                     return false
                 }
             }
+            this.bindCardDisable = true
             this.$http.post(`/account/cards`, {
                 holderName: this.holderName, idNo: this.idNo, cardNo: this.cardNo,
                 bankNo: this.bankNo, cellphone: this.cellphone, smsCode: this.verifyCode
             }).then((res) => {
-                console.log(res);
-            }).catch((error) => Toast(error))
+                console.log(res)
+            }).catch(function (error) {
+                Toast(error)
+                this.bindCardDisable = false
+            })
         },
         //获取银行列表接口
         getBank() {
