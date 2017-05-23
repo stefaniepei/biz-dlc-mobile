@@ -1,84 +1,72 @@
 <template>
     <div class="page recharge">
-        <mt-header title="充值" class="header-bg-color" fixed>
-            <router-link to="/info" slot="left">
-                <mt-button icon="back"></mt-button>
-            </router-link>
-        </mt-header>
-        <div class="banktop header-margin">
-            <div :class="'bankico bank_icon_'+this.userAccount.cards[0]['bankNo']"></div>
-            <div class="bankinfo">
-                <p>
-                    <span>{{this.userAccount.cards[0]['bankName']}}</span>
-                    <span>（尾号</span>
-                    <span>{{this.userAccount.cards[0]['cardNo']|lastChar}}</span>
-                    <span>）</span>
-                </p>
-                <p>
-                    <span>单笔限额</span>
-                    <span>{{this.perLimit}}</span>
-                    <span>每日限额</span>
-                    <span>{{this.dayLimit}}</span>
-                </p>
+        <div v-show="!rechargeSuccessDisplay">
+            <mt-header title="充值" class="header-bg-color" fixed>
+                <router-link to="/info" slot="left">
+                    <mt-button icon="back"></mt-button>
+                </router-link>
+            </mt-header>
+            <div class="banktop header-margin">
+                <div :class="'bankico bank_icon_'+this.userAccount.cards[0]['bankNo']"></div>
+                <div class="bankinfo">
+                    <p>
+                        <span>{{this.userAccount.cards[0]['bankName']}}</span>
+                        <span>（尾号</span>
+                        <span>{{this.userAccount.cards[0]['cardNo']|lastChar}}</span>
+                        <span>）</span>
+                    </p>
+                    <p>
+                        <span>单笔限额</span>
+                        <span>{{this.perLimit}}</span>
+                        <span>每日限额</span>
+                        <span>{{this.dayLimit}}</span>
+                    </p>
+                </div>
             </div>
-        </div>
-        <section class="fill-div-05">
-        </section>
-        <div class="bankinput">
-            <div class="tradeamount">
-                <span>金额</span>
-                <span>￥</span>
-                <input type="text" v-model="rechargeAmount" placeholder="请输入充值金额" />
-            </div>
+            <section class="fill-div-05">
+            </section>
+            <div class="bankinput">
+                <div class="tradeamount">
+                    <span>金额</span>
+                    <span>￥</span>
+                    <input type="text" v-model="rechargeAmount" placeholder="请输入充值金额" />
+                </div>
     
-            <div class="fast-input text-center">
-                <span @click="fastInput(5000)" v-if="this.perLimit >= 5000" :class="this.rechargeAmount == 5000 ? 'active' : ''">￥5,000</span>
-                <span @click="fastInput(10000)" v-if="this.perLimit >= 10000" :class="this.rechargeAmount == 10000 ? 'active' : ''">￥10,000</span>
-                <span @click="fastInput(20000)" v-if="this.perLimit >= 20000" :class="this.rechargeAmount == 20000 ? 'active' : ''">￥20,000</span>
-                <span @click="fastInput(30000)" v-if="this.perLimit >= 30000" :class="this.rechargeAmount == 30000 ? 'active' : ''">￥30,000</span>
-                <span @click="fastInput(40000)" v-if="this.perLimit >= 40000" :class="this.rechargeAmount == 40000 ? 'active' : ''">￥40,000</span>
-                <span @click="fastInput(50000)" v-if="this.perLimit >= 50000" :class="this.rechargeAmount == 50000 ? 'active' : ''">￥50,000</span>
-            </div>
-            <div class="wxips">提示：该卡本次最多充值
-                <font>{{this.perLimit}}</font>元
-            </div>
-            <div class="withopt">
-                <input type="text" class="opt" maxlength="6" placeholder="请输入验证码" />
-                <button class="sendCode" @click="sendOtp" ref="otpCodeDOM">发送验证码</button>
-            </div>
+                <div class="fast-input text-center">
+                    <span @click="fastInput(5000)" v-if="this.perLimit >= 5000" :class="this.rechargeAmount == 5000 ? 'active' : ''">￥5,000</span>
+                    <span @click="fastInput(10000)" v-if="this.perLimit >= 10000" :class="this.rechargeAmount == 10000 ? 'active' : ''">￥10,000</span>
+                    <span @click="fastInput(20000)" v-if="this.perLimit >= 20000" :class="this.rechargeAmount == 20000 ? 'active' : ''">￥20,000</span>
+                    <span @click="fastInput(30000)" v-if="this.perLimit >= 30000" :class="this.rechargeAmount == 30000 ? 'active' : ''">￥30,000</span>
+                    <span @click="fastInput(40000)" v-if="this.perLimit >= 40000" :class="this.rechargeAmount == 40000 ? 'active' : ''">￥40,000</span>
+                    <span @click="fastInput(50000)" v-if="this.perLimit >= 50000" :class="this.rechargeAmount == 50000 ? 'active' : ''">￥50,000</span>
+                </div>
+                <div class="wxips">提示：该卡本次最多充值
+                    <font>{{this.perLimit}}</font>元
+                </div>
+                <div class="withopt">
+                    <input type="text" v-model='verifyCode' class="opt" maxlength="6" placeholder="请输入验证码" />
+                    <button class="sendCode" @click="sendOtp" ref="otpCodeDOM">发送验证码</button>
+                </div>
     
+            </div>
+            <div class="bankbutton rechbutton">
+                <button class="btn btn-default btn-recharge" @click="rechargeBtn">确定充值</button>
+                <p>温馨提示：</p>
+                <p> 1、充值免费，单笔充值金额必须大于等于2元。</p>
+                <p> 2、一般情况下完成充值操作后，资金会立即到用户账户中，不排除在充值高峰期，到账时间会推迟，请以实际到账时间为准。</p>
+            </div>
         </div>
-        <div class="bankbutton rechbutton">
-            <button class="btn btn-default btn-recharge" id="rechButton">确定充值</button>
-            <p>温馨提示：</p>
-            <p> 1、充值免费，单笔充值金额必须大于等于2元。</p>
-            <p> 2、一般情况下完成充值操作后，资金会立即到用户账户中，不排除在充值高峰期，到账时间会推迟，请以实际到账时间为准。</p>
-        </div>
+        <recharge-success v-show="rechargeSuccessDisplay" :child-data="rechargeTradeData">
+        </recharge-success>
     </div>
-    <!--<div class="success-page" style="display:none;">
-            <div class="success-top">
-            <img src="../images/account/recharge-success.png">
-            <p>充值成功</p>
-            </div>
-            <div class="success-middle">
-            <p>
-            <span class="left">银行卡</span>
-            <span class="right" id="cardInfo">中国民生银行 尾号8928</span>
-            </p>
-            <p>
-            <span class="left">充值金额</span>
-            <span class="right" id="tradeAmount">￥10</span>
-            </p>
-            </div>
-            <div class="success-bottom">
-            <button class="re-recharge">继续充值</button>
-            <button class="buy">立即购买</button>
-            </div>
-            </div>-->
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { Toast } from 'mint-ui'
+import { Toast, MessageBox } from 'mint-ui'
+import bcrypt from 'bcryptjs'
+import md5 from 'md5'
+import { testMoney, testOtpCode } from '../../utils/validate.js'
+import rechargeSuccess from 'components/recharge-success.vue'
 
 export default {
     data() {
@@ -86,6 +74,9 @@ export default {
             perLimit: 20000,
             dayLimit: 50000,
             rechargeAmount: '',
+            verifyCode: '',
+            rechargeSuccessDisplay: false,
+            rechargeTradeData: {},
         }
     },
     computed: mapGetters([
@@ -93,6 +84,12 @@ export default {
         'userAccount',
         'userAuth'
     ]),
+    mounted() {
+        console.log(this)
+    },
+    components: {
+        rechargeSuccess
+    },
     methods: {
         fastInput(num) {
             this.rechargeAmount = num
@@ -101,39 +98,67 @@ export default {
             }
         },
         sendOtp() {
-            if (this.validateForm()) {
-                let _this = this
-                this.$http.post(`/user/captcha/validate`, { token: this.captchaToken, value: this.picVerifyCode }).then((response) => {
-                    _this.$http.get(`/user/signup/quick/otp`, { params: { cellphone: _this.phone, token: _this.captchaToken } }).then((otp) => {
-                        let times = 60
-                        let otpDom = _this.$refs.otpCodeDOM
+            let _this = this
+            _this.$http.get(`/account/deposit/otp`, { params: { cellphone: _this.user.userName }, headers: { 'Authorization': this.userAuth } })
+                .then((otp) => {
+                    let times = 60
+                    let otpDom = _this.$refs.otpCodeDOM
+                    otpDom.innerHTML = times + " s"
+                    otpDom.disabled = 'disabled'
+                    times--
+                    let timeClear = setInterval(() => {
+                        if (otpDom.innerHTML == '发送验证码') {
+                            clearInterval(timeClear)
+                            return
+                        }
                         otpDom.innerHTML = times + " s"
-                        otpDom.disabled = 'disabled'
+                        if (times == 0) {
+                            clearInterval(timeClear)
+                            otpDom.innerHTML = "发送验证码"
+                            otpDom.disabled = false
+                            times = 60
+                        }
                         times--
-                        var timeClear = setInterval(function () {
-                            if (otpDom.innerHTML == '发送验证码') {
-                                clearInterval(timeClear);
-                                return;
+                    }, 1000)
+                    _this.verifyCode = otp['data']['otp']
+                }).catch((otpError) => Toast(otpError))
+        },
+        rechargeBtn() {
+            if (!testMoney(this.rechargeAmount)) {
+                Toast('金额是正数且精度不能大于两位小数')
+            } else if (!testOtpCode(this.verifyCode)) {
+                Toast('请输入6位短信验证码')
+            } else {
+                let _this = this
+                MessageBox.prompt(' ', '请输入交易密码', { inputPlaceholder: '请输入交易密码' })
+                    .then(({ value, action }) => {
+                        if ('confirm' == action) {
+                            let param = {
+                                acceptTos: true,
+                                totalAmount: _this.rechargeAmount,
+                                password: value,
+                                smsCode: _this.verifyCode
                             }
-                            otpDom.innerHTML = times + " s";
-                            if (times == 0) {
-                                clearInterval(timeClear);
-                                otpDom.innerHTML = "发送验证码";
-                                otpDom.disabled = false
-                                times = 60;
-                            }
-                            times--
-                        }, 1000)
+                            _this.$http.get(`/user/signin/salt/${_this.user.userName}`)
+                                .then((saltRes) => {
+                                    param.password = bcrypt.hashSync(value, saltRes['data']['salt'])
+                                    _this.$http.post(`/account/deposit`, param, { headers: { 'Authorization': _this.userAuth } })
+                                        .then((payRes) => {
+                                            _this.rechargeTradeData = {
+                                                bankName: _this.userAccount.cards[0]['bankName'],
+                                                cardNo: _this.userAccount.cards[0]['cardNo'],
+                                                rechargeAmount: _this.rechargeAmount
+                                            }
+                                            if (0 == payRes['error']) {
+                                                _this.rechargeSuccessDisplay = true
+                                            } else {
+                                                _this.rechargeSuccessDisplay = false
+                                            }
 
-                        _this.verifyCode = otp['data']['otp']
-
-                    }).catch(function (otpError) {
-                        Toast(otpError)
-                        this.getCaptchaImg()
+                                        }).catch((payErr) => Toast(payErr))
+                                }).catch((saltErr) => Toast(saltErr))
+                        }
                     })
-                }).catch(function (signError) {
-                    Toast(signError)
-                })
             }
         },
     }

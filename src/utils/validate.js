@@ -28,6 +28,14 @@ export const testUserName = (userName) => {
     return result
 }
 
+//金额
+export const testMoney = (money) => {
+    money = money.toString()
+    let reg = /^(?!0+(?:\.0+)?$)(?:[1-9]\d*|0)(?:\.\d{1,2})?$/
+    let result = reg.test(money)
+    return result
+}
+
 //图片验证码
 export const testCaptcha = (captcha) => {
     let cap = captcha.toString()
