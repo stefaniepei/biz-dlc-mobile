@@ -19,7 +19,7 @@
     user-select: none;
     background-image: none;
     border: 1px solid transparent;
-    border-radius: 5px;
+    border-radius: 3px;
 }
 
 .btn:hover {
@@ -40,7 +40,7 @@
     border: none;
     font-size: 1.2rem;
     background-color: #346faf;
-    border-radius: 5px;
+    border-radius: 3px;
 }
 
 .btn-normal {
@@ -50,7 +50,7 @@
     color: #fff;
     border: none;
     font-size: 1.2rem;
-    border-radius: 5px;
+    border-radius: 3px;
     background-color: #346faf;
 }
 
@@ -62,7 +62,7 @@
     font-size: 0.5rem;
     padding: 0;
     margin: 0;
-    border-radius: 5px;
+    border-radius: 3px;
     background-color: #fff;
     border: 1px solid #eee;
 }
@@ -75,7 +75,7 @@
     font-size: 0.5rem;
     padding: 0;
     margin: 0;
-    border-radius: 5px;
+    border-radius: 3px;
     background-color: #fff;
     border: 1px solid #eee;
 }
@@ -98,4 +98,54 @@
 .checkboxIcon.checked {
     background: url(../images/dlc/checkbox_checked_mini.png) no-repeat;
     background-size: cover;
+}
+
+
+/*input*/
+
+input,
+textarea {
+    border: 0;
+    /* 方法1 */
+    -webkit-appearance: none;
+    /* 方法2 */
+}
+
+input::-webkit-input-placeholder {
+    color: #eee;
+    font-size: 1.2rem;
+    /* WebKit browsers */
+}
+
+input:-moz-placeholder {
+    color: #eee;
+    font-size: 1.2rem;
+    /* Mozilla Firefox 4 to 18 */
+}
+
+input::-moz-placeholder {
+    color: #eee;
+    font-size: 1.2rem;
+    /* Mozilla Firefox 19+ */
+}
+
+input:-ms-input-placeholder {
+    color: #eee;
+    font-size: 1.2rem;
+    /* Internet Explorer 10+ */
+}
+
+
+/*设置输入框placeholder属性的字体颜色 end*/
+
+
+/*controller*/
+
+input:disabled,
+input[disabled] {
+    color: #8d8d8d;
+    -webkit-text-fill-color: #8d8d8d;
+    -webkit-opacity: 1;
+    opacity: 1;
+    border: 1px solid #eee !important;
 }

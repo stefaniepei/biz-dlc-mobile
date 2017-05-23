@@ -410,7 +410,7 @@ router.beforeEach(({
     if (Boolean(store.state.user) && Boolean(store.state.user.user) && Boolean(store.state.user.user.accessToken)) {
         isLogin = true //true用户已登录， false用户未登录
     }
-    console.log(auth, isLogin)
+    console.log('是否需要权限：' + auth, '是否已经登录：' + isLogin)
     if (auth && !isLogin) {
         store.dispatch('USER_LOGIN_OUT')
         next({

@@ -2,7 +2,7 @@
     <div class="page pay-order">
         <div v-show="orderShow">
             <mt-header title="订单支付" class="header-bg-color" fixed>
-                <a @click="this.$router.go(-1)" slot="left">
+                <a @click="routerBack" slot="left">
                     <mt-button icon="back"></mt-button>
                 </a>
             </mt-header>
@@ -112,11 +112,15 @@ export default {
     ]),
     beforeRouteEnter(to, from, next) {
         next(vm => {
+            vm.orderShow = true
             vm.getOrderDetail(vm.$route.params.order)
             if (vm.userAccount != null && vm.userAccount.balance && vm.userAccount.balance.available) {
                 vm.balance = vm.userAccount.balance.available
             }
         })
+    },
+    mounted() {
+        console.log(this)
     },
     components: {
         paySuccess, payFailed
@@ -204,7 +208,6 @@ export default {
             }
             MessageBox.prompt(' ', '请输入交易密码', { inputPlaceholder: '请输入交易密码' })
                 .then(({ value, action }) => {
-                    console.log(value, action)
                     if ('confirm' == action) {
                         // this.needPay
                         let param = {
@@ -231,13 +234,13 @@ export default {
                         _this.$http.get(`/user/signin/salt/${_this.user.userName}`)
                             .then((saltRes) => {
                                 param.password = bcrypt.hashSync(value, saltRes['data']['salt'])
-                                console.log(value, saltRes['data']['salt'], bcrypt.hashSync(value, saltRes['data']['salt']))
                                 _this.$http.post(`/trades/pay`, param, { headers: { 'Authorization': _this.userAuth } })
                                     .then((payRes) => {
                                         _this.payTradeData = payRes['data']
-                                        if (0 == payRes.error) {
+                                        if (0 == payRes['error']) {
                                             //paySuccess
                                             // Toast("paySuccess")
+                                            _this.paySuccess = true
                                         } else {
                                             _this.paySuccess = false
                                         }
@@ -254,6 +257,9 @@ export default {
         toDisabled() {
             this.btnDisabled = 'disabled'
             this.buyBtnVal = '已过期'
+        },
+        routerBack() {
+            this.$router.go(-1);
         }
     }
 }

@@ -31,8 +31,7 @@
         </div>
     
         <div class="reg-agree">
-            <input type="checkbox" v-show="false" id="chkContract" checked="checked" />
-            <span class="checkboxIcon checked" id="chkContractIcon"></span>
+            <span class="checkboxIcon checked" @click="chkAgree" ref="agree"></span>
             <span>我同意
                 <a href="/regAgreement">《点理财金融服务协议》</a>
             </span>
@@ -42,9 +41,13 @@
 </template>
 <script>
 import { Toast } from 'mint-ui'
+<<<<<<< HEAD
 import bcrypt from 'bcryptjs'
 import md5 from 'md5'
 import { testAccountName, testPassword, testCaptcha, testOtpCode } from '../../utils/validate.js'
+=======
+
+>>>>>>> 80e9fff25ccb9683b1f87eba970713122b199d12
 export default {
     data() {
         return {
@@ -54,6 +57,7 @@ export default {
             verifyCode: '',
             captchaUrl: '',
             captchaToken: '',
+            chkContarct: true,
         }
     },
     mounted() {
@@ -119,6 +123,7 @@ export default {
         },
         //提交注册
         regBtn() {
+<<<<<<< HEAD
             if (this.validateForm()) {
                 let _this = this
                 if (!testOtpCode(this.verifyCode)) {
@@ -135,16 +140,37 @@ export default {
                     Toast(regupError)
                     _this.$refs.regupDom.disabled = false
                 })
+=======
+            if (!this.chkContarct) {
+                Toast('请先阅读《点理财金融服务协议》')
+                return
+>>>>>>> 80e9fff25ccb9683b1f87eba970713122b199d12
             }
         },
         //获取图片验证码
         getCaptchaImg() {
             let _this = this
             this.$http.get(`/user/captcha`).then((res) => {
+<<<<<<< HEAD
                 _this.captchaToken = res['data']['token']
                 _this.captchaUrl = res['data']['url']
             }).catch((saltError) => Toast(saltError))
         }
+=======
+                _this.captchaToken = res['data']['data']['token']
+                _this.captchaUrl = res['data']['data']['url']
+            }).catch(function () { })
+        },
+        //checkbox of contarct
+        chkAgree() {
+            this.chkContarct = !this.chkContarct
+            if (this.chkContarct) {
+                this.$refs.agree.className = 'checkboxIcon checked'
+            } else {
+                this.$refs.agree.className = 'checkboxIcon'
+            }
+        },
+>>>>>>> 80e9fff25ccb9683b1f87eba970713122b199d12
     }
 }
 </script>
@@ -212,7 +238,7 @@ button.sendCode {
     color: #fff;
     border: 0;
     font-size: 1.2rem;
-    border-radius: 5px;
+    border-radius: 3px;
 }
 
 .reg-agree {
@@ -237,7 +263,7 @@ button.sendCode {
     padding: 0;
     top: 2px;
     height: 1.5rem;
-    border-radius: 1rem;
+    border-radius: 3px;
     border: 1px solid #666;
 }
 

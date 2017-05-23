@@ -336,7 +336,6 @@ export default {
                     //create order no
                     this.$http.post(`/biz/orders`, { productId: this.$route.params.id, amount: this.buyAmount }, { headers: { 'Authorization': this.userAuth } }).then((res) => {
                         let orderNo = res.data.orderNo
-                        console.log(res.data, orderNo)
                         _this.$router.push({ path: '/pay/' + orderNo })
                     }).catch((err) => Toast(err))
                 }
@@ -353,9 +352,7 @@ export default {
             } else {
                 val = String(this.buyAmount).substr(0, String(this.buyAmount).length - 1)
             }
-            console.log(val)
             val = isNaN(Number.parseInt(val)) ? '' : Number.parseInt(val)
-            console.log(val)
             this.buyAmount = val
             this.calu(val)
         },
@@ -479,7 +476,7 @@ export default {
     font-size: 0.5rem;
     color: #B3C9E1;
     border: 1px solid #A3BEDB;
-    border-radius: 5px;
+    border-radius: 3px;
     display: inline-block;
     margin-right: 5px;
     width: 50px;
@@ -542,7 +539,7 @@ export default {
     text-align: center;
     display: inline-block;
     border: 1px solid #DFDFDF;
-    border-radius: 5px;
+    border-radius: 3px;
     box-sizing: border-box;
     width: 60%;
     height: 3rem;
