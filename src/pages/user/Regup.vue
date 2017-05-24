@@ -92,7 +92,7 @@ export default {
                         otpDom.innerHTML = times + " s"
                         otpDom.disabled = 'disabled'
                         times--
-                        var timeClear = setInterval(function () {
+                        let timeClear = setInterval(function () {
                             if (otpDom.innerHTML == '发送验证码') {
                                 clearInterval(timeClear);
                                 return;
