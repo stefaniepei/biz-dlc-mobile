@@ -16,7 +16,7 @@
         </div>
     
         <div class="marReg">
-            <input type="text" v-model='cardNo' maxlength="16" placeholder="请输入银行卡号">
+            <input type="text" v-model='cardNo' maxlength="19" placeholder="请输入银行卡号">
         </div>
     
         <div class="marReg">
@@ -129,7 +129,7 @@ export default {
                 _this.bindCardDisable = true
                 this.$http.post(`/account/cards`, {
                     holderName: this.holderName, idNo: this.idNo, cardNo: this.cardNo,
-                    bankNo: this.bankNo, cellphone: this.cellphone, smsCode: this.verifyCode
+                    bankNo: this.bankNo, cellphone: this.cellphone, smsCode: this.verifyCode, acceptTos: true
                 }, { headers: { 'Authorization': this.userAuth } }).then((res) => {
                     console.log(res)
                 }).catch(function (error) {
