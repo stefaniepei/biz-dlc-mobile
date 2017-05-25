@@ -71,7 +71,7 @@ export const testBankPhone = (phoneNo) => {
 export const testBankNO = (bankNum) => {
     //银行卡号验证规则
     let bankNumRule = /^\d{16}|\d{19}|\d{17}|\d{18}$/
-    if ($.trim(bankNum) == "" || bankNum == null) {
+    if (bankNum.trim() == "" || bankNum == null) {
         return false
     } else if (!bankNumRule.test(bankNum)) {
         return false

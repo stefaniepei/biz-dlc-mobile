@@ -5,7 +5,7 @@
         </div>
     
         <div class="marReg">
-            <input type="text" v-model='idNo' maxlength="16" placeholder="持卡人身份证号">
+            <input type="text" v-model='idNo' maxlength="18" placeholder="持卡人身份证号">
         </div>
     
         <div class="marReg">
@@ -16,7 +16,7 @@
         </div>
     
         <div class="marReg">
-            <input type="text" v-model='cardNo' maxlength="16" placeholder="请输入银行卡号">
+            <input type="text" v-model='cardNo' maxlength="19" placeholder="请输入银行卡号">
         </div>
     
         <div class="marReg">
@@ -43,6 +43,7 @@
 </template>
 <script>
 import { Toast } from 'mint-ui'
+import { mapGetters } from 'vuex'
 import { testChineseName, testIDCard, testBankNO, testBankPhone, testOtpCode } from '../../utils/validate.js'
 export default {
     data() {
@@ -57,6 +58,10 @@ export default {
             bankList: {},
         }
     },
+    computed: mapGetters([
+        'userAuth',
+        'userAccount'
+    ]),
     mounted() {
         //获取银行列表
         this.getBank()
@@ -69,6 +74,9 @@ export default {
                 return false
             } else if (!testIDCard(this.idNo)) {
                 Toast('请输入正确的身份证号')
+                return false
+            } else if (this.bankNo == '') {
+                Toast('请输入银行名称')
                 return false
             } else if (!testBankNO(this.cardNo)) {
                 Toast('请输入正确的银行卡号')
@@ -84,11 +92,12 @@ export default {
         },
         //获取银行预留手机验证码
         verifyCodeBtn() {
+            let _this = this
             if (!testBankPhone(this.cellphone)) {
                 Toast('请输入11位正确的手机号码')
                 return false
             }
-            this.$http.get(`/account/cards/otp`, { params: { cellphone: this.cellphone } }).then((otp) => {
+            this.$http.get(`/account/cards/otp`, { params: { cellphone: this.cellphone }, headers: { 'Authorization': this.userAuth } }).then((otp) => {
                 let times = 60
                 let otpDom = _this.$refs.otpCode
                 otpDom.innerHTML = times + " s"
@@ -115,22 +124,20 @@ export default {
         },
         //确认绑定
         confirmBtn() {
+            let _this = this
             if (this.validateForm()) {
-                if (this.bankNo == '') {
-                    Toast('请输入银行名称')
-                    return false
-                }
+                _this.bindCardDisable = true
+                this.$http.post(`/account/cards`, {
+                    holderName: this.holderName, idNo: this.idNo, cardNo: this.cardNo,
+                    bankNo: this.bankNo, cellphone: this.cellphone, smsCode: this.verifyCode, acceptTos: true
+                }, { headers: { 'Authorization': this.userAuth } }).then((res) => {
+                    console.log(res)
+                }).catch(function (error) {
+                    Toast(error)
+                    _this.bindCardDisable = false
+                })
             }
-            this.bindCardDisable = true
-            this.$http.post(`/account/cards`, {
-                holderName: this.holderName, idNo: this.idNo, cardNo: this.cardNo,
-                bankNo: this.bankNo, cellphone: this.cellphone, smsCode: this.verifyCode
-            }).then((res) => {
-                console.log(res)
-            }).catch(function (error) {
-                Toast(error)
-                this.bindCardDisable = false
-            })
+
         },
         //获取银行列表接口
         getBank() {
