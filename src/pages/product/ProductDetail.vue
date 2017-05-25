@@ -212,13 +212,13 @@ export default {
     beforeRouteEnter(to, from, next) {
         next(vm => {
             vm.getProductDetail(vm.$route.params.id)
-            if (vm.user != null && vm.user.accessToken) {
+            if (vm.user != null && vm.user['accessToken']) {
                 vm.loginOut = false
             } else {
                 vm.loginOut = true
             }
-            if (vm.userAccount != null && vm.userAccount.balance && vm.userAccount.balance.available) {
-                vm.balance = vm.userAccount.balance.available
+            if (vm.userAccount != null && vm.userAccount['balance'] && vm.userAccount['balance']['available']) {
+                vm.balance = vm.userAccount['balance']['available']
             }
         })
     },

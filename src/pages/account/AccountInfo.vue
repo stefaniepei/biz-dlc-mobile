@@ -2,7 +2,8 @@
     <div class="page account">
         <div class="account-money">
             <router-link to="/setting" style="text-align:right;margin-right: 2.5rem;" tag="div">
-                <span class="setting-icon"></span><span>设置</span>
+                <span class="setting-icon"></span>
+                <span>设置</span>
             </router-link>
             <section>
                 <p class="text-center fz-biggest">{{this.userAccount.balance.available}}</p>
@@ -10,11 +11,11 @@
             </section>
             <section class="profit-all">
                 <div class="profit-all-1">
-                    <p class="text-center fz-biggest">{{this.userAccount.asset.totalProfit}}</p>
+                    <p class="text-center fz-biggest">{{this.userAccount['asset']['totalProfit']}}</p>
                     <p class="text-center fz-small">累计收益</p>
                 </div>
                 <div class="profit-all-2">
-                    <p class="text-center fz-biggest">{{this.userAccount.totalAsset}}</p>
+                    <p class="text-center fz-biggest">{{this.userAccount['totalAsset']}}</p>
                     <p class="text-center fz-small">总资产（元）</p>
                 </div>
             </section>
@@ -22,10 +23,12 @@
     
         <div class="cash_withdrawal">
             <router-link to="/recharge" class="withdrawal" tag="div">
-                <span class="icon"></span><span>充值</span>
+                <span class="icon"></span>
+                <span>充值</span>
             </router-link>
             <router-link to="/cash" class="cash" tag="div">
-                <span class="icon"></span><span>提现</span>
+                <span class="icon"></span>
+                <span>提现</span>
             </router-link>
         </div>
     
@@ -33,29 +36,41 @@
     
         <div class="icon-div">
             <router-link to="/financialList" tag="div">
-                <p><span class="record-icon"></span></p>
+                <p>
+                    <span class="record-icon"></span>
+                </p>
                 <p class="label">投资记录</p>
             </router-link>
             <router-link to="/capitalList" tag="div">
-                <p><span class="detail-icon"></span></p>
+                <p>
+                    <span class="detail-icon"></span>
+                </p>
                 <p class="label">资金明细</p>
             </router-link>
             <router-link to="/coupon" class="last" tag="div">
-                <p><span class="coupon-icon"></span></p>
+                <p>
+                    <span class="coupon-icon"></span>
+                </p>
                 <p class="label">我的优惠券</p>
             </router-link>
         </div>
         <div class="icon-div last">
             <router-link to="/coin" tag="div">
-                <p><span class="coin-icon"></span></p>
+                <p>
+                    <span class="coin-icon"></span>
+                </p>
                 <p class="label">我的点币</p>
             </router-link>
             <router-link to="/safe" tag="div">
-                <p><span class="safe-icon"></span></p>
+                <p>
+                    <span class="safe-icon"></span>
+                </p>
                 <p class="label">安全中心</p>
             </router-link>
             <router-link to="/invite" class="last" tag="div">
-                <p><span class="invite-icon"></span></p>
+                <p>
+                    <span class="invite-icon"></span>
+                </p>
                 <p class="label">邀请有礼</p>
             </router-link>
         </div>
@@ -80,7 +95,7 @@ export default {
         'userAccount'
     ]),
     mounted() {
-
+        console.log(this)
     },
     methods: {
 

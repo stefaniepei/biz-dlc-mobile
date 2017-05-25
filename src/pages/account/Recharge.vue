@@ -7,12 +7,12 @@
                 </router-link>
             </mt-header>
             <div class="banktop header-margin">
-                <div :class="'bankico bank_icon_'+this.userAccount.cards[0]['bankNo']"></div>
+                <div :class="'bankico bank_icon_'+this.userAccount['cards'][0]['bankNo']"></div>
                 <div class="bankinfo">
                     <p>
-                        <span>{{this.userAccount.cards[0]['bankName']}}</span>
+                        <span>{{this.userAccount['cards'][0]['bankName']}}</span>
                         <span>（尾号</span>
-                        <span>{{this.userAccount.cards[0]['cardNo']|lastChar}}</span>
+                        <span>{{this.userAccount['cards'][0]['cardNo']|lastChar}}</span>
                         <span>）</span>
                     </p>
                     <p>
@@ -45,7 +45,7 @@
                 </div>
                 <div class="withopt">
                     <input type="text" v-model='verifyCode' class="opt" maxlength="6" placeholder="请输入验证码" />
-                    <button class="sendCode" @click="sendOtp" ref="otpCodeDOM">发送验证码</button>
+                    <button class="sendCode" @click="sendOtp" :disabled="otpDisabled">{{otpBtnVal}}</button>
                 </div>
     
             </div>
@@ -75,6 +75,8 @@ export default {
             dayLimit: 50000,
             rechargeAmount: '',
             verifyCode: '',
+            otpBtnVal: '发送验证码',
+            otpDisabled: false,
             rechargeSuccessDisplay: false,
             rechargeTradeData: {},
         }
@@ -84,6 +86,12 @@ export default {
         'userAccount',
         'userAuth'
     ]),
+    beforeRouteEnter(to, from, next) {
+        next(vm => {
+            Object.assign(vm.$data, vm.$options.data())
+            // vm.rechargeSuccessDisplay = false
+        })
+    },
     mounted() {
         console.log(this)
     },
@@ -99,23 +107,22 @@ export default {
         },
         sendOtp() {
             let _this = this
-            _this.$http.get(`/account/deposit/otp`, { params: { cellphone: _this.user.userName }, headers: { 'Authorization': this.userAuth } })
+            this.$http.get(`/account/deposit/otp`, { params: { cellphone: this.user['userName'] }, headers: { 'Authorization': this.userAuth } })
                 .then((otp) => {
                     let times = 60
-                    let otpDom = _this.$refs.otpCodeDOM
-                    otpDom.innerHTML = times + " s"
-                    otpDom.disabled = 'disabled'
+                    _this.otpBtnVal = times + " s"
+                    _this.otpDisabled = 'disabled'
                     times--
                     let timeClear = setInterval(() => {
-                        if (otpDom.innerHTML == '发送验证码') {
+                        if (_this.otpBtnVal == '发送验证码') {
                             clearInterval(timeClear)
                             return
                         }
-                        otpDom.innerHTML = times + " s"
+                        _this.otpBtnVal = times + " s"
                         if (times == 0) {
                             clearInterval(timeClear)
-                            otpDom.innerHTML = "发送验证码"
-                            otpDom.disabled = false
+                            _this.otpBtnVal = "发送验证码"
+                            _this.otpDisabled = false
                             times = 60
                         }
                         times--
@@ -139,14 +146,14 @@ export default {
                                 password: value,
                                 smsCode: _this.verifyCode
                             }
-                            _this.$http.get(`/user/signin/salt/${_this.user.userName}`)
+                            _this.$http.get(`/user/signin/salt/${_this.user['userName']}`)
                                 .then((saltRes) => {
                                     param.password = bcrypt.hashSync(value, saltRes['data']['salt'])
                                     _this.$http.post(`/account/deposit`, param, { headers: { 'Authorization': _this.userAuth } })
                                         .then((payRes) => {
                                             _this.rechargeTradeData = {
-                                                bankName: _this.userAccount.cards[0]['bankName'],
-                                                cardNo: _this.userAccount.cards[0]['cardNo'],
+                                                bankName: _this.userAccount['cards'][0]['bankName'],
+                                                cardNo: _this.userAccount['cards'][0]['cardNo'],
                                                 rechargeAmount: _this.rechargeAmount
                                             }
                                             if (0 == payRes['error']) {

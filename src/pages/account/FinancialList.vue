@@ -7,7 +7,10 @@
         </mt-header>
         <div class="fill-div-05"></div>
         <div class="financial-total">
-            <p><em></em>当前总投资额（元）：<span class="dlc-red">{{this.userAccount.asset.totalCapital|formatCurrency(2,true)}}</span></p>
+            <p>
+                <em></em>当前总投资额（元）：
+                <span class="dlc-red">{{this.userAccount['asset']['totalCapital']|formatCurrency(2,true)}}</span>
+            </p>
         </div>
         <div class="fill-div-05"></div>
     

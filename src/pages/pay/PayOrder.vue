@@ -114,8 +114,8 @@ export default {
         next(vm => {
             vm.orderShow = true
             vm.getOrderDetail(vm.$route.params.order)
-            if (vm.userAccount != null && vm.userAccount.balance && vm.userAccount.balance.available) {
-                vm.balance = vm.userAccount.balance.available
+            if (vm.userAccount != null && vm.userAccount['balance'] && vm.userAccount['balance']['available']) {
+                vm.balance = vm.userAccount['balance']['available']
             }
         })
     },
@@ -231,7 +231,7 @@ export default {
                                 amount: Number.parseFloat(_this.coupon.amount)
                             })
                         }
-                        _this.$http.get(`/user/signin/salt/${_this.user.userName}`)
+                        _this.$http.get(`/user/signin/salt/${_this.user['userName']}`)
                             .then((saltRes) => {
                                 param.password = bcrypt.hashSync(value, saltRes['data']['salt'])
                                 _this.$http.post(`/trades/pay`, param, { headers: { 'Authorization': _this.userAuth } })

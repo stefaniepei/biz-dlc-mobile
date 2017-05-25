@@ -8,7 +8,7 @@
     
         <div class="coin-header">
             <section>当前点币：</section>
-            <section class="coin-balance">{{this.userAccount.asset.availablePoint}}</section>
+            <section class="coin-balance">{{this.userAccount['asset']['availablePoint']}}</section>
             <section>温馨提示：点币有效期至每年公历12月31日，过期将自动清零。</section>
         </div>
     

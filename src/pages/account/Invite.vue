@@ -10,7 +10,7 @@
             <img src="../../assets/images/account/polirebanner.png" class="img-responsive">
         </div>
     
-        <div v-if="this.userAccount.hasCard">
+        <div v-if="this.userAccount['hasCard']">
             <div>
                 <div>
                     <p class="invite-title">您的个人二维码名片</p>
@@ -25,8 +25,12 @@
                 <div class="bdashed">
                     <h4 class="friend-title">好友投资奖励</h4>
                     <div class="friend-content">
-                        <div class="w48 inline-block"><span class="margin-left-1">现金总奖励</span></div>
-                        <div class="w48 inline-block total-reward"><span class="margin-right-1">30000元</span></div>
+                        <div class="w48 inline-block">
+                            <span class="margin-left-1">现金总奖励</span>
+                        </div>
+                        <div class="w48 inline-block total-reward">
+                            <span class="margin-right-1">30000元</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -34,7 +38,8 @@
         </div>
     
         <div class="authbutton" v-else>
-            <p>主人,请先<a href="/bindCard">实名认证和绑卡</a>,方便邀请好友和提现奖励哦！</p>
+            <p>主人,请先
+                <a href="/bindCard">实名认证和绑卡</a>,方便邀请好友和提现奖励哦！</p>
             <button class="bindCardBut">立即绑卡</button>
         </div>
     </div>
