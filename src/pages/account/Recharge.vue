@@ -196,6 +196,7 @@ export default {
 .bankinfo {
     display: inline-block;
     height: 3rem;
+    line-height: 3rem;
 }
 
 .tradeamount {
