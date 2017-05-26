@@ -28,8 +28,10 @@
     </div>
 </template>
 <script>
+// *******************************该页面暂时没用到*******************************
 import { mapGetters } from 'vuex'
 import MugenScroll from 'vue-mugen-scroll'
+import routeData from 'mixins/routeData.js'
 
 export default {
     data() {

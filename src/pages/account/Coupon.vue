@@ -24,13 +24,14 @@
                         <div class="redPkt-act-right">
                             <div class="cp-con-top">
                                 <em v-if="'fx' == value.classType || 'mj' == value.classType">
-                                        <span class="icon-rmb">￥</span><span class="unit">{{value.amount}}</span> 
-                                    </em>
+                                    <span class="icon-rmb">￥</span>
+                                    <span class="unit">{{value.amount}}</span>
+                                </em>
     
                                 <em v-else-if="'jx' == value.classType">
-                                        <span class="unit" style="margin-left:1.4rem">{{value.amount}}</span>
-                                        <span class="icon-rmb" style="vertical-align: bottom;">%</span> 
-                                    </em>
+                                    <span class="unit" style="margin-left:1.4rem">{{value.amount}}</span>
+                                    <span class="icon-rmb" style="vertical-align: bottom;">%</span>
+                                </em>
                             </div>
                             <div class="cp-con-bottom">
                                 <p v-if="0 == Number.parseInt(value.minInvestAmount) && 2147483647 == Number.parseInt(value.maxInvestAmount)">1.单笔投资无限制</p>
@@ -60,13 +61,14 @@
                         <div class="redPkt-act-right">
                             <div class="cp-con-top">
                                 <em v-if="'fx' == value.classType || 'mj' == value.classType">
-                                        <span class="icon-rmb">￥</span><span class="unit">{{value.amount}}</span> 
-                                    </em>
+                                    <span class="icon-rmb">￥</span>
+                                    <span class="unit">{{value.amount}}</span>
+                                </em>
     
                                 <em v-else-if="'jx' == value.classType">
-                                        <span class="unit" style="margin-left:1.4rem">{{value.amount}}</span>
-                                        <span class="icon-rmb" style="vertical-align: bottom;">%</span> 
-                                    </em>
+                                    <span class="unit" style="margin-left:1.4rem">{{value.amount}}</span>
+                                    <span class="icon-rmb" style="vertical-align: bottom;">%</span>
+                                </em>
                             </div>
                             <div class="cp-con-bottom">
                                 <p v-if="0 == Number.parseInt(value.minInvestAmount) && 2147483647 == Number.parseInt(value.maxInvestAmount)">1.单笔投资无限制</p>
@@ -96,13 +98,14 @@
                         <div class="redPkt-act-right">
                             <div class="cp-con-top">
                                 <em v-if="'fx' == value.classType || 'mj' == value.classType">
-                                        <span class="icon-rmb">￥</span><span class="unit">{{value.amount}}</span> 
-                                    </em>
+                                    <span class="icon-rmb">￥</span>
+                                    <span class="unit">{{value.amount}}</span>
+                                </em>
     
                                 <em v-else-if="'jx' == value.classType">
-                                        <span class="unit" style="margin-left:1.4rem">{{value.amount}}</span>
-                                        <span class="icon-rmb" style="vertical-align: bottom;">%</span> 
-                                    </em>
+                                    <span class="unit" style="margin-left:1.4rem">{{value.amount}}</span>
+                                    <span class="icon-rmb" style="vertical-align: bottom;">%</span>
+                                </em>
                             </div>
                             <div class="cp-con-bottom">
                                 <p v-if="0 == Number.parseInt(value.minInvestAmount) && 2147483647 == Number.parseInt(value.maxInvestAmount)">1.单笔投资无限制</p>
@@ -130,9 +133,11 @@
 import { Navbar, TabItem, Toast } from 'mint-ui'
 import { mapGetters } from 'vuex'
 import MugenScroll from 'vue-mugen-scroll'
+import routeData from 'mixins/routeData.js'
 
 export default {
-    data() {
+    mixins: [routeData],
+    routeData() {
         return {
             selected: '1',
             records1: [{}],
@@ -142,7 +147,7 @@ export default {
             page2: 1,
             page3: 1,
             pageSize: 10,
-            loading1: true,
+            loading1: false,
             loading2: false,
             loading3: false,
             loadingTitle1: '加载中...',
@@ -153,10 +158,9 @@ export default {
     computed: mapGetters([
         'userAuth'
     ]),
-    beforeRouteEnter(to, from, next) {
-        next(vm => {
-            vm.fetchData1()
-        })
+    created() {
+        this.loading1 = true
+        this.fetchData1()
     },
     mounted() {
 

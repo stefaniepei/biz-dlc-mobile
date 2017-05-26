@@ -10,7 +10,7 @@
             <img src="../../assets/images/account/polirebanner.png" class="img-responsive">
         </div>
     
-        <div v-if="this.userAccount.hasCard">
+        <div v-if="this.userAccount['hasCard']">
             <div>
                 <div>
                     <p class="invite-title">您的个人二维码名片</p>
@@ -25,8 +25,12 @@
                 <div class="bdashed">
                     <h4 class="friend-title">好友投资奖励</h4>
                     <div class="friend-content">
-                        <div class="w48 inline-block"><span class="margin-left-1">现金总奖励</span></div>
-                        <div class="w48 inline-block total-reward"><span class="margin-right-1">30000元</span></div>
+                        <div class="w48 inline-block">
+                            <span class="margin-left-1">现金总奖励</span>
+                        </div>
+                        <div class="w48 inline-block total-reward">
+                            <span class="margin-right-1">{{total}}元</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -34,7 +38,8 @@
         </div>
     
         <div class="authbutton" v-else>
-            <p>主人,请先<a href="/bindCard">实名认证和绑卡</a>,方便邀请好友和提现奖励哦！</p>
+            <p>主人,请先
+                <a href="/bindCard">实名认证和绑卡</a>,方便邀请好友和提现奖励哦！</p>
             <button class="bindCardBut">立即绑卡</button>
         </div>
     </div>
@@ -42,56 +47,37 @@
 <script>
 import { Toast } from 'mint-ui'
 import { mapGetters } from 'vuex'
-import MugenScroll from 'vue-mugen-scroll'
+import routeData from 'mixins/routeData.js'
+
 export default {
-    data() {
+    mixins: [routeData],
+    routeData() {
         return {
-            selected: '1',
-            records1: [{}],
-            records2: [{}],
-            records3: [{}],
-            page1: 1,
-            page2: 1,
-            page3: 1,
-            pageSize: 10,
-            loading1: true,
-            loading2: false,
-            loading3: false,
-            loadingTitle1: '加载中...',
-            loadingTitle2: '加载中...',
-            loadingTitle3: '加载中...',
+            total: 0.00,
         }
     },
     computed: mapGetters([
         'userAuth',
         'userAccount'
     ]),
+    created() {
+        // this.fetchData()
+    },
     mounted() {
 
     },
     methods: {
-        fetchData1() {
+        fetchData() {
             let _this = this
+            // app.account.getBizAccountInfo
             this.$http.get(`/account/points/jour`, { params: { page: this.page1, pageSize: this.pageSize }, headers: { 'Authorization': this.userAuth } })
                 .then((res) => {
-                    let souce = res.data
-                    if (_this.page1 === 1) {
-                        _this.records1 = souce
-                    } else {
-                        _this.records1.push(...souce)
-                    }
-                    if (_this.pageSize == souce.length) {
-                        _this.loading1 = true
-                        _this.page1++
-                    } else {
-                        _this.loading1 = false
-                        _this.loadingTitle1 = '暂无更多数据'
-                    }
+                    _this.total = res.data.asset.totalReward
                 }).catch((err) => Toast(err))
         },
     },
     components: {
-        MugenScroll
+
     }
 }
 </script>

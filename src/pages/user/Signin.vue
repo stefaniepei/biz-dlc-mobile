@@ -26,7 +26,7 @@
 import { Toast } from 'mint-ui'
 import bcrypt from 'bcryptjs'
 import md5 from 'md5'
-import { testAccountName, testPassword } from '../../utils/validate.js'
+import { testAccountName, testPassword } from 'utils/validate.js'
 
 export default {
     data() {
@@ -56,13 +56,15 @@ export default {
                     .then((res) => {
                         _this.$http.post(`/user/signin`, { userName: _this.userName, password: md5(bcrypt.hashSync(this.loginPassword, res['data']['salt'])) })
                             .then((response) => {
-                                _this.$store.dispatch('USER_LOGIN_IN', response.data)
-                                let userAuth = 'Bearer ' + response.data.accessToken
+                                _this.$store.dispatch('USER_LOGIN_IN', response['data'])
+                                let userAuth = 'Bearer ' + response['data']['accessToken']
                                 _this.$store.dispatch('USER_AUTH', userAuth)
                                 _this.$http.get(`/account`, { headers: { 'Authorization': userAuth } })
                                     .then((resolve) => {
-                                        _this.$store.dispatch('USER_ACCOUNT', resolve.data)
-                                        _this.$router.go(-1)
+                                        console.log(resolve.data)
+                                        _this.$store.dispatch('USER_ACCOUNT', resolve['data'])
+                                        _this.$router.push({ path: '/' })
+                                        // _this.$router.go(-1)
                                     }).catch((accountError) => Toast(accountError))
                             }).catch((signError) => Toast(signError))
                     }).catch((saltError) => Toast(saltError))

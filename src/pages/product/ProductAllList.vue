@@ -68,9 +68,11 @@
 <script>
 import { Toast } from 'mint-ui'
 import bottomMenu from 'components/bottom-menu.vue'
+import routeData from 'mixins/routeData.js'
 
 export default {
-    data() {
+    mixins: [routeData],
+    routeData() {
         return {
             productList: [{}],
         }
@@ -78,7 +80,7 @@ export default {
     components: {
         bottomMenu
     },
-    mounted() {
+    created() {
         this.getProductList()
     },
     methods: {

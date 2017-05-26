@@ -28,26 +28,27 @@
 import { mapGetters } from 'vuex'
 import { Toast } from 'mint-ui'
 import MugenScroll from 'vue-mugen-scroll'
+import routeData from 'mixins/routeData.js'
 
 export default {
-    data() {
+    mixins: [routeData],
+    routeData() {
         return {
             records: [{}],
             page: 1,
-            loading: true,
+            loading: false,
             loadingTitle: '加载中...'
         }
     },
     computed: mapGetters([
         'userAuth'
     ]),
-    beforeRouteEnter(to, from, next) {
-        next(vm => {
-            vm.fetchData()
-        })
+    created() {
+        this.loading = true
+        this.fetchData()
     },
     mounted() {
-
+        console.log(this)
     },
     methods: {
         fetchData() {

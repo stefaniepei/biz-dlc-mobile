@@ -13,7 +13,7 @@
                     <img src="../../assets/images/dlc/draw.png" />
                     <p>点币抽奖</p>
                 </router-link>
-                <router-link to="/invitePolite/WeChat" tag="li" v-if="this.user && this.user.accessToken">
+                <router-link to="/invitePolite/WeChat" tag="li" v-if="this.user && this.user['accessToken']">
                     <img src="../../assets/images/dlc/invite.png" />
                     <p>邀请有礼</p>
                 </router-link>
@@ -150,9 +150,11 @@ import { mapGetters } from 'vuex'
 Vue.component(Swipe.name, Swipe)
 Vue.component(SwipeItem.name, SwipeItem)
 import bottomMenu from 'components/bottom-menu.vue'
+import routeData from 'mixins/routeData.js'
 
 export default {
-    data() {
+    mixins: [routeData],
+    routeData() {
         return {
             imgData: {},
             newHand: {},
@@ -169,10 +171,11 @@ export default {
     computed: mapGetters([
         'user'
     ]),
-    mounted() {
+    created() {
         this.getSwiperData()
         this.getNewHand()
         this.getProductList()
+        console.log(this)
     },
     methods: {
         getSwiperData() {

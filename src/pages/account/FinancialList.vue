@@ -1,13 +1,16 @@
 <template>
     <div class="page financial-list">
-        <mt-header title="我的理财" class="header-bg-color">
+        <mt-header title="投资记录" class="header-bg-color">
             <router-link to="/info" slot="left">
                 <mt-button icon="back"></mt-button>
             </router-link>
         </mt-header>
         <div class="fill-div-05"></div>
         <div class="financial-total">
-            <p><em></em>当前总投资额（元）：<span class="dlc-red">{{this.userAccount.asset.totalCapital|formatCurrency(2,true)}}</span></p>
+            <p>
+                <em></em>当前总投资额（元）：
+                <span class="dlc-red">{{this.userAccount['asset']['totalCapital']|formatCurrency(2,true)}}</span>
+            </p>
         </div>
         <div class="fill-div-05"></div>
     
@@ -57,13 +60,15 @@
 import { mapGetters } from 'vuex'
 import { Toast } from 'mint-ui'
 import MugenScroll from 'vue-mugen-scroll'
+import routeData from 'mixins/routeData.js'
 
 export default {
-    data() {
+    mixins: [routeData],
+    routeData() {
         return {
             records: [{}],
             page: 1,
-            loading: true,
+            loading: false,
             loadingTitle: '加载中...'
         }
     },
@@ -71,13 +76,12 @@ export default {
         'userAccount',
         'userAuth'
     ]),
-    beforeRouteEnter(to, from, next) {
-        next(vm => {
-            vm.fetchData()
-        })
+    created() {
+        this.loading = true
+        this.fetchData()
     },
     mounted() {
-
+        console.log(this)
     },
     methods: {
         fetchData() {

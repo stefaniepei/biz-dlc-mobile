@@ -8,7 +8,7 @@
     
         <div class="coin-header">
             <section>当前点币：</section>
-            <section class="coin-balance">{{this.userAccount.asset.availablePoint}}</section>
+            <section class="coin-balance">{{this.userAccount['asset']['availablePoint']}}</section>
             <section>温馨提示：点币有效期至每年公历12月31日，过期将自动清零。</section>
         </div>
     
@@ -69,9 +69,11 @@
 import { Navbar, TabItem, Toast } from 'mint-ui'
 import { mapGetters } from 'vuex'
 import MugenScroll from 'vue-mugen-scroll'
+import routeData from 'mixins/routeData.js'
 
 export default {
-    data() {
+    mixins: [routeData],
+    routeData() {
         return {
             selected: '1',
             records1: [{}],
@@ -81,7 +83,7 @@ export default {
             page2: 1,
             page3: 1,
             pageSize: 10,
-            loading1: true,
+            loading1: false,
             loading2: false,
             loading3: false,
             loadingTitle1: '加载中...',
@@ -93,10 +95,9 @@ export default {
         'userAuth',
         'userAccount'
     ]),
-    beforeRouteEnter(to, from, next) {
-        next(vm => {
-            vm.fetchData1()
-        })
+    created() {
+        this.loading1 = true
+        this.fetchData1()
     },
     mounted() {
 
