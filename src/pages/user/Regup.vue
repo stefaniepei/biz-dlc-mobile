@@ -43,7 +43,7 @@
 import { Toast } from 'mint-ui'
 import bcrypt from 'bcryptjs'
 import md5 from 'md5'
-import { testAccountName, testPassword, testCaptcha, testOtpCode } from '../../utils/validate.js'
+import { testAccountName, testPassword, testCaptcha, testOtpCode } from 'utils/validate.js'
 
 export default {
     data() {

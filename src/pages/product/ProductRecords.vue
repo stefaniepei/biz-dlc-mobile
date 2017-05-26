@@ -27,23 +27,27 @@
 <script>
 import MugenScroll from 'vue-mugen-scroll'
 import { Toast } from 'mint-ui'
+import routeData from 'mixins/routeData.js'
 
 export default {
-    data() {
+    mixins: [routeData],
+    routeData() {
         return {
             records: [{}],
             page: 1,
-            loading: true,
+            loading: false,
             loadingTitle: '加载中...'
         }
+    },
+    components: {
+        MugenScroll
     },
     mounted() {
 
     },
-    beforeRouteEnter(to, from, next) {
-        next(vm => {
-            vm.fetchData()
-        })
+    created() {
+        this.loading = true
+        this.fetchData()
     },
     methods: {
         fetchData() {
@@ -69,9 +73,6 @@ export default {
                 }).catch((err) => Toast(err))
         },
     },
-    components: {
-        MugenScroll
-    }
 }
 </script>
 <style scoped>

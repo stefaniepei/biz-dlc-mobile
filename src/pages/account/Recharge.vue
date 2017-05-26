@@ -65,11 +65,13 @@ import { mapGetters } from 'vuex'
 import { Toast, MessageBox } from 'mint-ui'
 import bcrypt from 'bcryptjs'
 import md5 from 'md5'
-import { testMoney, testOtpCode } from '../../utils/validate.js'
+import routeData from 'mixins/routeData.js'
+import { testMoney, testOtpCode } from 'utils/validate.js'
 import rechargeSuccess from 'components/recharge-success.vue'
 
 export default {
-    data() {
+    mixins: [routeData],
+    routeData() {
         return {
             perLimit: 20000,
             dayLimit: 50000,
@@ -81,22 +83,16 @@ export default {
             rechargeTradeData: {},
         }
     },
+    components: {
+        rechargeSuccess
+    },
     computed: mapGetters([
         'user',
         'userAccount',
         'userAuth'
     ]),
-    beforeRouteEnter(to, from, next) {
-        next(vm => {
-            Object.assign(vm.$data, vm.$options.data())
-            // vm.rechargeSuccessDisplay = false
-        })
-    },
     mounted() {
         console.log(this)
-    },
-    components: {
-        rechargeSuccess
     },
     methods: {
         fastInput(num) {

@@ -83,10 +83,12 @@
 <script>
 import { mapGetters } from 'vuex'
 import { Toast } from 'mint-ui'
+import routeData from 'mixins/routeData.js'
 import bottomMenu from 'components/bottom-menu.vue'
 
 export default {
-    data() {
+    mixins: [routeData],
+    routeData() {
         return {
 
         }

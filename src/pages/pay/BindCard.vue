@@ -44,7 +44,7 @@
 <script>
 import { Toast } from 'mint-ui'
 import { mapGetters } from 'vuex'
-import { testChineseName, testIDCard, testBankNO, testBankPhone, testOtpCode } from '../../utils/validate.js'
+import { testChineseName, testIDCard, testBankNO, testBankPhone, testOtpCode } from 'utils/validate.js'
 export default {
     data() {
         return {

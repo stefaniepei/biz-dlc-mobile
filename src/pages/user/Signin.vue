@@ -26,7 +26,7 @@
 import { Toast } from 'mint-ui'
 import bcrypt from 'bcryptjs'
 import md5 from 'md5'
-import { testAccountName, testPassword } from '../../utils/validate.js'
+import { testAccountName, testPassword } from 'utils/validate.js'
 
 export default {
     data() {
