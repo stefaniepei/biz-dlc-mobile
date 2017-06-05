@@ -85,7 +85,6 @@ export default {
         bottomMenu
     },
     created() {
-        this.loading = true
         this.fetchData()
     },
     mounted() {
@@ -96,8 +95,11 @@ export default {
             this.getProductList()
         },
         getProductList() {
-            let _this = this;
+            let _this = this
             let pageSize = 10
+            if (!_this.loading && _this.page != 1) {
+                return
+            }
             _this.loading = false
             this.$http.get('/products', { params: { page: _this.page, pageSize: pageSize } }).then((res) => {
                 if (_this.page === 1) {
@@ -107,11 +109,10 @@ export default {
                 }
                 if (res.data.length == pageSize) {
                     _this.loading = true
-                    _this.page++
                 } else {
                     _this.loadingTitle = '暂无更多数据'
                 }
-
+                _this.page++
             }).catch((err) => Toast(err))
         },
     }

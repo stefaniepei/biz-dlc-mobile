@@ -8,7 +8,8 @@ const init = function ($route) {
     }
     this.$options.routeData._url = store.getUrl($route)
     let keepAlive = store.getItem(this.$options.routeData._url)
-    if (keepAlive) {
+    console.log(this.$options.routeData._url, keepAlive)
+    if (isObject(keepAlive)) {
         return keepAlive
     }
     return this.$options.routeData.call(this)
@@ -19,6 +20,11 @@ const saveData = function () {
     let newData = {}
     Object.keys(data).forEach((k) => newData[k] = this.$data[k])
     store.setItem(this.$options.routeData._url, newData)
+}
+
+const isObject = function (obj) {
+    let type = typeof obj
+    return type == 'function' || (type == 'object') || false
 }
 
 export default {

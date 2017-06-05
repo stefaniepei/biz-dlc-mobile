@@ -1,10 +1,10 @@
 export default class Store {
     constructor() {
         this.data = {}
-        this.changeList = []
+        // this.changeList = []
     }
     setItem(url, data) {
-        this.changeList.forEach((fn) => fn(data, this.data[url], url))
+        // this.changeList.forEach((fn) => fn(data, this.data[url], url))
         this.data[url] = data
     }
     getItem(url) {

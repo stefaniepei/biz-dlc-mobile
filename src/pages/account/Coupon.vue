@@ -159,7 +159,6 @@ export default {
         'userAuth'
     ]),
     created() {
-        this.loading1 = true
         this.fetchData1()
     },
     mounted() {
@@ -180,6 +179,9 @@ export default {
         },
         fetchData1() {
             let _this = this
+            if (!_this.loading1 && _this.page1 != 1) {
+                return
+            }
             _this.loading1 = false
             this.$http.get(`/account/coupons`, { params: { categoryId: 2, status: 0, page: this.page1, pageSize: this.pageSize }, headers: { 'Authorization': this.userAuth } })
                 .then((res) => {
@@ -208,14 +210,17 @@ export default {
                     }
                     if (_this.pageSize == souce.length) {
                         _this.loading1 = true
-                        _this.page1++
                     } else {
                         _this.loadingTitle1 = '暂无更多数据'
                     }
+                    _this.page1++
                 }).catch((err) => Toast(err))
         },
         fetchData2() {
             let _this = this
+            if (!_this.loading2 && _this.page2 != 1) {
+                return
+            }
             _this.loading2 = false
             this.$http.get(`/account/coupons`, { params: { categoryId: 2, status: 1, page: this.page2, pageSize: this.pageSize }, headers: { 'Authorization': this.userAuth } })
                 .then((res) => {
@@ -244,14 +249,17 @@ export default {
                     }
                     if (_this.pageSize == souce.length) {
                         _this.loading2 = true
-                        _this.page2++
                     } else {
                         _this.loadingTitle2 = '暂无更多数据'
                     }
+                    _this.page2++
                 }).catch((err) => Toast(err))
         },
         fetchData3() {
             let _this = this
+            if (!_this.loading3 && _this.page3 != 1) {
+                return
+            }
             _this.loading3 = false
             this.$http.get(`/account/coupons`, { params: { categoryId: 2, status: 2, page: this.page3, pageSize: this.pageSize }, headers: { 'Authorization': this.userAuth } })
                 .then((res) => {
@@ -280,10 +288,10 @@ export default {
                     }
                     if (_this.pageSize == souce.length) {
                         _this.loading3 = true
-                        _this.page3++
                     } else {
                         _this.loadingTitle3 = '暂无更多数据'
                     }
+                    _this.page3++
                 }).catch((err) => Toast(err))
         },
     },

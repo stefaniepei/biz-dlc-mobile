@@ -44,7 +44,6 @@ export default {
         'userAuth'
     ]),
     created() {
-        this.loading = true
         this.fetchData()
     },
     mounted() {
@@ -57,6 +56,9 @@ export default {
         getCapitalList() {
             let _this = this
             let pageSize = 10
+            if (!_this.loading && _this.page != 1) {
+                return
+            }
             _this.loading = false
             this.$http.get(`/trades/jour`, { params: { sort: 'created_at', asc: false, page: this.page, pageSize: pageSize }, headers: { 'Authorization': this.userAuth } })
                 .then((res) => {
@@ -67,10 +69,10 @@ export default {
                     }
                     if (res.data.length == pageSize) {
                         _this.loading = true
-                        _this.page++
                     } else {
                         _this.loadingTitle = '暂无更多数据'
                     }
+                    _this.page++
                 }).catch((err) => Toast(err))
         },
     },

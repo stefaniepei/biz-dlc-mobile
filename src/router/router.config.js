@@ -198,13 +198,6 @@ const routes = [
         component: resolve => require(['../pages/account/FinancialList.vue'], resolve)
     },
     {
-        path: '/orderList', //订单列表
-        meta: {
-            auth: true
-        },
-        component: resolve => require(['../pages/account/OrderList.vue'], resolve)
-    },
-    {
         path: '/capitalList', //资金明细
         meta: {
             auth: true

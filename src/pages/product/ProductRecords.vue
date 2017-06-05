@@ -46,7 +46,6 @@ export default {
 
     },
     created() {
-        this.loading = true
         this.fetchData()
     },
     methods: {
@@ -54,8 +53,11 @@ export default {
             this.getProductRecords(this.$route.params.id)
         },
         getProductRecords(id) {
-            let _this = this;
+            let _this = this
             let pageSize = 20
+            if (!_this.loading && _this.page != 1) {
+                return
+            }
             _this.loading = false
             this.$http.get(`/trades/invest/list`, { params: { prodCodeId: id, page: this.page, pageSize: pageSize } })
                 .then((res) => {
@@ -66,10 +68,10 @@ export default {
                     }
                     if (res.data.length == pageSize) {
                         _this.loading = true
-                        _this.page++
                     } else {
                         _this.loadingTitle = '暂无更多数据'
                     }
+                    _this.page++
                 }).catch((err) => Toast(err))
         },
     },

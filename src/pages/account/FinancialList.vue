@@ -77,7 +77,6 @@ export default {
         'userAuth'
     ]),
     created() {
-        this.loading = true
         this.fetchData()
     },
     mounted() {
@@ -89,6 +88,9 @@ export default {
         },
         getFinancialList() {
             let _this = this
+            if (!_this.loading && _this.page != 1) {
+                return
+            }
             _this.loading = false
             let pageSize = 10
             this.$http.get(`/biz/accounts/share`, { params: { sort: 'created_at', asc: false, status: '', page: this.page, pageSize: pageSize }, headers: { 'Authorization': this.userAuth } })
