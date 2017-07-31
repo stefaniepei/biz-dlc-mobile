@@ -64,9 +64,12 @@ module.exports = {
     devServer: {
         historyApiFallback: true,
         noInfo: true,
-        proxy: {
-            // "**": 'https://unstable-m.dianlc.com'
-        }
+        // proxy: {
+        //     '/': {
+        //         target: 'https://unstable-m.dianlc.com:80',
+        //         secure: false
+        //     }
+        // }
     },
     performance: {
         hints: false
